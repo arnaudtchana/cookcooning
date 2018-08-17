@@ -74,6 +74,15 @@ var App = angular.module('starter', ['ionic'])
               }
           }
       })
+      .state('app.new_profile', {
+          url: '/new_profile',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/ajout_profile.html',
+                  controller: 'AddProfilCtrl'
+              }
+          }
+      })
   .state('app.search', {
     url: '/search',
     views: {
