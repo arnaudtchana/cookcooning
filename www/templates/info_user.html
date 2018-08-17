@@ -1,0 +1,38 @@
+<ion-view view-title="Informations personnelles">
+    <ion-content>
+        <div style="padding-top: 20%;text-align: center">
+            <h2 style="color: #387ef5;">CookCooking</h2>
+        </div>
+
+        <div ng-controller="CompteCtrl">
+            <form name="formulaire" class="list list-inset" ng-submit="saveUser()">
+                <label class="item item-input">
+                    <input type="text" name="email" placeholder="Email" ng-model="email" required>
+                </label>
+
+                <label class="item item-input">
+                    <input type="text" name="login" placeholder="Identifiant" ng-model="login" required>
+                </label>
+
+                <label class="item item-input">
+                    <input type="password" name="password" placeholder="Mot de passe" ng-model="password" ng-minlength="6" required>
+                </label>
+                <label class="item item-input">
+                    <input type="password" name="confirm_password" placeholder="Confirmation" ng-model="confirm_password" required>
+                </label>
+                <!--<span class="rouge" ng-show="!formulaire.password.$valid && formulaire.password.$touched">{{'password_court' | translate}}<br></span>
+                <span class="rouge" ng-show="formulaire.password.$touched && formulaire.password.$invalid">{{'mot_pass_requis' | translate}}.<br></span>
+                <span class="rouge" ng-show="formulaire.login.$touched && formulaire.login.$invalid">{{'login_requis' | translate}}.<br></span>
+                <span class="rouge" ng-show="formulaire.confirm_password.$touched && formulaire.confirm_password.$invalid">{{'confirm_pass_requis' | translate}}.<br></span>
+                -->
+                <div><button type="submit" class="button button-block button-positive">Suivant</button></div>
+            </form>
+        </div>
+        <div style="padding-top: 25%">
+
+            <div class="text-center"> <a ui-sref="connexion()">J'ai déjà un compte</a></div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,29 @@
+<ion-view view-title="Connexion">
+    <ion-content class="marge_haut">
+        <div class="padding">
+            <h2 style="color: #387ef5; text-align: center">CookCooking</h2>
+        </div>
+        <form ng-submit="doLogin()" class="marge_from_haut">
+            <div class="list padding padding_bottom_null">
+                <label class="item item-input">
+                    <span class="input-label">Identifiant</span>
+                    <input type="text" ng-model="loginData.username" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Mot de passe</span>
+                    <input type="password" ng-model="loginData.password" required>
+                </label>
+            </div>
+            <div class="padding padding_top_null">
+                <label>
+                    <button class="button button-block button-positive" type="submit">Connexion</button>
+                </label>
+            </div>
+        </form>
+        <div class="row marge_haut">
+            <div class="col-55 text-left"><a ui-sref="bar.email_reset()">Mot de passe oublié?</a></div>
+            <div class="col"></div>
+            <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+    </ion-content>
+</ion-view>
