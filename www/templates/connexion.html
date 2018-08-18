@@ -6,8 +6,8 @@
         <form ng-submit="doLogin()" class="marge_from_haut">
             <div class="list padding padding_bottom_null">
                 <label class="item item-input">
-                    <span class="input-label">Identifiant</span>
-                    <input type="text" ng-model="loginData.username" required>
+                    <span class="input-label">Email</span>
+                    <input type="email" ng-model="loginData.email" required>
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Mot de passe</span>
@@ -19,7 +19,9 @@
                     <button class="button button-block button-positive" type="submit">Connexion</button>
                 </label>
             </div>
+            <div class="padding"><p style="color: red;">{{error}}</p></div>
         </form>
+
         <div class="row marge_haut">
             <div class="col-55 text-left"><a ui-sref="bar.email_reset()">Mot de passe oublié?</a></div>
             <div class="col"></div>
