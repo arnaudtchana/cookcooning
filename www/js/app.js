@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
-var App = angular.module('starter', ['ionic','satellizer','ngStorage'])
+var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -27,12 +27,15 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider,$authProvider,$httpProvider) {
+.config(function($stateProvider, $urlRouterProvider,$authProvider,$httpProvider,RestangularProvider) {
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $authProvider.loginUrl = ApiUrl+'auth';
     $authProvider.signupUrl = ApiUrl+'register';
     $httpProvider.interceptors.push('InterceptorFactory');
+    var newBaseUrl = ApiUrl;
+    RestangularProvider.setBaseUrl(newBaseUrl);
   $stateProvider
 
     .state('connexion',{
@@ -133,15 +136,17 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage'])
             return {
                 //lorsquon envoi une requette on met le token dans lentete
                 request : function(config) {
-                    //console.log("je suis ici dans la requete de sortie");
-                    config.headers.Authorization= "Bearer "+$sessionStorage.token;
-                    //console.log($sessionStorage.token);
+                    console.log("je suis ici dans la requete de sortie");
+                    config.headers.Authorization= "bearer "+$sessionStorage.token;
+                    config.url = config.url+"?token="+$sessionStorage.token;
+                    console.log($sessionStorage.token);
                     /*en envoi la requette*/
                     return config;
                 },
                 /*dans le cas ou la requete passe avec succes on regarde si le token est present dans lentete
                  * auquel cas on le met dans la variable de session*/
                 response : function(response){
+                    /*on affiche la reponse de la requete pour voir comment recuperer le token*/
                     if(token = response.headers('Authorization')){
                         /*on enregistre le token dans la varible de session*/
                         /*on regarde sil y a le bearer dans le token de base et on le supprime*/
@@ -151,52 +156,6 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage'])
                     /*on retourne la reponse*/
                     return response;
                 },
-                /*dans le cas ou on a une mauvaise reponse*/
-                // responseError: function(rejection){
-                //   if(rejection.status ===401 && rejection.data["error"]!="invalid_credentials"){
-                //     /*on essaie de refresh le token cote serveur*/
-                //
-                //     console.log(rejection.data["error"]);
-                //     var deffered = $q.defer();
-                //     $injector.get("$http").post(testApiUrl+"/api/refresh?token="+$sessionStorage.token,{}, {
-                //       headers: {
-                //         Authorization: "Bearer "+$sessionStorage.token
-                //       }
-                //     }).then(function(response){
-                //       /*si la requette passe, on aura un nouveau token et doit le garder dans notre storage*/
-                //       /*ici le token est dans la variable refreshtoken*/
-                //       $sessionStorage.token = response.refreshToken;
-                //       console.log("voici le token refresh" +response.refreshToken);
-                //       console.log("voici la reponse du refresh" +response);
-                //       console.log("ici on vient de refresh le token");
-                //
-                //       /*on envoie a present la requete originale*/
-                //
-                //       /*ici on enregistre le token dans config avant de renvoyer la requete*/
-                //       config.headers.Authorization= "Bearer "+$sessionStorage.token;
-                //       $injector.get("$http")(response.config)
-                //         .then(function(response){
-                //           /*si la requete originale passe, on retourne le resultat*/
-                //           return deffered.resolve(response);
-                //         },function(){
-                //           /*cette requete nest pas passee a nouveau*/
-                //           /*So we reject the response and carry on with 401*/
-                //           /*le token peut etre expire on le supprime en local et on renvoie lutilisateur en page de connexion*/
-                //           delete $sessionStorage.token;
-                //           $state.go('authentification');
-                //           return deffered.reject();
-                //         })
-                //     },function(){
-                //       /*le rafraichissement du token a echoue, on deconnecte lutilisateur et on lui renvoie la page de connexion */
-                //       delete $sessionStorage.token;
-                //       $state.go('authentification');
-                //       return deffered.reject();
-                //     });
-                //     /*on continue avec lerreur 404 si on atteint ce point*/
-                //     return deffered.promise;
-                //   }
-                //   return rejection;
-                // }
                 /*ici on teste le code alternatif du cas ou on a une mauvaise reponse*/
                 responseError: function(rejection) {
 

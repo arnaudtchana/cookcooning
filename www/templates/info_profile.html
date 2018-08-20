@@ -5,27 +5,22 @@
         </div>
 
         <div ng-controller="CompteCtrl">
-            <form name="formulaire" class="list list-inset" ng-submit="saveProfile(login,password,confirm_password)">
+            <form name="formulaire" class="list list-inset" ng-submit="singup()">
                 <label class="item item-input">
-                    <input type="text" name="nom" placeholder="Nom" ng-model="nom" required>
+                    <input type="text" name="nom" placeholder="Nom" ng-model="profile.name" required>
                 </label>
 
                 <label class="item item-input">
-                    <input type="tel" name="tel" placeholder="Numéro de téléphone" ng-model="tel" required>
+                    <input type="tel" name="tel" placeholder="Numéro de téléphone" ng-model="profile.phone" required>
                 </label>
 
                 <label class="item item-input">
-                    <input type="text" name="adresse" placeholder="Adresse" ng-model="adresse" required>
+                    <input type="text" name="adresse" placeholder="Adresse" ng-model="profile.address" required>
                 </label>
 
                 <label class="item item-input">
-                    <textarea type="text" rows="3" name="description" placeholder="Description" ng-model="description" required></textarea>
+                    <textarea type="text" rows="3" name="description" placeholder="Description" ng-model="profile.comments" required></textarea>
                 </label>
-                <!--<span class="rouge" ng-show="!formulaire.password.$valid && formulaire.password.$touched">{{'password_court' | translate}}<br></span>
-                <span class="rouge" ng-show="formulaire.password.$touched && formulaire.password.$invalid">{{'mot_pass_requis' | translate}}.<br></span>
-                <span class="rouge" ng-show="formulaire.login.$touched && formulaire.login.$invalid">{{'login_requis' | translate}}.<br></span>
-                <span class="rouge" ng-show="formulaire.confirm_password.$touched && formulaire.confirm_password.$invalid">{{'confirm_pass_requis' | translate}}.<br></span>
-                -->
                 <div><button type="submit" class="button button-block button-positive">Suivant</button></div>
             </form>
         </div>

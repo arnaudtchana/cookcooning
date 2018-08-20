@@ -3,11 +3,11 @@
         <div class="padding">
             <h2 style="color: #387ef5; text-align: center">CookCooking</h2>
         </div>
-        <form ng-submit="doLogin()" class="marge_from_haut">
+        <form ng-submit="doLogin()" class="marge_from_haut" name="myForm">
             <div class="list padding padding_bottom_null">
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="email" ng-model="loginData.email" required>
+                    <input type="email" name="email" ng-model="loginData.email" required>
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Mot de passe</span>
@@ -19,7 +19,12 @@
                     <button class="button button-block button-positive" type="submit">Connexion</button>
                 </label>
             </div>
-            <div class="padding"><p style="color: red;">{{error}}</p></div>
+            <div class="padding">
+                <span class="couleur_rouge" ng-show="myForm.email.$error.email">
+                    Adresse email invalide.
+                </span>
+                <span class="couleur_rouge">{{error}}</span>
+            </div>
         </form>
 
         <div class="row marge_haut">

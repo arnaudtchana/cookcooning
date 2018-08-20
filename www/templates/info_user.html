@@ -7,21 +7,22 @@
         <div ng-controller="CompteCtrl">
             <form name="formulaire" class="list list-inset" ng-submit="saveUser()">
                 <label class="item item-input">
-                    <input type="email" name="email" placeholder="Email" ng-model="email" required>
+                    <input type="email" name="email" placeholder="Email" ng-model="user.email" required>
                 </label>
 
                 <label class="item item-input">
-                    <input type="password" name="password" placeholder="Mot de passe" ng-model="password" ng-minlength="6" required>
+                    <input type="password" name="password" placeholder="Mot de passe" ng-model="user.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="password" name="confirm_password" placeholder="Confirmation" ng-model="confirm_password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirmation" ng-model="user.confirm_password" required>
                 </label>
-                <!--<span class="rouge" ng-show="!formulaire.password.$valid && formulaire.password.$touched">{{'password_court' | translate}}<br></span>
-                <span class="rouge" ng-show="formulaire.password.$touched && formulaire.password.$invalid">{{'mot_pass_requis' | translate}}.<br></span>
-                <span class="rouge" ng-show="formulaire.login.$touched && formulaire.login.$invalid">{{'login_requis' | translate}}.<br></span>
-                <span class="rouge" ng-show="formulaire.confirm_password.$touched && formulaire.confirm_password.$invalid">{{'confirm_pass_requis' | translate}}.<br></span>
-                -->
                 <div><button type="submit" class="button button-block button-positive">Suivant</button></div>
+                <div class="padding">
+                <span class="couleur_rouge" ng-show="formulaire.email.$error.email">
+                    Adresse email invalide.
+                </span>
+                    <span class="couleur_rouge">{{error}}</span>
+                </div>
             </form>
         </div>
         <div style="padding-top: 25%">

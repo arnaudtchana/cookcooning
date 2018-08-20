@@ -21,6 +21,8 @@ $scope.error = "";
                 /*on enregistre le token et on passe a la page suivante il faudra egalement verifier
                 * que l'intercepteur ne fonctionne pas normalement*/
                 $sessionStorage.token = response.data.token;
+                $sessionStorage.data = response.data;
+                console.log($sessionStorage.data);
                 $state.go('app.accueil');
             }else{
                 /*on affiche le message d'erreur*/
