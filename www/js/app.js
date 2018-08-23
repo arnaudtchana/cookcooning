@@ -7,7 +7,7 @@
 var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$localStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -80,6 +80,15 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               'menuContent': {
                   templateUrl: 'templates/accueil.html',
                   controller: 'AccueilCtrl'
+              }
+          }
+      })
+      .state('app.panier', {
+          url: '/panier',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/mon_panier.html',
+                  controller: 'PanierCtrl'
               }
           }
       })

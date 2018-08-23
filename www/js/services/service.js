@@ -1,9 +1,10 @@
-App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup){  // $ionicPopup has to be defined here
+App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope){  // $ionicPopup has to be defined here
 
     var cartObj = {}; 			// note that this is an Cart Object. It contains product list, total qty, and total amt
     cartObj.cart=[]; 		// array of product items
     cartObj.total_amount=0; // total cart amount
     cartObj.total_qty=0;    // total cart qty
+
 
 
     cartObj.cart.add=function(id,image,description,price,qty){
@@ -20,7 +21,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup){  // $ioni
         else{
             //insert this into cart array
             cartObj.cart.push( { "cart_item_id": id , "cart_item_image": image , "cart_item_description": description , "cart_item_price": price , "cart_item_qty": qty } );
-            cartObj.total_qty+=1;	// increase the cartqty
+            cartObj.total_qty+=qty;	// increase the cartqty
             cartObj.total_amount+=parseInt(price);	//increase the cart amount pkoi il prend la valeur en entier qui fausse les resultats
             console.log(cartObj)
         }

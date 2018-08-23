@@ -3,9 +3,9 @@
 
     <!--loads the cart item image-->
     <img ng-src="https://at-deg.inimov-cloud.com/{{produit_courant.image}}" width="100%" height="auto" style="width: 100%; height: auto;">
-
+<p style="text-align: center">{{produit_courant.description}}</p>
     <div>
-        <p>{{produit_courant.qty}} x {{produit_courant.price}} € =
+        <p style="text-align: center;">{{produit_courant.qty}} x {{produit_courant.price}} € =
             <strong>{{ produit_courant.qty *  produit_courant.price  }} €</strong>
         </p>
     </div>
@@ -13,9 +13,10 @@
     <!--the bottom buttons for cart items-->
     <div class="button-bar">
         <!--<button ng-click="removeFromCart(produit_courant.cart_item_id)" class="button button-assertive button-block button-small icon ion-android-delete" ></button>-->
-        <button class="button button-stable button-clear button-block button-small icon ion-plus" ng-click="inc_initial()"></button>
-        <button class="button button-stable button-clear button-block button-small">{{produit_courant.qty}}</button>
         <button class="button button-stable button-clear button-block  icon ion-minus" ng-click="dec_initial()" ></button>
+        <button class="button button-stable button-clear button-block button-small">{{produit_courant.qty}}</button>
+        <button class="button button-stable button-clear button-block button-small icon ion-plus" ng-click="inc_initial()"></button>
+
     </div>
 
 </div>

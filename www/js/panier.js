@@ -1,4 +1,4 @@
-App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope) {
+App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -6,10 +6,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e) {
         var cart = sharedCartService.cart;
+        $scope.taille_panier = cart.length;
+        if(cart.length == 0){
+            $scope.panier_vide = "Votre panier est vide"
+        }else{
+            $scope.cart = cart;
+        }
     });
     //global variable shared between different pages.
-    var cart = sharedCartService.cart;
+    //var cart = sharedCartService.cart;
     //$localStorage.nombre_plat = 0;
+    //$scope.taille_panier = cart.length;
     $rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
     $scope.articles = $sessionStorage.data.products;
@@ -49,7 +56,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
                         type: 'button-positive',
                         onTap:function(){
                             cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
-                        /*on essaaye de modifier la variable du rootscope pour la qtite*/
+                            /*on essaaye de modifier la variable du rootscope pour la qtite*/
                             $rootScope.nombre_plat=sharedCartService.total_qty;
                         }
                     }
@@ -92,6 +99,11 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
         $rootScope.nombre_plat=sharedCartService.total_qty;
+        /*on doit verifier la taille du cart*/
+        if($rootScope.nombre_plat == 0){
+            $scope.taille_panier =0;
+            $scope.panier_vide = "Votre panier est vide"
+        }
 
     };
 
@@ -132,4 +144,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         }
 
     };
+    /*fonciton qui permet de lancer la commande*/
+    $scope.commander = function () {
+        /*je lance la commande a ce niveau*/
+        console.log($sessionStorage.data)
+    }
 })

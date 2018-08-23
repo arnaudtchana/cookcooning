@@ -15,3 +15,8 @@
 .couleur_rouge{
     color: red;
 }
+.compte_commande{
+    position: absolute;
+    top:1px;
+    left: 0px;
+}
