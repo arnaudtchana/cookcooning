@@ -65,7 +65,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
             $scope.produit_courant.img = img;
             $scope.produit_courant.price = price;*/
             myPopup = $ionicPopup.show({
-                cssClass: 'popup_produit',
+                cssClass: 'popup_produit_detail',
                 templateUrl: 'templates/popup_produit.html',
                 scope: $scope,
                 buttons: [
