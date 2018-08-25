@@ -49,3 +49,24 @@
   right: 16px;
   bottom: 5px;
 }
+
+/*pour arranger le texte du select dans le item*/
+.item_select_popup{
+  direction: ltr;
+  padding: 0 50px 0 16px;
+
+}
+
+/*on customise l'affichage du popup de la commande*/
+.popup_commande .popup-head{
+  background-color: #ff6600;
+}
+
+.popup_commande .popup-buttons{
+  padding: 0px;
+  min-height: 40px;
+}
+
+.popup_commande .popup-head .popup-title{
+  color: white;
+}

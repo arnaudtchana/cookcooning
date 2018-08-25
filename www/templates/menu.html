@@ -25,8 +25,20 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
+        <ion-item menu-close href="#/app/accueil">
+          Accueil
+        </ion-item>
+        <ion-item menu-close href="#/app/historique">
+          Historiques
+        </ion-item>
+        <ion-item menu-close href="#/app/list_profile">
+          Liste des profiles
+        </ion-item>
         <ion-item menu-close href="#/app/new_profile">
           Ajouter un profile
+        </ion-item>
+        <ion-item menu-close href="#/app/update_account">
+          Mise à jour du compte
         </ion-item>
         <!--pour gerer la deconnexion on va mettre un ng-click avec une fonction pour gerer la deconnexion-->
         <ion-item menu-close ng-click="logout()">

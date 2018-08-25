@@ -92,6 +92,33 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               }
           }
       })
+      .state('app.list_profile', {
+          url: '/list_profile',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/list_profile.html',
+                  controller: ''
+              }
+          }
+      })
+      .state('app.update_account', {
+          url: '/update_account',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/update_account.html',
+                  controller: ''
+              }
+          }
+      })
+      .state('app.historique', {
+          url: '/historique',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/historiques.html',
+                  controller: ''
+              }
+          }
+      })
       .state('app.new_profile', {
           url: '/new_profile',
           views: {

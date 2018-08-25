@@ -144,9 +144,41 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         }
 
     };
+    /*fonction qui permet de virifeir si le profile de lutilisateur est valide pour passer la commande*/
+    $scope.choix_profile = function(){
+
+    }
     /*fonciton qui permet de lancer la commande*/
     $scope.commander = function () {
         /*je lance la commande a ce niveau*/
+        /*toute la commande va se gerer dans un popup*/
+        $scope.info_commande = {};
+        $scope.profile_user = $sessionStorage.data.client.profiles;
+        var Popup_commande = $ionicPopup.show({
+            cssClass: 'popup_commande',
+            templateUrl: 'templates/popup_commande.html',
+            title: 'Confirmer les informations',
+            scope: $scope,
+            buttons: [
+                { text: 'Annuler' },
+                {
+                    text: '<b>Valider</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        if (!$scope.data.wifi) {
+                            //don't allow the user to close unless he enters wifi password
+                            e.preventDefault();
+                        } else {
+                            return $scope.data.wifi;
+                        }
+                    }
+                }
+            ]
+        });
+
+        Popup_commande.then(function(res) {
+            console.log('Tapped!', res);
+        });
         console.log($sessionStorage.data)
     }
 })
