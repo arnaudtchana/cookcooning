@@ -6,6 +6,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e) {
         var cart = sharedCartService.cart;
+        $scope.articles = $sessionStorage.data.products;/*apres une nouvelle commande ca doit passer a nouveau*/
+        $rootScope.nombre_plat=sharedCartService.total_qty;
     });
     //global variable shared between different pages.
     var cart = sharedCartService.cart;
