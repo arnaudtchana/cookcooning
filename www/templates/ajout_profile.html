@@ -1,5 +1,19 @@
-<ion-view view-title="Ajouter un profile">
-    <ion-content ng-controller="AddProfilCtrl">
-        <h1>Ajout d'un profile</h1>
-    </ion-content>
-</ion-view>
+
+
+        <span class="couleur_rouge" ng-show="text">{{message}}</span>
+        <label class="item item-input">
+            <input type="text" name="nom" placeholder="Nom" ng-model="info_profil.name" required>
+        </label>
+
+        <label class="item item-input">
+            <input type="tel" name="tel" placeholder="Numéro de téléphone" ng-model="info_profil.phone" required>
+        </label>
+
+        <label class="item item-input">
+            <input type="text" name="adresse" placeholder="Adresse" ng-model="info_profil.address" required>
+        </label>
+
+        <label class="item item-input">
+            <textarea type="text" rows="3" name="description" placeholder="Description" ng-model="info_profil.comments" required></textarea>
+        </label>
+

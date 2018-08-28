@@ -92,12 +92,12 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               }
           }
       })
-      .state('app.list_profile', {
-          url: '/list_profile',
+      .state('app.gestion_profile', {
+          url: '/gestion_profile',
           views: {
               'menuContent': {
-                  templateUrl: 'templates/list_profile.html',
-                  controller: ''
+                  templateUrl: 'templates/gestion_profile.html',
+                  controller: 'GestionProfilCtrl'
               }
           }
       })
@@ -110,12 +110,12 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               }
           }
       })
-      .state('app.historique', {
-          url: '/historique',
+      .state('app.liste_commande', {
+          url: '/liste_commande',
           views: {
               'menuContent': {
-                  templateUrl: 'templates/historiques.html',
-                  controller: ''
+                  templateUrl: 'templates/liste_commande.html',
+                  controller: 'ListeCommandeCtrl'
               }
           }
       })
