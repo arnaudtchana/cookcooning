@@ -3,7 +3,7 @@
     <label class="item item-select">
         <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
             <option value="" selected>-- Choisir un profile --</option>
-            <option value="{{$index}}" ng-repeat="profile in profile_user track by $index">{{profile.address}}</option>
+            <option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}}</option>
         </select>
     </label>
 

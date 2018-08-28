@@ -184,6 +184,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     $scope.commander = function () {
         /*je lance la commande a ce niveau*/
         /*toute la commande va se gerer dans un popup*/
+        $scope.lance_la_commande = false;
+        $scope.text = false;
         $scope.info_commande = {
             profile_id :"",
             moment : ""
@@ -211,6 +213,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                 /*s'il a choisi on regarde la valeur avannt ou apres*/
                                 if($scope.info_commande.moment ==="0"){
                                     /*on ferme le popup et on lance la commande via une fonction*/
+                                    $scope.lance_la_commande = true;
                                     Popup_commande.close();
 
                                 }else{
@@ -230,6 +233,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                             /*lheur est bien choisi*/
                                             $scope.text = false;
                                             /*on ferme le popup et on appelle la fonciton qui lance la commande*/
+                                            $scope.lance_la_commande = true;
                                             Popup_commande.close();
                                         }else{
                                             $scope.message = "Entrez une heure valide";
@@ -259,67 +263,70 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
         Popup_commande.then(function(res) {
             /*on forme d'abord les deux objets qui vont aller dans la commande*/
-            var heure_livraison;
-            if($scope.info_commande.moment !=="0"){
-                var heure_livraison = ""+$scope.info_commande.heure.getHours()+":"+$scope.info_commande.heure.getMinutes()+":"+$scope.info_commande.heure.getSeconds();
-            }else{
-                heure_livraison = "undefined"
-            }
-            var command = {
-                "client_id": $sessionStorage.data.client.id,
-                "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
-                "moment": $scope.info_commande.moment,
-                "delivery_date": heure_livraison,
-                "amount": sharedCartService.total_amount,
-                "comment": $scope.info_commande.commentaire
-            }
-            var commandLines = [];
-            /*on fait un foreach pour mettre chaque produit commander avec la qte*/
-            angular.forEach(sharedCartService.cart, function (value,key) {
-                /*on met chaque valeur dans le tableau sous forme d'objet*/
-                var produit = {
-                    "product_id": value.cart_item_id,
-                    "quantity": value.cart_item_qty,
-                    "price": value.cart_item_price
-                }
-                commandLines[key] = produit;
-            })
-            var CommandeEnFin = Restangular.one('command');
-            CommandeEnFin.command = JSON.stringify(command);
-            CommandeEnFin.commandLines = JSON.stringify(commandLines);
-            $ionicLoading.show({
-                templateUrl : 'templates/loading.html'
-            });
-            CommandeEnFin.post().then(function (response) {
-                $ionicLoading.hide();
-                if (response.success == true){
-                    /*on affiche le message de success a l'utilisateur*/
-                    var popupResult = $ionicPopup.alert({
-                        title: 'Information',
-                        template: response.message
-                    });
-                    /*on remet toutes les variables a jour apres une comamnde*/
-                    sharedCartService = {};
-                    sharedCartService.cart=[]; 		// array of product items
-                    sharedCartService.total_amount=0; // total cart amount
-                    sharedCartService.total_qty=0;
-                    $rootScope.nombre_plat = 0;
-                    //$scope.taille_panier = 0;
-                    $scope.cart = [];
-                    console.log(sharedCartService);
-                    /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
-
+            if($scope.lance_la_commande){
+                var heure_livraison;
+                if($scope.info_commande.moment !=="0"){
+                    var heure_livraison = ""+$scope.info_commande.heure.getHours()+":"+$scope.info_commande.heure.getMinutes()+":"+$scope.info_commande.heure.getSeconds();
                 }else{
-                    var popupResult = $ionicPopup.alert({
-                        title: 'Error',
-                        template: response.message
-                    });
+                    heure_livraison = "undefined"
                 }
-            },function (error) {
-                $ionicLoading.hide();
-            })
-            console.log(command);
-            console.log("liste des produits commander avec qte",commandLines)
+                var command = {
+                    "client_id": $sessionStorage.data.client.id,
+                    "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
+                    "moment": $scope.info_commande.moment,
+                    "delivery_date": heure_livraison,
+                    "amount": sharedCartService.total_amount,
+                    "comment": $scope.info_commande.commentaire
+                }
+                var commandLines = [];
+                /*on fait un foreach pour mettre chaque produit commander avec la qte*/
+                angular.forEach(sharedCartService.cart, function (value,key) {
+                    /*on met chaque valeur dans le tableau sous forme d'objet*/
+                    var produit = {
+                        "product_id": value.cart_item_id,
+                        "quantity": value.cart_item_qty,
+                        "price": value.cart_item_price
+                    }
+                    commandLines[key] = produit;
+                })
+                var CommandeEnFin = Restangular.one('command');
+                CommandeEnFin.command = JSON.stringify(command);
+                CommandeEnFin.commandLines = JSON.stringify(commandLines);
+                $ionicLoading.show({
+                    templateUrl : 'templates/loading.html'
+                });
+                CommandeEnFin.post().then(function (response) {
+                    $ionicLoading.hide();
+                    if (response.success == true){
+                        /*on affiche le message de success a l'utilisateur*/
+                        var popupResult = $ionicPopup.alert({
+                            title: 'Information',
+                            template: response.message
+                        });
+                        /*on remet toutes les variables a jour apres une comamnde*/
+                        sharedCartService = {};
+                        sharedCartService.cart=[]; 		// array of product items
+                        sharedCartService.total_amount=0; // total cart amount
+                        sharedCartService.total_qty=0;
+                        $rootScope.nombre_plat = 0;
+                        //$scope.taille_panier = 0;
+                        $scope.cart = [];
+                        console.log(sharedCartService);
+                        /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
+
+                    }else{
+                        var popupResult = $ionicPopup.alert({
+                            title: 'Error',
+                            template: response.message
+                        });
+                    }
+                },function (error) {
+                    $ionicLoading.hide();
+                })
+                console.log(command);
+                console.log("liste des produits commander avec qte",commandLines)
+            }
+
         });
         console.log($sessionStorage.data)
     }
