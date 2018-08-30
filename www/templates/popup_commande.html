@@ -1,3 +1,7 @@
+<div ng-show="profile_valide">
+    <h6>Prix commande: {{total_amount | number:3}} €</h6>
+    <h6>Prix livraison: {{montant_livraison |number:2}} €</h6>
+</div>
 <div>
 <span ng-if="text">{{message}}</span>
     <label class="item item-select">

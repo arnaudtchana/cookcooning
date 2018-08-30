@@ -197,6 +197,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 /*on affiche le message de success*/
                 $scope.profile_valide = true
                 $scope.text = false;
+                /*on affiche le montant de livraison pour le profile choisi*/
+                $scope.montant_livraison = $scope.profile_user[$scope.info_commande.profile_id].delivery_amount;
             }
         }
 
@@ -208,6 +210,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         /*toute la commande va se gerer dans un popup*/
         $scope.lance_la_commande = false;
         $scope.text = false;
+        $scope.profile_valide = false;
         $scope.info_commande = {
             profile_id :"",
             moment : ""
@@ -251,14 +254,16 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                         var heure_commande = new Date();
                                         heure_commande.setHours($scope.info_commande.heure.getHours(),$scope.info_commande.heure.getMinutes(),$scope.info_commande.heure.getSeconds())
                                         heure_courant.setHours(heure_courant.getHours(),heure_courant.getMinutes(),heure_courant.getSeconds());
-                                        if(heure_commande.getTime() - heure_courant.getTime() > 0){
+                                        console.log(heure_commande.getTime(),heure_courant.getTime())
+                                        var diff_in_minutes = (heure_commande.getTime() - heure_courant.getTime())/60000;
+                                        if(heure_commande.getTime() - heure_courant.getTime() > 0 && diff_in_minutes > 30){
                                             /*lheur est bien choisi*/
                                             $scope.text = false;
                                             /*on ferme le popup et on appelle la fonciton qui lance la commande*/
                                             $scope.lance_la_commande = true;
                                             Popup_commande.close();
                                         }else{
-                                            $scope.message = "Entrez une heure valide";
+                                            $scope.message = "Entrez une heure valide avec un décallage d'au moins 30 minutes";
                                             $scope.text = true;
                                         }
                                     }
@@ -334,6 +339,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                         //$scope.taille_panier = 0;
                         $scope.cart = [];
                         console.log(sharedCartService);
+                        $state.go('app.accueil');
                         /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
 
                     }else{

@@ -11,5 +11,11 @@
     "!www/lib/**/*",
     "!www/**/*.map"
   ],
-  "app_id": ""
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/api/test",
+      "proxyUrl": "http://yourdomain.com/sante_bon/public/api/enregistrement"
+    }
+  ]
 }

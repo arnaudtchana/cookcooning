@@ -12,7 +12,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     //global variable shared between different pages.
     var cart = sharedCartService.cart;
     //$localStorage.nombre_plat = 0;
-    $rootScope.nombre_plat=sharedCartService.total_qty;
+    //$rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
     $scope.articles = $sessionStorage.data.products;
     console.log($scope.articles)
