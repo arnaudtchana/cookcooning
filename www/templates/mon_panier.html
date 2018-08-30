@@ -1,12 +1,12 @@
 <!--ici on affiche la liste des produits presents dans le panier de lutilisateur-->
 <ion-view view-title="Votre panier">
     <ion-content ng-controller="PanierCtrl">
-        <div ng-if="taille_panier!=0" class="padding padding_top_null">
+        <div ng-if="$root.nombre_plat!=0" class="padding padding_top_null">
             <label>
-                <button class="button button-block button-positive" ng-click="commander()">Lancer la commande</button>
+                <button class="button button-block button-positive" ng-click="commander()">Lancer la commande ({{total_amount | number:3}} €)</button>
             </label>
         </div>
-        <p ng-if="taille_panier==0">{{panier_vide}}</p>
+        <h5 style="text-align: center" ng-if="taille_panier==0">{{panier_vide}}</h5>
         <ion-list ng-repeat="item in cart">
             <ion-item>
             <img ng-src="https://at-deg.inimov-cloud.com/{{item.cart_item_image}}" width="100%" height="auto" style="width: 100%; height: auto;">

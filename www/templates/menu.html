@@ -11,7 +11,7 @@
       <ion-nav-buttons side="right">
         <a ui-sref="app.panier" class="button button-positive button-clear  icon ion-android-cart"></a>
         <div class="compte_commande">
-          <span ng-if="$root.nombre_plat!=0" style="color: #ff6600;font-family: inherit;">{{$root.nombre_plat}}</span>
+          <span class="nombre_commande" ng-if="$root.nombre_plat!=0" style="font-family: inherit;">{{$root.nombre_plat}}</span>
         </div>
       </ion-nav-buttons>
 

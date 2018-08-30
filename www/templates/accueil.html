@@ -7,14 +7,15 @@
 
                 <img  ng-src="https://at-deg.inimov-cloud.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" >
 
-                <p style="position:absolute;right:10px;">
-                    <a  ng-click="addToCart(item.id,item.image,item.description,item.price)" class="button  button-balanced button-clear   icon ion-android-cart">  </a>
+                <p style="position:absolute;right:15px;top:50px;">
+                    <a  ng-click="addToCart(item.id,item.image,item.description,item.price)" class="button  button-positive button_ajout_panier">
+                    Ajouter au panier</a>
                 </p>
 
                     <h2  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" > {{item.description}} </h2>
 
                     <!--prix du produit-->
-                    <p   ng-click="showProductInfo(item.id,item.description,item.image,item.price)">Price: {{item.price}} €</p>
+                    <p   ng-click="showProductInfo(item.id,item.description,item.image,item.price)">Prix: {{item.price}} €</p>
 
             </ion-item>
 

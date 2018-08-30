@@ -8,6 +8,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         $scope.text = false;/*permet de gerer le montant de la commande par rapport au profil*/
         $scope.heure = true;/*permet de gerer le champs de l'heure*/
         var cart = sharedCartService.cart;
+        $scope.total_amount = sharedCartService.total_amount;
         $scope.taille_panier = cart.length;
         if(cart.length == 0){
             $scope.panier_vide = "Votre panier est vide"
@@ -105,17 +106,34 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
     //remove function
     $scope.removeFromCart=function(c_id){
-        $scope.cart.drop(c_id);	 // deletes the product from cart.
+        /*on lui demande la confirmation via un popup*/
+      var PopupDelete = $ionicPopup.show({
+            cssClass: 'popup_produit',
+            template: 'Voulez-vous vraiment supprimer le produit du panier?',
+            scope: $scope,
+            buttons: [
+                { text: 'Non' },
+                {
+                    text: '<b>Oui</b>',
+                    type: 'button-positive',
+                    onTap:function(){
+                        $scope.cart.drop(c_id);	 // deletes the product from cart.
 
-        // dynamically update the current $scope data.
-        $scope.total_qty=sharedCartService.total_qty;
-        $scope.total_amount=sharedCartService.total_amount;
-        $rootScope.nombre_plat=sharedCartService.total_qty;
-        /*on doit verifier la taille du cart*/
-        if($rootScope.nombre_plat == 0){
-            $scope.taille_panier =0;
-            $scope.panier_vide = "Votre panier est vide"
-        }
+                        // dynamically update the current $scope data.
+                        $scope.total_qty=sharedCartService.total_qty;
+                        $scope.total_amount=sharedCartService.total_amount;
+                        $rootScope.nombre_plat=sharedCartService.total_qty;
+                        /*on doit verifier la taille du cart*/
+                        if($rootScope.nombre_plat == 0){
+                            $scope.taille_panier =0;
+                            $scope.panier_vide = "Votre panier est vide"
+                        }
+                        PopupDelete.close();
+                    }
+                }
+            ]
+        });
+
 
     };
 
@@ -124,6 +142,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         $scope.cart.increment(c_id);
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
+        /*on met a jour le nombre de plat*/
+        $rootScope.nombre_plat+=1;
     };
 
     // decrements the qty
@@ -131,6 +151,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         $scope.cart.decrement(c_id);
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
+        $rootScope.nombre_plat-=1;
+
     };
 
     //add to cart function

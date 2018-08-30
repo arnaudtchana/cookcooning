@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--ici on ajoute tous les profiles et on permet a un utilisateur d'ajouter un profile-->
+<ion-view view-title="Liste des commandes">
+    <ion-content ng-controller="ListeCommandeCtrl">
 
-</body>
-</html>
+<h5 style="text-align: center" ng-if="taille_tableau==0">Aucune commande enregistrée pour cette journée</h5>
+        <ion-list class="list" ng-repeat="commande in commande_livrer track by $index">
+            <li class="item" ng-click="signaler_erreur($index)">
+                {{commande.command_number}} {{commande.command_date}}
+            </li>
+        </ion-list>
+
+    </ion-content>
+</ion-view>
