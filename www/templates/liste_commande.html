@@ -3,11 +3,57 @@
     <ion-content ng-controller="ListeCommandeCtrl">
 
 <h5 style="text-align: center" ng-if="taille_tableau==0">Aucune commande enregistrée pour cette journée</h5>
-        <ion-list class="list" ng-repeat="commande in commande_livrer track by $index">
-            <li class="item" ng-click="signaler_erreur($index)">
-                {{commande.command_number}} {{commande.command_date}}
-            </li>
-        </ion-list>
+        <div class="card" ng-repeat="commande in commande_livrer track by $index">
+            <div>
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Numéro commande:</div>
+                    <div class="col affichage_liste_commande">{{commande.command_number}}</div>
+                </div>
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Montant total:</div>
+                    <div class="col affichage_liste_commande">
+                        {{commande.amount}}€+{{commande.profile.delivery_amount}}€ = {{commande.amount + commande.profile.delivery_amount}}€</div>
+                </div>
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Livraison:</div>
+                    <div class="col affichage_liste_commande">
+                        {{commande.profile.delivery_amount}} € </div>
+                </div>
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Heure commande:</div>
+                    <div class="col affichage_liste_commande">{{commande.command_date | date: format:'HH:mm:ss'}}</div>
+                </div>
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Heure livraison:</div>
+                    <div class="col affichage_liste_commande">{{commande.delivery_date | date: format:'HH:mm:ss' }}</div>
+                </div>
 
+                <div class="row">
+                    <div class="col affichage_liste_commande_gauche">Status commande:</div>
+                    <div class="col affichage_status_commande" ng-if="commande.status ==2">
+                        Livré
+                    </div>
+                    <div style="color: #999900" class="col affichage_status_commande" ng-if="commande.status ==0">
+                        En cours
+                    </div>
+                    <div style="color: #f68b1e" class="col affichage_status_commande" ng-if="commande.status ==1">
+                        En cours de livraison
+                    </div>
+                </div>
+                <div class="row" ng-if="commande.status ==2">
+                    <div class="col"></div>
+                    <div class="col col-50 text-center">
+                        <a  ng-click="signaler_erreur($index)" class="button  button-assertive button_ajout_panier">
+                            Signaler une erreur</a>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="card">
+            <div class="item item-text-wrap">
+                This is a basic Card which contains an item that has wrapping text.
+            </div>
+        </div>-->
     </ion-content>
 </ion-view>

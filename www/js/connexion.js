@@ -1,4 +1,4 @@
-App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage) {
+App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -9,12 +9,13 @@ App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$a
 $scope.error = "";
     // Form data for the login modal
     $scope.loginData = {};
-    
+    $rootScope.userData = {};
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
         $ionicLoading.show({
             templateUrl : 'templates/loading.html'
         });
+
         $auth.login($scope.loginData).then(function (response) {
             $ionicLoading.hide();
             if(response.data.success==true){
@@ -22,6 +23,8 @@ $scope.error = "";
                 * que l'intercepteur ne fonctionne pas normalement*/
                 $sessionStorage.token = response.data.token;
                 $sessionStorage.data = response.data;
+                $rootScope.userData = response.data.client;
+                console.log("voici les donnees du user",$rootScope.userData)
                 console.log($sessionStorage.data);
                 $state.go('app.accueil');
             }else{

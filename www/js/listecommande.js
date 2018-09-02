@@ -26,6 +26,7 @@ $scope.signaler_erreur = function (index) {
     //alert(index)
     $scope.data = {};
     var Popup_erreur = $ionicPopup.show({
+        cssClass: 'popup_commande',
         template: '<textarea rows="5" type="text" ng-model="data.message"></textarea>',
         title: 'Signaler une erreur',
         scope: $scope,

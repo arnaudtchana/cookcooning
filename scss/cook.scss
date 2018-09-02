@@ -18,8 +18,8 @@
 }
 .compte_commande{
   position: absolute;
-  top:6px;
-  left: -7px;
+  top:0px;
+  left: 32px;
 }
 
 /*on gere le css des popup a ce niveau*/
@@ -94,4 +94,50 @@ p .button:after{
   text-align: center;
   font-size: 12px;
   padding: 2px;
+}
+.reduction{
+  color: white;
+  font-family: inherit;
+  background-color: #f68b1e;
+  //border-radius: 50%;
+  min-width: 15px;
+  min-height: 15px;
+  line-height: 15px;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+}
+
+.ancien_prix{
+  text-decoration: line-through;
+  font-size: 11px;
+}
+.affichage_liste_commande{
+  text-align: right;
+  padding: 0px;
+}
+.affichage_liste_commande_gauche{
+  text-align: left;
+  padding: 0px;
+}
+.button_signal_erreur{
+  min-height: 26px;
+  font-size: 12px;
+  line-height: 26px;
+  border-radius: 10px;
+}
+.affichage_status_commande{
+  text-align: right;
+  color: green;
+}
+
+.couleur_app{
+  color: #ff6600;
+}
+.loading{
+  background-color: #ff6600 !important;
+}
+.spinner.light svg {
+  stroke: #fff !important;
+  fill: #fff !important;
 }

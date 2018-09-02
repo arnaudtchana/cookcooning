@@ -4,10 +4,22 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
+    $scope.$on('$ionicView.enter', function(e) {
+        /*on recupere la liste des profile de l'utilisateur connecte au niveau du storage*/
+        var ListeProfile = Restangular.one('profile');
+        $ionicLoading.show({
+            templateUrl : 'templates/loading.html'
+        });
+        ListeProfile.get().then(function (response) {
+            $ionicLoading.hide();
+            $scope.liste_profile = response.profiles;
+        },function (error) {
+            $ionicLoading.hide();
+            console.log(error)
+        })
+    });
     /*on recupere la liste des profile de l'utilisateur connecte au niveau du storage*/
-    var ListeProfile = Restangular.one('profile');
+    /*var ListeProfile = Restangular.one('profile');
     $ionicLoading.show({
         templateUrl : 'templates/loading.html'
     });
@@ -17,7 +29,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
     },function (error) {
         $ionicLoading.hide();
         console.log(error)
-    })
+    })*/
     $scope.info_profil = {};
     $scope.text = false;
     $scope.lance_form = false;/*permet de savoir s'il faut lancer la requete denregistrement ou pas lorsque le popup se ferme*/
@@ -75,9 +87,17 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                     AjoutProfile.post().then(function (response) {
                         $ionicLoading.hide();
                     if(response.success){
-                        alert(response.message)
+                        var PopupProrileSave = $ionicPopup.alert({
+                            cssClass: 'popup_commande',
+                            title: 'Profil enregistré',
+                            template: response.message
+                        });
+                        //alert(response.message)
                         /*ici on va faire un reload et recharger les profiles sur la page*/
-                        location.reload();
+                        PopupProrileSave.then(function () {
+                            /*il clic sur ok et on reload*/
+                            location.reload();
+                        })
                         //$scope.liste_profile.push(response.profile);
                     }else{
                         alert(response.message)

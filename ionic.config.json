@@ -14,8 +14,9 @@
   "app_id": "",
   "proxies": [
     {
-      "path": "/api/test",
-      "proxyUrl": "http://yourdomain.com/sante_bon/public/api/enregistrement"
+      "path": "/api/",
+      "proxyUrl": "https://at-deg.inimov-cloud.com",
+      "rejectUnauthorized" : false
     }
   ]
 }

@@ -148,6 +148,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
     // decrements the qty
     $scope.dec=function(c_id){
+        /*on verifie la qtite avant de decrementer et dans le cas ou on passe a 0 le nombre de plat doit etre exact*/
+        console.log("voici celui kon decremente",$scope.cart[c_id]);
         $scope.cart.decrement(c_id);
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
@@ -219,7 +221,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         var Popup_commande = $ionicPopup.show({
             cssClass: 'popup_commande',
             templateUrl: 'templates/popup_commande.html',
-            title: 'Confirmer les informations',
+            title: 'Finaliser votre commande',
             scope: $scope,
             buttons: [
                 { text: 'Annuler' },
@@ -327,19 +329,23 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                     if (response.success == true){
                         /*on affiche le message de success a l'utilisateur*/
                         var popupResult = $ionicPopup.alert({
+                            cssClass: 'popup_commande',
                             title: 'Information',
                             template: response.message
                         });
                         /*on remet toutes les variables a jour apres une comamnde*/
-                        sharedCartService = {};
-                        sharedCartService.cart=[]; 		// array of product items
-                        sharedCartService.total_amount=0; // total cart amount
-                        sharedCartService.total_qty=0;
-                        $rootScope.nombre_plat = 0;
-                        //$scope.taille_panier = 0;
-                        $scope.cart = [];
-                        console.log(sharedCartService);
-                        $state.go('app.accueil');
+                        popupResult.then(function () {
+                            sharedCartService = {};
+                            sharedCartService.cart=[]; 		// array of product items
+                            sharedCartService.total_amount=0; // total cart amount
+                            sharedCartService.total_qty=0;
+                            $rootScope.nombre_plat = 0;
+                            //$scope.taille_panier = 0;
+                            $scope.cart = [];
+                            console.log(sharedCartService);
+                            $state.go('app.accueil');
+                        })
+
                         /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
 
                     }else{

@@ -8,6 +8,7 @@
     "satellizer": "^0.15.5",
     "ngstorage": "^0.3.11",
     "restangular": "^1.6.1",
-    "ionic-toast": "^0.4.1"
+    "ionic-toast": "^0.4.1",
+    "ngCordova": "^0.1.27-alpha"
   }
 }

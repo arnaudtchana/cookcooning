@@ -6,7 +6,7 @@
 <p style="text-align: center">{{produit_courant.description}}</p>
     <div>
         <p style="text-align: center;">{{produit_courant.qty}} x {{produit_courant.price}} € =
-            <strong>{{ produit_courant.qty *  produit_courant.price  }} €</strong>
+            <strong>{{ produit_courant.qty *  produit_courant.price  | number:2}} €</strong>
         </p>
     </div>
 

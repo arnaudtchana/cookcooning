@@ -7,7 +7,7 @@
 
                 <img  ng-src="https://at-deg.inimov-cloud.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" >
 
-                <p style="position:absolute;right:15px;top:50px;">
+                <p style="position:absolute;right:14px;top:65px;">
                     <a  ng-click="addToCart(item.id,item.image,item.description,item.price)" class="button  button-positive button_ajout_panier">
                     Ajouter au panier</a>
                 </p>
@@ -15,7 +15,10 @@
                     <h2  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" > {{item.description}} </h2>
 
                     <!--prix du produit-->
-                    <p   ng-click="showProductInfo(item.id,item.description,item.image,item.price)">Prix: {{item.price}} €</p>
+                    <h3 ng-click="showProductInfo(item.id,item.description,item.image,item.price)">{{item.price}} €</h3>
+                    <p ng-if="item.refund !==0"><span class="ancien_prix">{{item.price*(1+item.refund/100) | number:2}}</span> € <br>
+                        <span class="reduction"> -{{item.refund}} %</span>
+                    </p>
 
             </ion-item>
 

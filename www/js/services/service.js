@@ -13,6 +13,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
 
             //Ionic popup
             var alertPopup = $ionicPopup.alert({
+                cssClass: 'popup_commande',
                 title: 'Produit déjà ajouté',
                 template: 'Modifier la quantité en cliquant sur l\'image'
             });
@@ -41,6 +42,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
     // used to delete a product
     cartObj.cart.drop=function(id){
         var temp=cartObj.cart[cartObj.cart.find(id)]; //used to find the price and qty of the object to be deleted
+        console.log("nmero a supprimer",cartObj.cart.find(id))
         cartObj.total_qty-= parseInt(temp.cart_item_qty);  // decrements the product qty
         cartObj.total_amount-=( parseInt(temp.cart_item_qty) * temp.cart_item_price ); //decrements the product amt
         cartObj.cart.splice(cartObj.cart.find(id), 1); //used to remove product from the cart array.

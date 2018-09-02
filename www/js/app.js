@@ -5,8 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
-var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast'])
-
+//var ApiUrl = "http://www.africare.io/api/";
+var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
+//App.options('*', cors())
 .run(function($ionicPlatform,$localStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,8 +31,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
 .config(function($stateProvider, $urlRouterProvider,$authProvider,$httpProvider,RestangularProvider) {
     // Satellizer configuration that specifies which API
     // route the JWT should be retrieved from
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $authProvider.loginUrl = ApiUrl+'auth';
+    //$authProvider.loginUrl = ApiUrl+'authenticate';
     $authProvider.signupUrl = ApiUrl+'register';
     $httpProvider.interceptors.push('InterceptorFactory');
     var newBaseUrl = ApiUrl;
@@ -174,8 +178,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                 request : function(config) {
                     console.log("je suis ici dans la requete de sortie");
                     config.headers.Authorization= "bearer "+$sessionStorage.token;
+                    /*config.headers=["Access-Control-Allow-Origin", '*'];
+                    config.headers=['Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE'];
+                    config.headers=['Access-Control-Allow-Headers', 'Content-Type,Accept'];*/
                     config.url = config.url+"?token="+$sessionStorage.token;
-                    console.log($sessionStorage.token);
+                   // console.log(config);
                     /*en envoi la requette*/
                     return config;
                 },

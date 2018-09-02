@@ -4,13 +4,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
+    var cart = sharedCartService.cart;
+    var myPopup;
     $scope.$on('$ionicView.enter', function(e) {
-        var cart = sharedCartService.cart;
+        console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
+         cart = sharedCartService.cart;
+        $scope.cart = cart;
         $scope.articles = $sessionStorage.data.products;/*apres une nouvelle commande ca doit passer a nouveau*/
         $rootScope.nombre_plat=sharedCartService.total_qty;
     });
     //global variable shared between different pages.
-    var cart = sharedCartService.cart;
+
     //$localStorage.nombre_plat = 0;
     //$rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
@@ -25,7 +29,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         /*on affiche le popup avec les informations du produit ici*/
         /*prendre egalement la qtite et prix du produit courant et je pense qu'il faut se rassurer auprealable que le produit existe
         * dans le panier,dans le cas contraire, ouvrir le popup en mentionnant kil est a o*/
-        $scope.produit_courant = cart[cart.find(id)];
+        //$scope.produit_courant = cart[cart.find(id)];
+        $scope.produit_courant = sharedCartService.cart[cart.find(id)];
+        console.log("valeur apres la supresssion",$scope.produit_courant);
         if($scope.produit_courant == undefined){
             /*dans le cas ou le produit n'existe pas dans le panier, je crree un popup personnaliser qui gere les qtite
             * et qui ajoute directement au panier a la fin*/
@@ -94,6 +100,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
         $rootScope.nombre_plat=sharedCartService.total_qty;
+        myPopup.close();
 
     };
 
@@ -106,9 +113,23 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
 
     // decrements the qty
     $scope.dec=function(c_id){
-        $scope.cart.decrement(c_id);
-        $scope.total_qty=sharedCartService.total_qty;
-        $scope.total_amount=sharedCartService.total_amount;
+        /*avant de decrementer on doit connaitre la qtite*/
+        console.log("voici la qtite",$scope.produit_courant);
+        if($scope.produit_courant.cart_item_qty == 1){
+            /*on appelle la fonction pour retirer le produit du panier
+            * et on ferme le popup*/
+            //$scope.produit_courant.qty=1;
+            /*si la qtite est donc a 1 et kon clic sur moins on appelle la function drop*/
+            $scope.cart.drop(c_id);
+            $scope.total_qty=sharedCartService.total_qty;
+            $scope.total_amount=sharedCartService.total_amount;
+            myPopup.close()
+        }else{
+            $scope.cart.decrement(c_id);
+            $scope.total_qty=sharedCartService.total_qty;
+            $scope.total_amount=sharedCartService.total_amount;
+        }
+            $rootScope.nombre_plat = sharedCartService.total_qty;
     };
 
     //add to cart function

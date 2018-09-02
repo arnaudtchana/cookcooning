@@ -3,7 +3,7 @@
     <ion-content ng-controller="PanierCtrl">
         <div ng-if="$root.nombre_plat!=0" class="padding padding_top_null">
             <label>
-                <button class="button button-block button-positive" ng-click="commander()">Lancer la commande ({{total_amount | number:3}} €)</button>
+                <button class="button button-block button-positive" ng-click="commander()">Lancer la commande ({{total_amount | number:2}} €)</button>
             </label>
         </div>
         <h5 style="text-align: center" ng-if="taille_panier==0">{{panier_vide}}</h5>
@@ -13,7 +13,7 @@
             <p style="text-align: center">{{item.cart_item_description}}</p>
             <div>
                 <p style="text-align: center">{{item.cart_item_qty}} x {{item.cart_item_price}} € =
-                    <strong>{{ item.cart_item_qty *  item.cart_item_price  }} €</strong>
+                    <strong>{{ item.cart_item_qty *  item.cart_item_price  | number:2}} €</strong>
                 </p>
             </div>
 
