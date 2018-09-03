@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-stable">
+    <ion-nav-bar class="bar-positive">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -9,7 +9,7 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
-        <a ui-sref="app.panier" class="button button-positive button-clear  icon ion-android-cart"></a>
+        <a ui-sref="app.panier" class="button button-clear  icon ion-android-cart"></a>
         <div class="compte_commande">
           <span class="nombre_commande" ng-if="$root.nombre_plat!=0" style="font-family: inherit;">{{$root.nombre_plat}}</span>
         </div>
@@ -20,8 +20,8 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h5 style="margin-top: 0px;" class="couleur_app">{{$root.userData.name}}<br>
+    <ion-header-bar class="bar-positive">
+      <h5 style="margin-top: 0px;color: white">{{$root.userData.name}}<br>
         <span>{{$root.userData.email}}</span>
       </h5>
       <!--<p>arnaudtchana1994@gmail.com</p>-->
@@ -40,9 +40,9 @@
         <!--<ion-item menu-close href="#/app/new_profile">
           Ajouter un profile
         </ion-item>-->
-        <ion-item menu-close href="#/app/update_account">
+        <!--<ion-item menu-close href="#/app/update_account">
           Mise à jour du compte
-        </ion-item>
+        </ion-item>-->
         <!--pour gerer la deconnexion on va mettre un ng-click avec une fonction pour gerer la deconnexion-->
         <ion-item menu-close ng-click="logout()">
           Déconnexion
