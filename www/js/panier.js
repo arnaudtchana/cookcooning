@@ -23,7 +23,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     //$scope.taille_panier = cart.length;
     $rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
-    $scope.articles = $sessionStorage.data.products;
+    $scope.articles = $sessionStorage.products;
     console.log($scope.articles)
 
 
@@ -224,7 +224,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             profile_id :"",
             moment : ""
         };
-        $scope.profile_user = $sessionStorage.data.client.profiles;
+        /*on recupere les profiles*/
+        $scope.profile_user = $sessionStorage.profiles;
         var Popup_commande = $ionicPopup.show({
             cssClass: 'popup_commande',
             templateUrl: 'templates/popup_commande.html',

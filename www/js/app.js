@@ -8,7 +8,7 @@ var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
 //var ApiUrl = "http://www.africare.io/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
 //App.options('*', cors())
-.run(function($ionicPlatform,$localStorage) {
+.run(function($ionicPlatform,$localStorage,$state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -24,6 +24,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       // Set the statusbar to use the default style, tweak this to
       // remove the status bar on iOS or change it to use white instead of dark colors.
       StatusBar.styleDefault();
+    }
+    if($localStorage.token){
+        console.log("on regarde dans le run",$localStorage.token)
+        $localStorage.new_connection = false;
+        $state.go('app.accueil')
     }
   });
 })
@@ -174,11 +179,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                 //lorsquon envoi une requette on met le token dans lentete
                 request : function(config) {
                     console.log("je suis ici dans la requete de sortie");
-                    config.headers.Authorization= "bearer "+$sessionStorage.token;
+                    config.headers.Authorization= "bearer "+$localStorage.token;
                     /*config.headers=["Access-Control-Allow-Origin", '*'];
                     config.headers=['Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE'];
                     config.headers=['Access-Control-Allow-Headers', 'Content-Type,Accept'];*/
-                    config.url = config.url+"?token="+$sessionStorage.token;
+                    config.url = config.url+"?token="+$localStorage.token;
                    // console.log(config);
                     /*en envoi la requette*/
                     return config;

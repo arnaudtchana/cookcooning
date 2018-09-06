@@ -1,6 +1,6 @@
 App
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,$auth,$sessionStorage,$ionicLoading,Restangular,$state) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$auth,$sessionStorage,$ionicLoading,Restangular,$state,$localStorage) {
 
  /*ici on gere la deconnxion*/
   $scope.logout = function () {
@@ -13,6 +13,7 @@ App
           $auth.logout().then(function (response) {
               $ionicLoading.hide();
               delete $sessionStorage.token;
+              $localStorage.token = undefined;
               $state.go('connexion');
           },function (error) {
               $ionicLoading.hide();
@@ -20,6 +21,7 @@ App
       },function (error) {
           $ionicLoading.hide();
           delete $sessionStorage.token;
+           $localStorage.token = undefined;
           $state.go('connexion');
       })
 

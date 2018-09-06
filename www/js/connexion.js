@@ -1,4 +1,4 @@
-App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope) {
+App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope,$localStorage) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -21,9 +21,14 @@ $scope.error = "";
             if(response.data.success==true){
                 /*on enregistre le token et on passe a la page suivante il faudra egalement verifier
                 * que l'intercepteur ne fonctionne pas normalement*/
-                $sessionStorage.token = response.data.token;
+                $localStorage.token = response.data.token;
+                $localStorage.new_connection = true;
+                //$localStorage.products = response.data.products;
+                console.log($localStorage)
+                $sessionStorage.profiles = response.data.client.profiles;
                 $sessionStorage.data = response.data;
                 $rootScope.userData = response.data.client;
+                $localStorage.userData = response.data.client
                 console.log("voici les donnees du user",$rootScope.userData)
                 console.log($sessionStorage.data);
                 $state.go('app.accueil');

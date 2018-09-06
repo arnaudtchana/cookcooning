@@ -1,4 +1,4 @@
-App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading) {
+App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading,$localStorage,Restangular) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -9,16 +9,50 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     var myPopup;
     $scope.$on('$ionicView.enter', function(e) {
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
-        $scope.articles = $sessionStorage.data.products;/*apres une nouvelle commande ca doit passer a nouveau*/
-        $rootScope.nombre_plat=sharedCartService.total_qty;
+        if($localStorage.new_connection){
+            $scope.articles = $sessionStorage.products;/*apres une nouvelle commande ca doit passer a nouveau*/
+            $rootScope.nombre_plat=sharedCartService.total_qty;
+        }else{
+            /*on recharge la page pour recuperer les donnees des articles a jour sur le serveur*/
+            $localStorage.new_connection = true;
+            $rootScope.nombre_plat = 0;
+            /*il faut faire une mise a jour  de la liste des produits qui nexiste plus*/
+            /*on va faire la requete plus bas et on va laisser le reload ici*/
+            //location.reload();
+            /*on recupere les profiles de lutilisateur ici*/
+            $rootScope.userData = $localStorage.userData;
+            var Profile = Restangular.one('profile');
+            Profile.get().then(function (response) {
+                $sessionStorage.profiles = response.profiles;
+                console.log("profiles recuperer apres connexion automatique",$sessionStorage.profiles)
+            },function (error) {
+                
+            })
+        }
+
     });
     //global variable shared between different pages.
 
     //$localStorage.nombre_plat = 0;
     //$rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
-    $scope.articles = $sessionStorage.data.products;
-    console.log($scope.articles)
+    /*ici on va fire une requette qui recupere la liste des produits
+    * apres la requete on va laisser les donnees dans le sessionStorage*/
+    var Produit = Restangular.one('product');
+    $ionicLoading.show({
+        templateUrl : 'templates/loading.html'
+    });
+    Produit.get().then(function (response) {
+        $ionicLoading.hide();
+        $scope.articles = response.products;
+        $sessionStorage.products = response.products;
+        console.log($scope.articles)
+        //console.log($sessionStorage.data.products)
+    },function (error) {
+        $ionicLoading.hide();
+        console.log(error)
+    })
+
 
 
     //presente les informations du produit sur un popup
