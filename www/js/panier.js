@@ -1,4 +1,4 @@
-App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,Restangular,$ionicLoading) {
+App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,Restangular,$ionicLoading,$localStorage) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -308,7 +308,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                     heure_livraison = "undefined"
                 }
                 var command = {
-                    "client_id": $sessionStorage.data.client.id,
+                    "client_id": $localStorage.userData.id,
                     "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
                     "moment": $scope.info_commande.moment,
                     "delivery_date": heure_livraison,
