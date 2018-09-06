@@ -7,13 +7,14 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     $scope.$on('$ionicView.enter', function(e) {
         $scope.text = false;/*permet de gerer le montant de la commande par rapport au profil*/
         $scope.heure = true;/*permet de gerer le champs de l'heure*/
-        var cart = sharedCartService.cart;
+        /*on va commenter cette variable*/
+        //var cart = sharedCartService.cart;
         $scope.total_amount = sharedCartService.total_amount;
-        $scope.taille_panier = cart.length;
-        if(cart.length == 0){
+        $scope.taille_panier = sharedCartService.cart.length;
+        if(sharedCartService.cart.length == 0){
             $scope.panier_vide = "Votre panier est vide"
         }else{
-            $scope.cart = cart;
+            $scope.cart = sharedCartService.cart;
         }
     });
     //global variable shared between different pages.
@@ -33,7 +34,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         /*on affiche le popup avec les informations du produit ici*/
         /*prendre egalement la qtite et prix du produit courant et je pense qu'il faut se rassurer auprealable que le produit existe
         * dans le panier,dans le cas contraire, ouvrir le popup en mentionnant kil est a o*/
-        $scope.produit_courant = cart[cart.find(id)];
+        $scope.produit_courant = sharedCartService.cart[sharedCartService.cart.find(id)];
         if($scope.produit_courant == undefined){
             /*dans le cas ou le produit n'existe pas dans le panier, je crree un popup personnaliser qui gere les qtite
             * et qui ajoute directement au panier a la fin*/
@@ -58,7 +59,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                         text: '<b>Ajouter</b>',
                         type: 'button-positive',
                         onTap:function(){
-                            cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
+                            sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
                             /*on essaaye de modifier la variable du rootscope pour la qtite*/
                             $rootScope.nombre_plat=sharedCartService.total_qty;
                         }
@@ -67,8 +68,8 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             });
         }else{
             /*on affiche le bon popup*/
-            console.log("on teste la valeur de retour",cart[cart.find(id)])
-            $scope.cart = cart;
+            console.log("on teste la valeur de retour",sharedCartService.cart[sharedCartService.cart.find(id)])
+            $scope.cart = sharedCartService.cart;
             console.log($scope.produit_courant)
             /*$scope.produit_courant.id = id;
             $scope.produit_courant.description = desc;
@@ -117,7 +118,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                     text: '<b>Oui</b>',
                     type: 'button-positive',
                     onTap:function(){
-                        $scope.cart.drop(c_id);	 // deletes the product from cart.
+                        sharedCartService.cart.drop(c_id);	 // deletes the product from cart.
 
                         // dynamically update the current $scope data.
                         $scope.total_qty=sharedCartService.total_qty;
@@ -139,7 +140,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
     // increments the qty
     $scope.inc=function(c_id){
-        $scope.cart.increment(c_id);
+        sharedCartService.cart.increment(c_id);
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
         /*on met a jour le nombre de plat*/
@@ -147,20 +148,26 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     };
 
     // decrements the qty
-    $scope.dec=function(c_id){
+    $scope.dec=function(item){
+        /*ici on nevoi plus seulement lid mais litem total pour eviter des reductions lorsque la qtite est a 1
+        * cela cree des bug*/
         /*on verifie la qtite avant de decrementer et dans le cas ou on passe a 0 le nombre de plat doit etre exact*/
-        console.log("voici celui kon decremente",$scope.cart[c_id]);
-        $scope.cart.decrement(c_id);
-        $scope.total_qty=sharedCartService.total_qty;
-        $scope.total_amount=sharedCartService.total_amount;
-        $rootScope.nombre_plat-=1;
+        console.log("voici litem courrant",item);
+        //console.log("voici celui kon decremente",sharedCartService.cart[item.cart_item_id]);
+        if(item.cart_item_qty !==1){
+            sharedCartService.cart.decrement(item.cart_item_id);
+            $scope.total_qty=sharedCartService.total_qty;
+            $scope.total_amount=sharedCartService.total_amount;
+            $rootScope.nombre_plat-=1;
+        }
+
 
     };
 
     //add to cart function
     $scope.addToCart=function(id,image,description,price){
         // function cart.add is declared in services.js
-        cart.add(id,image,description,price,1);
+        sharedCartService.cart.add(id,image,description,price,1);
         $rootScope.nombre_plat=sharedCartService.total_qty;
     };
 
@@ -335,15 +342,19 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                         });
                         /*on remet toutes les variables a jour apres une comamnde*/
                         popupResult.then(function () {
-                            sharedCartService = {};
+                            /*sharedCartService = {};
                             sharedCartService.cart=[]; 		// array of product items
                             sharedCartService.total_amount=0; // total cart amount
-                            sharedCartService.total_qty=0;
-                            $rootScope.nombre_plat = 0;
-                            //$scope.taille_panier = 0;
-                            $scope.cart = [];
-                            console.log(sharedCartService);
-                            $state.go('app.accueil');
+                            sharedCartService.total_qty=0;*/
+                            sharedCartService.cart.vider();
+                                /*lorskil fini de vider on passe ici*/
+                                $rootScope.nombre_plat = 0;
+                                //$rootScope.commander = true;
+                                //$scope.taille_panier = 0;
+                                $scope.cart = [];
+                                console.log(sharedCartService);
+                                $state.go('app.accueil');
+
                         })
 
                         /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/

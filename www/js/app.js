@@ -33,7 +33,6 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
     // route the JWT should be retrieved from
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $authProvider.loginUrl = ApiUrl+'auth';
-    //$authProvider.loginUrl = ApiUrl+'authenticate';
     $authProvider.signupUrl = ApiUrl+'register';
     $httpProvider.interceptors.push('InterceptorFactory');
     var newBaseUrl = ApiUrl;

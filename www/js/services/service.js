@@ -78,5 +78,13 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
 
     };
 
+    /*Cette fonction permet de vider les variables*/
+    cartObj.cart.vider = function () {
+        /*on fait une boucle et on vide tout*/
+        cartObj.cart.length = 0;
+        cartObj.total_amount =0;
+        cartObj.total_qty = 0;
+    }
+
     return cartObj;
 }]);

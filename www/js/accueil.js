@@ -1,16 +1,14 @@
-App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope) {
+App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     /*on va d'abord commenter cette variable cart*/
-    var cart = sharedCartService.cart;
+    //var cart = sharedCartService.cart;
     var myPopup;
     $scope.$on('$ionicView.enter', function(e) {
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
-         cart = sharedCartService.cart;
-        $scope.cart = cart;
         $scope.articles = $sessionStorage.data.products;/*apres une nouvelle commande ca doit passer a nouveau*/
         $rootScope.nombre_plat=sharedCartService.total_qty;
     });
@@ -31,7 +29,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         /*prendre egalement la qtite et prix du produit courant et je pense qu'il faut se rassurer auprealable que le produit existe
         * dans le panier,dans le cas contraire, ouvrir le popup en mentionnant kil est a o*/
         //$scope.produit_courant = cart[cart.find(id)];
-        $scope.produit_courant = sharedCartService.cart[cart.find(id)];
+        //$scope.produit_courant = sharedCartService.cart[cart.find(id)];
+        $scope.produit_courant = sharedCartService.cart[sharedCartService.cart.find(id)];
         console.log("valeur apres la supresssion",$scope.produit_courant);
         if($scope.produit_courant == undefined){
             /*dans le cas ou le produit n'existe pas dans le panier, je crree un popup personnaliser qui gere les qtite
@@ -57,7 +56,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
                         text: '<b>Ajouter</b>',
                         type: 'button-positive',
                         onTap:function(){
-                            cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
+                            /*on va remplacer cart ici par sa valeur sharedCartService*/
+                            sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
                         /*on essaaye de modifier la variable du rootscope pour la qtite*/
                             $rootScope.nombre_plat=sharedCartService.total_qty;
                         }
@@ -66,8 +66,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
             });
         }else{
             /*on affiche le bon popup*/
-            console.log("on teste la valeur de retour",cart[cart.find(id)])
-            $scope.cart = cart;
+            //console.log("on teste la valeur de retour",cart[cart.find(id)])
+            $scope.cart = sharedCartService.cart;
             console.log($scope.produit_courant)
             /*$scope.produit_courant.id = id;
             $scope.produit_courant.description = desc;
@@ -95,7 +95,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
 
     //remove function
     $scope.removeFromCart=function(c_id){
-        $scope.cart.drop(c_id);	 // deletes the product from cart.
+        /*on va retirer directement le produit du service*/
+       // $scope.cart.drop(c_id);	 // deletes the product from cart.
+        sharedCartService.cart.drop(c_id);	 // deletes the product from cart.
 
         // dynamically update the current $scope data.
         $scope.total_qty=sharedCartService.total_qty;
@@ -107,7 +109,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
 
     // increments the qty
     $scope.inc=function(c_id){
-        $scope.cart.increment(c_id);
+        /*je fais lincrement sirectement sur la variable se trouvant dans le service*/
+        //$scope.cart.increment(c_id);
+        sharedCartService.cart.increment(c_id);
         $scope.total_qty=sharedCartService.total_qty;
         $scope.total_amount=sharedCartService.total_amount;
     };
@@ -121,12 +125,16 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
             * et on ferme le popup*/
             //$scope.produit_courant.qty=1;
             /*si la qtite est donc a 1 et kon clic sur moins on appelle la function drop*/
-            $scope.cart.drop(c_id);
+            /*on le fait directement sur la variable du service */
+            //$scope.cart.drop(c_id);
+            sharedCartService.cart.drop(c_id);
             $scope.total_qty=sharedCartService.total_qty;
             $scope.total_amount=sharedCartService.total_amount;
             myPopup.close()
         }else{
-            $scope.cart.decrement(c_id);
+            /*ici aussi on le fait directemnt sur la variable se trouvant dans le service*/
+            //$scope.cart.decrement(c_id);
+            sharedCartService.cart.decrement(c_id);
             $scope.total_qty=sharedCartService.total_qty;
             $scope.total_amount=sharedCartService.total_amount;
         }
@@ -136,7 +144,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     //add to cart function
     $scope.addToCart=function(id,image,description,price){
         // function cart.add is declared in services.js
-        cart.add(id,image,description,price,1);
+        /*on le fait directement sur la variable du service*/
+        //cart.add(id,image,description,price,1);
+        sharedCartService.cart.add(id,image,description,price,1);
         $rootScope.nombre_plat=sharedCartService.total_qty;
     };
 

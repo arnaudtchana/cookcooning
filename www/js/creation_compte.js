@@ -75,9 +75,9 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
         console.log("partie user",$sessionStorage.user)
         $auth.signup({user:JSON.stringify($sessionStorage.user),profiles:JSON.stringify(profiles)}).then(function (response) {
             $ionicLoading.hide();
-            if(response.success == true){
+            if(response.data.success == true){
                 /*on met un toast et on passe a la page de connexion*/
-                ionicToast.show(response.message, 'center', true, 2500);
+                ionicToast.show(response.data.message, 'center', true, 2500);
                 $state.go("connexion");
             }
             console.log(response)

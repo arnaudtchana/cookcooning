@@ -20,7 +20,7 @@
             <!--the bottom buttons for cart items-->
             <div class="button-bar">
                 <button ng-click="removeFromCart(item.cart_item_id)" class="button button-assertive button-block button-small icon ion-android-delete" ></button>
-                <button class="button button-stable button-clear button-block  icon ion-minus" ng-click="dec(item.cart_item_id)" ></button>
+                <button class="button button-stable button-clear button-block  icon ion-minus" ng-click="dec(item)" ></button>
                 <button class="button button-stable button-clear button-block button-small">{{item.cart_item_qty}}</button>
                 <button class="button button-stable button-clear button-block button-small icon ion-plus" ng-click="inc(item.cart_item_id)"></button>
 
