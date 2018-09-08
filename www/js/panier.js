@@ -224,7 +224,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             profile_id :"",
             moment : ""
         };
-        /*on recupere les profiles*/
+        /*on recupere les profiles de lutilisateur ici on doit faire une requete autre requete a ce niveau*/
         $scope.profile_user = $sessionStorage.profiles;
         var Popup_commande = $ionicPopup.show({
             cssClass: 'popup_commande',

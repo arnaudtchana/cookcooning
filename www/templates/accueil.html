@@ -5,14 +5,16 @@
 
             <ion-item class="item-thumbnail-left" >
 
-                <img  ng-src="https://at-deg.inimov-cloud.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" >
-
+                <img  ng-src="https://at-deg.inimov-cloud.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" >
+                <p ng-if="item.available_quantity < 80" style="position:absolute;right:20px;top:30px;">
+                    {{item.available_quantity}} plats
+                </p>
                 <p style="position:absolute;right:14px;top:65px;">
-                    <a  ng-click="addToCart(item.id,item.image,item.description,item.price)" class="button  button-positive button_ajout_panier">
+                    <a  ng-click="addToCart(item.id,item.image,item.description,item.price,item.name)" class="button  button-positive button_ajout_panier">
                     Ajouter au panier</a>
                 </p>
 
-                    <h2  ng-click="showProductInfo(item.id,item.description,item.image,item.price)" > {{item.description}} </h2>
+                    <h2  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" > {{item.name}} </h2>
 
                     <!--prix du produit-->
                     <h3 ng-click="showProductInfo(item.id,item.description,item.image,item.price)">{{item.price}} €</h3>

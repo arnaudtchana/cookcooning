@@ -1,0 +1,12 @@
+<div ng-repeat="item in cart">
+  <ion-item>
+    <img ng-src="{{item.product.image}}" width="100%" height="auto" style="width: 100%; height: auto;">
+    <p style="text-align: center">{{item.product.name}}</p>
+    <div>
+      <p style="text-align: center">{{item.quantity}} x {{item.price}} € =
+        <strong>{{ item.quantity *  item.price  | number:2}} €</strong>
+      </p>
+    </div>
+
+  </ion-item>
+</div>

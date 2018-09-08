@@ -59,6 +59,8 @@ $scope.signaler_erreur = function (index) {
             });
             Command_error.post().then(function (response) {
                 $ionicLoading.hide();
+                /*on essaye de caher directement le bouton derreur a ce niveau*/
+                $scope.commande_livrer[index].command_error = response.command.command_error;
                 alert(response.message)
             },function (error) {
                 $ionicLoading.hide();
@@ -69,6 +71,22 @@ $scope.signaler_erreur = function (index) {
     });
 }
 
-
+    /*liste des details sur une commande donnee*/
+    $scope.detail_commande = function(index){
+        /*on recupere lindex dune commande et on renvoie la liste des details sur la commande en question*/
+        $scope.cart = $scope.commande_livrer[index].command_lines;
+        console.log($scope.cart);
+        var Detail = $ionicPopup.show({
+            cssClass: 'popup_produit_detail',
+            templateUrl: 'templates/popup-detail-commande.html',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>Ok</b>',
+                    type: 'button-positive',
+                }
+            ]
+        });
+    }
 
 })

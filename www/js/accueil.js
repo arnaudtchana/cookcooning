@@ -56,7 +56,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
 
 
     //presente les informations du produit sur un popup
-    $scope.showProductInfo=function (id,desc,img,price) {
+    $scope.showProductInfo=function (id,desc,img,price,name) {
         /*on va essayer de faire le add au panier directement ici et lui permettre de gerer les qtites dans le popup directement*/
         // we use session to store details about the current product displayed in the product page
         /*on affiche le popup avec les informations du produit ici*/
@@ -91,7 +91,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
                         type: 'button-positive',
                         onTap:function(){
                             /*on va remplacer cart ici par sa valeur sharedCartService*/
-                            sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty);
+                            sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty,$scope.produit_courant.name);
                         /*on essaaye de modifier la variable du rootscope pour la qtite*/
                             $rootScope.nombre_plat=sharedCartService.total_qty;
                         }
@@ -176,11 +176,11 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     };
 
     //add to cart function
-    $scope.addToCart=function(id,image,description,price){
+    $scope.addToCart=function(id,image,description,price,name){
         // function cart.add is declared in services.js
         /*on le fait directement sur la variable du service*/
         //cart.add(id,image,description,price,1);
-        sharedCartService.cart.add(id,image,description,price,1);
+        sharedCartService.cart.add(id,image,description,price,1,name);
         $rootScope.nombre_plat=sharedCartService.total_qty;
     };
 

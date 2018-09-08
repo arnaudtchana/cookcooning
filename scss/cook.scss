@@ -141,3 +141,8 @@ p .button:after{
   stroke: #fff !important;
   fill: #fff !important;
 }
+
+/*afficher tout le texte dans la description du produit*/
+.description_produit{
+  white-space: pre-wrap;
+}

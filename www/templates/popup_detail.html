@@ -3,7 +3,8 @@
 
     <!--loads the cart item image-->
     <img ng-src="https://at-deg.inimov-cloud.com/{{produit_courant.image}}" width="100%" height="auto" style="width: 100%; height: auto;">
-<p style="text-align: center">{{produit_courant.description}}</p>
+<h3 style="text-align: center;white-space: pre-wrap;">{{produit_courant.name}}</h3>
+<p style="text-align: center;white-space: pre-wrap;">{{produit_courant.description}}</p>
     <div>
         <p style="text-align: center;">{{produit_courant.qty}} x {{produit_courant.price}} € =
             <strong>{{ produit_courant.qty *  produit_courant.price  | number:2}} €</strong>

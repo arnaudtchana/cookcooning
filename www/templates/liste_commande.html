@@ -43,6 +43,14 @@
                         En livraison
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col col-50 text-center">
+                        <a  ng-click="detail_commande($index)" class="button  button-balanced button_ajout_panier">
+                            Détails</a>
+                    </div>
+                    <div class="col"></div>
+                </div>
                 <div class="row" ng-if="commande.status ==2 && commande.command_error==null">
                     <div class="col"></div>
                     <div class="col col-50 text-center">

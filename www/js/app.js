@@ -25,11 +25,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       // remove the status bar on iOS or change it to use white instead of dark colors.
       StatusBar.styleDefault();
     }
-    if($localStorage.token){
-        console.log("on regarde dans le run",$localStorage.token)
-        $localStorage.new_connection = false;
-        $state.go('app.accueil')
-    }
+      if($localStorage.token){
+          console.log("on regarde dans le run",$localStorage.token)
+          $localStorage.new_connection = false;
+          $state.go('app.accueil')
+      }
   });
 })
 
