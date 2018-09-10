@@ -1,13 +1,24 @@
 <div ng-show="profile_valide">
     <h6>Prix commande: {{total_amount | number:3}} €</h6>
     <h6>Prix livraison: {{montant_livraison |number:2}} €</h6>
+    <h6 ng-show="refund_valide">Réduction: {{prix_refund |number:2}} €</h6>
 </div>
 <div>
 <span ng-if="text">{{message}}</span>
     <label class="item item-select">
         <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
             <option value="" selected>-- Choisir un profile --</option>
-            <option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}}</option>
+            <option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}} ({{profile.min_command_amount}} €)</option>
+        </select>
+    </label>
+
+</div>
+
+<div class="padding-top" ng-if="refund_codes.length !==0">
+    <label class="item item-select">
+        <select class="item_select_popup" name="refund_code_id" ng-change="choix_code()" ng-model="info_commande.index" style="max-width: 100%;width: 100%;direction: ltr">
+            <option value="" selected>-- Code de ristourne --</option>
+            <option value="{{$index}}" ng-if="ristoune.status == 1" ng-repeat="ristoune in refund_codes track by $index">{{ristoune.code}} ({{ristoune.price}} €)</option>
         </select>
     </label>
 

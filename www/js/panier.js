@@ -7,6 +7,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     $scope.$on('$ionicView.enter', function(e) {
         $scope.text = false;/*permet de gerer le montant de la commande par rapport au profil*/
         $scope.heure = true;/*permet de gerer le champs de l'heure*/
+        $scope.refund_valide = false;/*texte du prix de reduction*/
         /*on va commenter cette variable*/
         //var cart = sharedCartService.cart;
         $scope.total_amount = sharedCartService.total_amount;
@@ -16,6 +17,13 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         }else{
             $scope.cart = sharedCartService.cart;
         }
+        /*ici on fait une requete pour recuperer les profiles*/
+        var Profiles_code = Restangular.one('refund-code');
+        Profiles_code.get().then(function (response) {
+            console.log("voici les profiles",response)
+            $scope.profile_user = response.profiles;
+            $scope.refund_codes = response.refund_codes;
+        })
     });
     //global variable shared between different pages.
     //var cart = sharedCartService.cart;
@@ -213,6 +221,21 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
 
     }
+
+    $scope.choix_code = function(){
+        if($scope.refund_codes[$scope.info_commande.index].price > $scope.total_amount){
+            /*il y a un problem*/
+            $scope.text = true;
+            $scope.message = "Le montant de la commande doit être supérieur au prix de la réduction";
+            $scope.refund_valide = false;
+        }else{
+            /*on affiche la reduction*/
+            $scope.text = false;
+            $scope.refund_valide = true;
+            $scope.prix_refund = $scope.refund_codes[$scope.info_commande.index].price;
+        }
+    }
+
     /*fonciton qui permet de lancer la commande*/
     $scope.commander = function () {
         /*je lance la commande a ce niveau*/
@@ -220,12 +243,13 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
         $scope.lance_la_commande = false;
         $scope.text = false;
         $scope.profile_valide = false;
+        $scope.refund_valide = false;
         $scope.info_commande = {
             profile_id :"",
             moment : ""
         };
         /*on recupere les profiles de lutilisateur ici on doit faire une requete autre requete a ce niveau*/
-        $scope.profile_user = $sessionStorage.profiles;
+        //$scope.profile_user = $sessionStorage.profiles;
         var Popup_commande = $ionicPopup.show({
             cssClass: 'popup_commande',
             templateUrl: 'templates/popup_commande.html',
@@ -248,8 +272,24 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                 /*s'il a choisi on regarde la valeur avannt ou apres*/
                                 if($scope.info_commande.moment ==="0"){
                                     /*on ferme le popup et on lance la commande via une fonction*/
-                                    $scope.lance_la_commande = true;
-                                    Popup_commande.close();
+                                    /*on doit faire un test ici pour voir si la ristourne est prise en compte*/
+                                    if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
+                                        /*on lance la commande*/
+                                        $scope.lance_la_commande = true;
+                                        Popup_commande.close();
+                                    }else{
+                                        if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
+                                            /*on lance la commande ici*/
+                                            $scope.lance_la_commande = true;
+                                            Popup_commande.close();
+                                        }else{
+                                            $scope.message = "Le montant de la commande doit être supérieur à la réduction";
+                                            $scope.text = true;
+                                            e.preventDefault();
+                                        }
+                                    }
+
+
 
                                 }else{
                                     /*dans le cas contraire on se rassure kil a rempli l'heure*/
@@ -270,8 +310,24 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                             /*lheur est bien choisi*/
                                             $scope.text = false;
                                             /*on ferme le popup et on appelle la fonciton qui lance la commande*/
-                                            $scope.lance_la_commande = true;
-                                            Popup_commande.close();
+                                            if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
+                                                /*on lance la commande*/
+                                                $scope.lance_la_commande = true;
+                                                Popup_commande.close();
+                                            }else{
+                                                if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
+                                                    /*on lance la commande ici*/
+                                                    $scope.lance_la_commande = true;
+                                                    Popup_commande.close();
+                                                }else{
+                                                    $scope.message = "Le montant de la commande doit être supérieur à la réduction";
+                                                    $scope.text = true;
+                                                    e.preventDefault();
+
+                                                }
+                                            }
+                                            /*$scope.lance_la_commande = true;
+                                            Popup_commande.close();*/
                                         }else{
                                             $scope.message = "Entrez une heure valide avec un décallage d'au moins 30 minutes";
                                             $scope.text = true;
@@ -307,13 +363,22 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 }else{
                     heure_livraison = "undefined"
                 }
+                /*on regarde si le refund_code a une valeur*/
+                console.log("on vpit la va;eur de index",$scope.info_commande.index)
+                if($scope.info_commande.index == undefined){
+                    /*pas de code de ristourne prix en compte*/
+                    $scope.refund_code_id = null;
+                }else{
+                    $scope.refund_code_id = $scope.refund_codes[$scope.info_commande.index].id;
+                }
                 var command = {
                     "client_id": $localStorage.userData.id,
                     "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
                     "moment": $scope.info_commande.moment,
                     "delivery_date": heure_livraison,
                     "amount": sharedCartService.total_amount,
-                    "comment": $scope.info_commande.commentaire
+                    "comment": $scope.info_commande.commentaire,
+                    "refund_code_id": $scope.refund_code_id
                 }
                 var commandLines = [];
                 /*on fait un foreach pour mettre chaque produit commander avec la qte*/

@@ -115,10 +115,16 @@ p .button:after{
 .affichage_liste_commande{
   text-align: right;
   padding: 0px;
+  padding-right: 10px;
+  font-family: italic;
+
 }
 .affichage_liste_commande_gauche{
-  text-align: left;
   padding: 0px;
+  padding-left: 10px;
+  text-align: left;
+  font-family: italic;
+
 }
 .button_signal_erreur{
   min-height: 26px;
