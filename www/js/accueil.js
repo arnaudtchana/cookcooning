@@ -1,4 +1,4 @@
-App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading,$localStorage,Restangular) {
+App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading,$localStorage,Restangular,$ionicPlatform) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -7,6 +7,31 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     /*on va d'abord commenter cette variable cart*/
     //var cart = sharedCartService.cart;
     var myPopup;
+
+    $ionicPlatform.ready(function () {
+        console.log("je suis avant le token")
+        console.log(window.plugins.OneSignal)
+        window.plugins.OneSignal.addSubscriptionObserver(function(state) {
+            if(!state.from.subscribed && state.to.subscribed){
+                console.log(state.to.userId)
+            }
+        });
+
+        var Savetoken = Restangular.one('device/registration/save');
+        window.plugins.OneSignal.getIds(function(ids) {
+            console.log(ids.userId);
+            Savetoken.registratin_token = ids.userId;
+            Savetoken.post().then(function (response) {
+                console.log("token save")
+            })
+
+        },function (error) {
+            console.log(error)
+        });
+        console.log("je suis apres le token")
+
+    })
+
     $scope.$on('$ionicView.enter', function(e) {
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
         if($localStorage.new_connection){

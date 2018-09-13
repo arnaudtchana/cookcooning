@@ -1,4 +1,4 @@
-App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope,$localStorage) {
+App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope,$localStorage,Restangular) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -21,6 +21,17 @@ $scope.error = "";
             if(response.data.success==true){
                 /*on enregistre le token et on passe a la page suivante il faudra egalement verifier
                 * que l'intercepteur ne fonctionne pas normalement*/
+                /*on enregistre le token*/
+                var Savetoken = Restangular.one('device/registration/save');
+
+                    window.plugins.OneSignal.getIds(function(ids) {
+                        console.log("on regarde la valeur ici",ids.userId);
+                        Savetoken.registration_token = ids.userId;
+                        Savetoken.post().then(function (response) {
+                            console.log('le token est enregistrer sur le serveur')
+                            console.log("voici la reponse du serveur",response)
+                        })
+                    });
                 $localStorage.token = response.data.token;
                 $localStorage.new_connection = true;
                 //$localStorage.products = response.data.products;

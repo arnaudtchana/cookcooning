@@ -16,8 +16,10 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
     // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
     // useful especially with forms, though we would prefer giving the user a little more room
     // to interact with the app.
-    if (window.cordova && window.Keyboard) {
-      window.Keyboard.hideKeyboardAccessoryBar(true);
+
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard) {
+      window.Keyboard.hideKeyboardAccessoryBar(false);
+        cordova.plugins.Keyboard.disableScroll(true);
     }
 
     if (window.StatusBar) {
@@ -30,6 +32,52 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
           $localStorage.new_connection = false;
           $state.go('app.accueil')
       }
+
+      /*ici on gere les notifications*/
+      //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
+window.plugins.OneSignal.setSubscription(false);
+      /*pour gerer la partie consentement de lueitlisateur*/
+      //window.plugins.OneSignal.init();
+      /*window.plugins.OneSignal.iOSSettings(iosSettings)
+      window.plugins.OneSignal.setRequiresUserPrivacyConsent(true);
+      window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
+          console.log("User accepted notifications: " + accepted);
+          window.plugins.OneSignal.provideUserConsent(true);
+      });*/
+
+      /*window.plugins.OneSignal.setSubscription(true);*/
+      //OneSignal.setRequiresUserPrivacyConsent(true)
+      var notificationOpenedCallback = function(data) {
+          console.log('notificationOpenedCallback: ' + JSON.stringify(data));
+          alert("je recoit la notification")
+          if(data.notification.payload.additionalData.channel == 0){
+              /*votre commande est en cours de livraison on peut switcher sur la page commande en cours*/
+              alert("commande en cours de livraison")
+          }
+          if(data.notification.payload.additionalData.channel == 1){
+              /*on lui affiche son code de ristourne avec la valeur*/
+              alert("vous venez de recevoir un code de ristourne")
+          }
+      };
+
+
+      window.plugins.OneSignal
+          .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
+          .handleNotificationOpened(notificationOpenedCallback)
+          .endInit();
+
+      /*window.plugins.OneSignal.addSubscriptionObserver(function(state) {
+          console.log("je suis dans la fonction")
+          if(!state.from.subscribed && state.to.subscribed){
+              console.log(state.to.userId)
+          }else{
+              console.log(state.to.userId)
+          }
+      },function (error) {
+          console.log(error);
+      });*/
+      window.plugins.OneSignal.setSubscription(true);
+
   });
 })
 

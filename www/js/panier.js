@@ -16,14 +16,22 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             $scope.panier_vide = "Votre panier est vide"
         }else{
             $scope.cart = sharedCartService.cart;
+            /*ici on fait une requete pour recuperer les profiles*/
+            /*si le panier esst vice on ne fait pas la requete*/
+            $ionicLoading.show({
+                templateUrl : 'templates/loading.html'
+            });
+            var Profiles_code = Restangular.one('refund-code');
+            Profiles_code.get().then(function (response) {
+                $ionicLoading.hide();
+                console.log("voici les profiles",response)
+                $scope.profile_user = response.profiles;
+                $scope.refund_codes = response.refund_codes;
+            },function (error) {
+                $ionicLoading.hide();
+            })
         }
-        /*ici on fait une requete pour recuperer les profiles*/
-        var Profiles_code = Restangular.one('refund-code');
-        Profiles_code.get().then(function (response) {
-            console.log("voici les profiles",response)
-            $scope.profile_user = response.profiles;
-            $scope.refund_codes = response.refund_codes;
-        })
+
     });
     //global variable shared between different pages.
     //var cart = sharedCartService.cart;
