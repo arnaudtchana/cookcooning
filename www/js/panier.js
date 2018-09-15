@@ -232,8 +232,10 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
     $scope.choix_code = function(){
         /*avant de faire le test a ce niveau on doit d'abor verifier si index a code a une valeur*/
-        if($scope.info_commande.index = undefined || $scope.info_commande.index ==""){
+        //console.log("voici la valeur presente dans lindex",$scope.info_commande.index);
+        if($scope.info_commande.index == undefined || $scope.info_commande.index == ""){
             /*on ne fait rien*/
+           // alert("on ne fait rien")
         }else{
             if($scope.refund_codes[$scope.info_commande.index].price > $scope.total_amount){
                 /*il y a un problem*/

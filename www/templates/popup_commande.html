@@ -7,28 +7,20 @@
 <span style="color: red" ng-if="text">{{message}}</span>
     <label class="item item-select">
         <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
-            <option value="" selected>-- Choisir un profile --</option>
+            <option value="" selected>-- Choisir un profile * --</option>
             <option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}} ({{profile.min_command_amount}} €)</option>
         </select>
     </label>
 
 </div>
 
-<div class="padding-top" ng-if="refund_codes.length !==0">
-    <label class="item item-select">
-        <select class="item_select_popup" name="refund_code_id" ng-change="choix_code()" ng-model="info_commande.index" style="max-width: 100%;width: 100%;direction: ltr">
-            <option value="" selected>-- Code de ristourne --</option>
-            <option value="{{$index}}" ng-if="ristoune.status == 1" ng-repeat="ristoune in refund_codes track by $index">{{ristoune.code}} ({{ristoune.price}} €)</option>
-        </select>
-    </label>
 
-</div>
 
 <div class="padding-top">
 
     <label class="item item-select">
         <select class="item_select_popup" name="moment" ng-change ="affiche_heure()" ng-model="info_commande.moment" style="max-width: 100%;width: 100%;direction: ltr">
-            <option value="" selected>-- Moment de livraison --</option>
+            <option value="" selected>-- Moment de livraison *  --</option>
             <option value="0">Au plus vite</option>
             <option value="1">Avant</option>
             <option value="2">Après</option>
@@ -39,10 +31,20 @@
 
 <div class="padding-top" ng-show="heure">
     <label class="item item-input" style="padding: 0px 0 0px 16px;">
-        <span style="padding: 3px 80px 0px 0px;" class="input-label">Heure</span>
+        <span style="padding: 3px 80px 0px 0px;" class="input-label">Heure *</span>
         <input type="time" ng-model="info_commande.heure">
 
     </label>
+</div>
+
+<div class="padding-top" ng-if="refund_codes.length !==0">
+    <label class="item item-select">
+        <select class="item_select_popup" name="refund_code_id" ng-change="choix_code()" ng-model="info_commande.index" style="max-width: 100%;width: 100%;direction: ltr">
+            <option value="" selected>-- Code de ristourne --</option>
+            <option value="{{$index}}" ng-if="ristoune.status == 1" ng-repeat="ristoune in refund_codes track by $index">{{ristoune.code}} ({{ristoune.price}} €)</option>
+        </select>
+    </label>
+
 </div>
 
 <div class="padding-top">

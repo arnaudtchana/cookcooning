@@ -8,8 +8,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     //var cart = sharedCartService.cart;
     var myPopup;
 
-    $ionicPlatform.ready(function () {
-        /*tout ceci sera decommenter*/
+    /*$ionicPlatform.ready(function () {
+        /!*tout ceci sera decommenter*!/
         console.log("je suis avant le token")
         window.plugins.OneSignal.addSubscriptionObserver(function(state) {
             if(!state.from.subscribed && state.to.subscribed){
@@ -30,9 +30,9 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         });
         console.log("je suis apres le token")
 
-        /*juskici*/
+        /!*juskici*!/
 
-    })
+    })*/
 
     $scope.$on('$ionicView.enter', function(e) {
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)

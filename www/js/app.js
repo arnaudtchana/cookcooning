@@ -68,10 +68,10 @@ window.plugins.OneSignal.setSubscription(false);
       };
 
 
-      /*window.plugins.OneSignal
+      window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
-          .endInit();*/
+          .endInit();
 
       window.plugins.OneSignal.addSubscriptionObserver(function(state) {
           console.log("je suis dans la fonction")
