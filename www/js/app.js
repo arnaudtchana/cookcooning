@@ -49,14 +49,21 @@ window.plugins.OneSignal.setSubscription(false);
       //OneSignal.setRequiresUserPrivacyConsent(true)
       var notificationOpenedCallback = function(data) {
           console.log('notificationOpenedCallback: ' + JSON.stringify(data));
-          alert("je recoit la notification")
+
           if(data.notification.payload.additionalData.channel == 0){
               /*votre commande est en cours de livraison on peut switcher sur la page commande en cours*/
-              alert("commande en cours de livraison")
+              alert(data.notification.payload.additionalData.message)
+              if($state.current.name == 'app.liste_commande') {
+                  /*on reload la page*/
+                  location.reload();
+              }else{
+                  /*on le redirige vers la page qui liste les commandes a livrer*/
+                  $state.go('app.liste_commande')
+              }
           }
           if(data.notification.payload.additionalData.channel == 1){
               /*on lui affiche son code de ristourne avec la valeur*/
-              alert("vous venez de recevoir un code de ristourne")
+              alert(data.notification.payload.additionalData.message)
           }
       };
 

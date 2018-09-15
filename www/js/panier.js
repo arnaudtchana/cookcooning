@@ -231,18 +231,23 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     }
 
     $scope.choix_code = function(){
-        /*avant de faire le test a ce niveau on doit d'abor verifier si le refund code a une valeur*/
-        if($scope.refund_codes[$scope.info_commande.index].price > $scope.total_amount){
-            /*il y a un problem*/
-            $scope.text = true;
-            $scope.message = "Le montant de la commande doit être supérieur au prix de la réduction";
-            $scope.refund_valide = false;
+        /*avant de faire le test a ce niveau on doit d'abor verifier si index a code a une valeur*/
+        if($scope.info_commande.index = undefined || $scope.info_commande.index ==""){
+            /*on ne fait rien*/
         }else{
-            /*on affiche la reduction*/
-            $scope.text = false;
-            $scope.refund_valide = true;
-            $scope.prix_refund = $scope.refund_codes[$scope.info_commande.index].price;
+            if($scope.refund_codes[$scope.info_commande.index].price > $scope.total_amount){
+                /*il y a un problem*/
+                $scope.text = true;
+                $scope.message = "Le montant de la commande doit être supérieur au prix de la réduction";
+                $scope.refund_valide = false;
+            }else{
+                /*on affiche la reduction*/
+                $scope.text = false;
+                $scope.refund_valide = true;
+                $scope.prix_refund = $scope.refund_codes[$scope.info_commande.index].price;
+            }
         }
+
     }
 
     /*fonciton qui permet de lancer la commande*/
