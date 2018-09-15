@@ -66,6 +66,22 @@
   padding: 0px;
   min-height: 40px;
 }
+.popup_commande_error .popup-body{
+  padding: 0px;
+}
+
+.popup_commande_error .popup-head{
+  background-color: #ff6600;
+}
+
+.popup_commande_error .popup-buttons{
+  padding: 0px;
+  min-height: 40px;
+}
+
+.popup_commande_error .popup-head .popup-title{
+  color: white;
+}
 
 .popup_commande .popup-head .popup-title{
   color: white;
@@ -76,7 +92,14 @@
   min-height: 26px;
   font-size: 12px;
   line-height: 26px;
-  border-radius: 10px;
+  border-radius: 3px;
+}
+.button_error{
+  padding: 0px 0px;
+  min-height: 40px;
+  font-size: 13px;
+  line-height: 40px;
+  border-radius: 3px;
 }
 
 /*ceci permet de bien positionner le texte du bouton a l'interieur du cadre*/
@@ -133,8 +156,11 @@ p .button:after{
   border-radius: 10px;
 }
 .affichage_status_commande{
+  padding: 0px;
+  padding-right: 10px;
   text-align: right;
   color: green;
+  font-weight: bold;
 }
 
 .couleur_app{
@@ -151,4 +177,7 @@ p .button:after{
 /*afficher tout le texte dans la description du produit*/
 .description_produit{
   white-space: pre-wrap;
+}
+.toast_section{
+  background-color: #4CAF50 !important;
 }

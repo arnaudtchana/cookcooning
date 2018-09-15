@@ -231,6 +231,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     }
 
     $scope.choix_code = function(){
+        /*avant de faire le test a ce niveau on doit d'abor verifier si le refund code a une valeur*/
         if($scope.refund_codes[$scope.info_commande.index].price > $scope.total_amount){
             /*il y a un problem*/
             $scope.text = true;
@@ -373,7 +374,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 }
                 /*on regarde si le refund_code a une valeur*/
                 console.log("on vpit la va;eur de index",$scope.info_commande.index)
-                if($scope.info_commande.index == undefined){
+                if($scope.info_commande.index == undefined || $scope.info_commande.index ==""){
                     /*pas de code de ristourne prix en compte*/
                     $scope.refund_code_id = null;
                 }else{

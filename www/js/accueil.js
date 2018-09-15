@@ -9,8 +9,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     var myPopup;
 
     $ionicPlatform.ready(function () {
+        /*tout ceci sera decommenter*/
         console.log("je suis avant le token")
-        console.log(window.plugins.OneSignal)
         window.plugins.OneSignal.addSubscriptionObserver(function(state) {
             if(!state.from.subscribed && state.to.subscribed){
                 console.log(state.to.userId)
@@ -29,6 +29,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
             console.log(error)
         });
         console.log("je suis apres le token")
+
+        /*juskici*/
 
     })
 

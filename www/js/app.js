@@ -61,12 +61,12 @@ window.plugins.OneSignal.setSubscription(false);
       };
 
 
-      window.plugins.OneSignal
+      /*window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
-          .endInit();
+          .endInit();*/
 
-      /*window.plugins.OneSignal.addSubscriptionObserver(function(state) {
+      window.plugins.OneSignal.addSubscriptionObserver(function(state) {
           console.log("je suis dans la fonction")
           if(!state.from.subscribed && state.to.subscribed){
               console.log(state.to.userId)
@@ -75,7 +75,7 @@ window.plugins.OneSignal.setSubscription(false);
           }
       },function (error) {
           console.log(error);
-      });*/
+      });
       window.plugins.OneSignal.setSubscription(true);
 
   });
@@ -271,7 +271,7 @@ window.plugins.OneSignal.setSubscription(false);
                             // in our array, we know we need to authenticate the user so
                             // we can remove the current user from local storage
                             //localStorage.removeItem('user');
-                            delete $sessionStorage.token;
+                             $localStorage.token = undefined;
                             // Send the user to the auth state so they can login
                             $ionicLoading.hide();
                             $state.go('connexion');

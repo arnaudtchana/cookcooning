@@ -4,7 +4,7 @@
     <h6 ng-show="refund_valide">Réduction: {{prix_refund |number:2}} €</h6>
 </div>
 <div>
-<span ng-if="text">{{message}}</span>
+<span style="color: red" ng-if="text">{{message}}</span>
     <label class="item item-select">
         <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
             <option value="" selected>-- Choisir un profile --</option>

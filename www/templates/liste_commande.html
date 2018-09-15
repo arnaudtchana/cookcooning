@@ -3,11 +3,12 @@
     <ion-content ng-controller="ListeCommandeCtrl">
 
 <h5 style="text-align: center" ng-if="taille_tableau==0">Aucune commande enregistrée pour cette journée</h5>
-        <div class="card" ng-repeat="commande in commande_livrer track by $index">
+
+        <div class="card" style="margin:0px 0px;" ng-repeat="commande in commande_livrer track by $index">
             <div>
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-80 text-center"><h6 style="text-decoration: underline;color: #33cd5f" ng-click="detail_commande($index)">{{commande.command_number}}</h6></div>
+                    <div class="col-80 text-center"><h6>N° {{commande.command_number}}</h6></div>
                     <div class="col"></div>
                     <!--<div class="col affichage_liste_commande_gauche">Numéro commande:</div>
                     <div class="col affichage_liste_commande">{{commande.command_number}}</div>-->
@@ -51,13 +52,16 @@
                     </div>
                     <div class="col"></div>
                 </div>-->
-                <div class="row" ng-if="commande.status ==2 && commande.command_error==null">
-                    <div class="col"></div>
-                    <div class="col col-50 text-center">
-                        <a  ng-click="signaler_erreur($index)" class="button  button-assertive button_ajout_panier">
+                <div class="row">
+                <!--<div class="row" ng-if="commande.command_error==null">-->
+                    <div class="col text-center" ng-if="commande.status ==2 && commande.command_error==null">
+                        <a  ng-click="signaler_erreur($index)" style="padding: 0px 0px; min-height: 40px;font-size: 13px;line-height: 40px;border-radius: 5px;" class="button button-full button-assertive">
                             Signaler une erreur</a>
                     </div>
-                    <div class="col"></div>
+                    <div class="col text-center">
+                        <a  ng-click="detail_commande($index)" style="padding: 0px 0px; min-height: 40px;background-color: #a2a2a2;color: white;font-size: 13px;line-height: 40px;border-radius: 5px;" class="button button-full">
+                            Détails</a>
+                    </div>
                 </div>
             </div>
         </div>
