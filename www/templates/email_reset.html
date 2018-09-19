@@ -1,0 +1,46 @@
+<!--ici la vue html pour lenvoie de lemail pour le reset de password-->
+<!--pour modifier les iformations dun patient on entre le numero de telephone du patient avec les infos a modifier-->
+<ion-view view-title="Adresse email" ng-controller="ResetPasswordCtrl">
+  <!--<ion-nav-buttons side="right">
+    <button class="button button-raised button-icon button-clear ion-ios-more" ng-click="popover.show($event)">
+    </button>
+  </ion-nav-buttons>-->
+  <ion-nav-back-button></ion-nav-back-button>
+  <ion-content>
+
+    <div class="padding" style="margin-top: 40%">
+      <form name ="formu" class="list" ng-submit="valide_email()">
+        <!--<div>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Email</span>
+            <input type="email" name="email" ng-model="data.email" placeholder="Email" required>
+          </label>
+        </div>-->
+        <label class="item item-input" id="enleve_bordure">
+          <input type="email" name="email" placeholder="Email" ng-model="data.email" required>
+        </label>
+
+        <!--<div class="list list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="Email">
+          </label>
+
+        </div>-->
+
+
+        <div class=""><button class="button button-block button-positive button-flat">Valider</button></div>
+      </form>
+      <div class="row" style="padding-top: 10%">
+        <div class="col"></div>
+        <div class="col-90 text-center" style="color: red">
+          <p ng-show="formu.email.$touched && formu.email.$invalid">* Adresse email invalide</p>
+<!--
+          <p ng-show="email_valide">{{"email_invalide" | translate}}</p>
+-->
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

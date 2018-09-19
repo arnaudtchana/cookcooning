@@ -1,4 +1,4 @@
-App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope,$localStorage,Restangular,$ionicViewService) {
+App.controller('ConnexionCtrl', function($scope, $ionicModal, $timeout,$state,$auth,$ionicLoading,$sessionStorage,$rootScope,$localStorage,Restangular,$ionicHistory) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -43,10 +43,10 @@ $scope.error = "";
                 console.log("voici les donnees du user",$rootScope.userData)
                 console.log($sessionStorage.data);
                 /*code permettant dempecher le retour a la page de connexion*/
-                $ionicViewService.nextViewOptions({
+                /*$ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
-                });
+                });*/
                 $state.go('app.accueil');
             }else{
                 /*on affiche le message d'erreur*/

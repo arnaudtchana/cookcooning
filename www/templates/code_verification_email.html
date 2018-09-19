@@ -1,0 +1,39 @@
+<!--ici la page pour entrer le code de verification recu par email-->
+
+<!--ici la vue html pour lenvoie de lemail pour le reset de password-->
+<!--pour modifier les iformations dun patient on entre le numero de telephone du patient avec les infos a modifier-->
+<ion-view class="title text-center" view-title="Code de vérification" ng-controller="CodeVerificationCtrl">
+  <!--<ion-nav-buttons side="right">
+    <button class="button button-raised button-icon button-clear ion-ios-more" ng-click="popover.show($event)">
+    </button>
+  </ion-nav-buttons>-->
+  <ion-content>
+
+    <div class="padding" style="margin-top: 40%">
+      <form name ="formu" class="list" ng-submit="valide_code()">
+        <!--<div>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">{{'code_de_validation' | translate}}</span>
+            <input type="text" name="code" ng-model="data.code" placeholder="{{'code_de_validation' | translate}}" required>
+          </label>
+        </div>-->
+
+        <label class="item item-input" id="enleve_bordure">
+          <input type="text" name="code" ng-model="data.code" placeholder="Code" required>
+        </label>
+
+
+        <div class=""><button class="button button-block button-positive button-flat">Valider</button></div>
+      </form>
+      <div class="row" style="padding-top: 10%">
+        <div class="col"></div>
+        <div class="col-90 text-center" style="color: red">
+          <p ng-show="formu.code.$touched && formu.code.$invalid">* Le code est obligatoire</p>
+          <p ng-show="code_valide">Le code est invalide</p>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -128,6 +128,33 @@ window.plugins.OneSignal.setSubscription(false);
           },
           controller: 'CompteCtrl'
       })
+      .state('bar.email_reset',{
+          url:'/email_reset',
+          views: {
+              'bar_content' :{
+                  templateUrl:'templates/email_reset.html'
+              }
+          },
+          controller: 'ResetPasswordCtrl'
+      })
+    $stateProvider.state('bar.envoie_code',{
+        url:'/envoie_code',
+        views: {
+            'bar_content' :{
+                templateUrl:'templates/code_verification_email.html'
+            }
+        },
+        controller: 'CodeVerificationCtrl'
+    })
+    $stateProvider.state('bar.enregistre_password',{
+        url:'/enregistre_password',
+        views: {
+            'bar_content' :{
+                templateUrl:'templates/new_password.html'
+            }
+        },
+        controller: 'EnregistrePasswordCtrl'
+    })
     .state('app', {
     url: '/app',
     abstract: true,

@@ -77,7 +77,7 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
             $ionicLoading.hide();
             if(response.data.success == true){
                 /*on met un toast et on passe a la page de connexion*/
-                ionicToast.show(response.data.message, 'center', true, 2500);
+                ionicToast.show('Votre compte a été créé avec succès, vous pourrez passer des commandes après validation de votre profile', 'center', true, 2500);
                 $state.go("connexion");
             }
             console.log(response)
