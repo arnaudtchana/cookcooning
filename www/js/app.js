@@ -17,13 +17,14 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
     // useful especially with forms, though we would prefer giving the user a little more room
     // to interact with the app.
       /*check for network connection*/
-      console.log("console navigateur",navigator)
-
-
-          if (navigator.connection.type == "unknown") {
+      /*installer le plugin et tester*/
+      /*on teste sil y a la connection*/
+      if(window.Connection) {
+          if (navigator.connection.type == Connection.NONE) {
+              /*on fait uen alert ici*/
               $ionicPopup.confirm({
-                  title: 'Erreur',
-                  content: 'Désolé, vous n\'êtes pas connecté.'
+                  title: 'Erreur !',
+                  content: "Vous n\'êtes pas connecté à internet "
               })
                   .then(function (result) {
                       if (!result) {
@@ -31,7 +32,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                       }
                   });
           }
-
+      }
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(false);
         cordova.plugins.Keyboard.disableScroll(true);
@@ -287,6 +288,7 @@ window.plugins.OneSignal.setSubscription(false);
                     config.headers=['Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE'];
                     config.headers=['Access-Control-Allow-Headers', 'Content-Type,Accept'];*/
                     config.url = config.url+"?token="+$localStorage.token;
+
                    // console.log(config);
                     /*en envoi la requette*/
                     return config;
