@@ -52,7 +52,7 @@ window.plugins.OneSignal.setSubscription(false);
 
           if(data.notification.payload.additionalData.channel == 0){
               /*votre commande est en cours de livraison on peut switcher sur la page commande en cours*/
-              alert(data.notification.payload.additionalData.message)
+              //alert(data.notification.payload.additionalData.message)
               if($state.current.name == 'app.liste_commande') {
                   /*on reload la page*/
                   location.reload();
@@ -63,7 +63,8 @@ window.plugins.OneSignal.setSubscription(false);
           }
           if(data.notification.payload.additionalData.channel == 1){
               /*on lui affiche son code de ristourne avec la valeur*/
-              alert(data.notification.payload.additionalData.message)
+              console.log("message pour le code de ristourne")
+              //alert(data.notification.payload.additionalData.message)
           }
       };
 

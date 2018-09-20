@@ -43,10 +43,7 @@ $scope.error = "";
                 console.log("voici les donnees du user",$rootScope.userData)
                 console.log($sessionStorage.data);
                 /*code permettant dempecher le retour a la page de connexion*/
-                /*$ionicHistory.nextViewOptions({
-                    disableAnimate: true,
-                    disableBack: true
-                });*/
+                $ionicHistory.clearCache();
                 $state.go('app.accueil');
             }else{
                 /*on affiche le message d'erreur*/
