@@ -8,7 +8,7 @@ var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
 //var ApiUrl = "http://www.africare.io/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
 //App.options('*', cors())
-.run(function($ionicPlatform,$localStorage,$state) {
+.run(function($ionicPlatform,$localStorage,$state,$ionicHistory,$ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -16,6 +16,21 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
     // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
     // useful especially with forms, though we would prefer giving the user a little more room
     // to interact with the app.
+      /*check for network connection*/
+      console.log("console navigateur",navigator)
+
+
+          if (navigator.connection.type == "unknown") {
+              $ionicPopup.confirm({
+                  title: 'Erreur',
+                  content: 'Désolé, vous n\'êtes pas connecté.'
+              })
+                  .then(function (result) {
+                      if (!result) {
+                          ionic.Platform.exitApp();
+                      }
+                  });
+          }
 
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(false);
@@ -30,6 +45,11 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       if($localStorage.token){
           console.log("on regarde dans le run",$localStorage.token)
           $localStorage.new_connection = false;
+          /*ce code permet de retirer la page de connexion de la pile*/
+          $ionicHistory.nextViewOptions({
+              disableAnimate: true,
+              disableBack: true
+          })
           $state.go('app.accueil')
       }
 
