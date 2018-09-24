@@ -23,7 +23,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
             //insert this into cart array
             cartObj.cart.push( { "cart_item_id": id , "cart_item_image": image , "cart_item_description": description , "cart_item_price": price , "cart_item_qty": qty,"cart_item_name": name } );
             cartObj.total_qty+=qty;	// increase the cartqty
-            cartObj.total_amount+=price;	//increase the cart amount pkoi il prend la valeur en entier qui fausse les resultats
+            cartObj.total_amount+=price * qty;	//increase the cart amount pkoi il prend la valeur en entier qui fausse les resultats
             console.log(cartObj)
         }
     };

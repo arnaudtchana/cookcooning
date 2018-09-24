@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var ApiUrl = "https://at-deg.inimov-cloud.com/api/";
+var ApiUrl = "https://cook-cooning.quickdeveloppement.com/api/";
 //var ApiUrl = "http://www.africare.io/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
 //App.options('*', cors())
@@ -56,7 +56,8 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
 
       /*ici on gere les notifications*/
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
-window.plugins.OneSignal.setSubscription(false);
+      /*je commente cette ligne*/
+//window.plugins.OneSignal.setSubscription(false);
       /*pour gerer la partie consentement de lueitlisateur*/
       //window.plugins.OneSignal.init();
       /*window.plugins.OneSignal.iOSSettings(iosSettings)
@@ -90,7 +91,7 @@ window.plugins.OneSignal.setSubscription(false);
       };
 
 
-      window.plugins.OneSignal
+      /*window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
           .endInit();
@@ -105,7 +106,7 @@ window.plugins.OneSignal.setSubscription(false);
       },function (error) {
           console.log(error);
       });
-      window.plugins.OneSignal.setSubscription(true);
+      window.plugins.OneSignal.setSubscription(true);*/
 
   });
 })
