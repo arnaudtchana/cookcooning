@@ -1,6 +1,6 @@
 App
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,$auth,$sessionStorage,$ionicLoading,Restangular,$state,$localStorage) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$auth,$sessionStorage,$ionicLoading,Restangular,$state,$localStorage,$ionicHistory) {
 
  /*ici on gere la deconnxion*/
   $scope.logout = function () {
@@ -14,6 +14,11 @@ App
               $ionicLoading.hide();
               delete $sessionStorage.token;
               $localStorage.token = undefined;
+              /*pour eviter de revenir dans lapplication apres la deconnxion*/
+              $ionicHistory.nextViewOptions({
+                  disableAnimate: true,
+                  disableBack: true
+              })
               $state.go('connexion');
           },function (error) {
               $ionicLoading.hide();
@@ -22,6 +27,11 @@ App
           $ionicLoading.hide();
           delete $sessionStorage.token;
            $localStorage.token = undefined;
+          /*pour eviter de revenir dans lapplication apres la deconnxion*/
+          $ionicHistory.nextViewOptions({
+              disableAnimate: true,
+              disableBack: true
+          })
           $state.go('connexion');
       })
 

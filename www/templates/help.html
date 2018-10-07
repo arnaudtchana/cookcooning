@@ -1,0 +1,147 @@
+<!--ici le contenu de la page daide de lapplication-->
+<ion-view view-title="Accueil">
+    <ion-nav-buttons side="right">
+      <a class="button button-clear  icon ion-android-cart"></a>
+      <!--<div class="compte_commande">
+        <span class="nombre_commande" ng-if="$root.nombre_plat!=0" style="font-family: inherit;">{{$root.nombre_plat}}</span>
+      </div>-->
+    </ion-nav-buttons>
+  <ion-content scroll="true" ng-controller="HelpCtrl">
+    <div id="resto">
+    <div class="padding">
+      <!--<h2 style="color: #ff6600; text-align: center">CookCooning</h2>-->
+      <img style="width: 100%" src="../img/logo.png">
+    </div>
+    <div class="row">
+      <div class="col text-center" style="color:white;font-weight: bold">Rue Ernest Solvay 267 à 4000 Sclessin</div>
+    </div>
+      <div class="row">
+        <div class="col text-center" style="color:white;font-weight: bold">04/2292030</div>
+      </div>
+    <div class="row">
+      <div class="col text-center">
+        <a style="padding: 0px 0px; min-height: 40px;font-size: 13px;line-height: 40px;border-radius: 5px;background-color: #000" ui-sref="connexion()" class="button button-full button-positive">
+          Se connecter</a>
+      </div>
+      <div class="col text-center">
+        <a style="padding: 0px 0px; min-height: 40px;color: white;font-size: 13px;line-height: 40px;border-radius: 5px;background-color: #4CAF50" ui-sref="bar.info_user" class="button button-full">
+          Créer un compte</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <h4 style="color: white">Nos plats</h4>
+      </div>
+    </div>
+    </div>
+    <ion-list ng-repeat="item in articles">
+
+
+      <ion-item class="item-thumbnail-left" >
+
+        <img  ng-src="https://cook-cooning.quickdeveloppement.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" >
+        <p ng-if="item.available_quantity < 6" style="position:absolute;right:20px;top:30px;">
+          {{item.available_quantity}} plats
+        </p>
+        <p style="position:absolute;right:14px;top:65px;">
+          <a  ng-click="connecter_vous()" class="button button-positive button_ajout_panier">
+            Ajouter au panier</a>
+        </p>
+
+        <h2  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" > {{item.name}} </h2>
+
+        <!--prix du produit-->
+        <h3 ng-click="showProductInfo(item.id,item.description,item.image,item.price)">{{item.price}} €</h3>
+        <p ng-if="item.refund !==0"><span class="ancien_prix">{{item.price*(1+item.refund/100) | number:2}}</span> € <br>
+          <span class="reduction"> -{{item.refund}} %</span>
+        </p>
+
+      </ion-item>
+
+    </ion-list>
+    <!--<ion-slides  options="options" slider="data.slider">
+      <ion-slide-page>
+        <div align="center" class="box blue" style="padding-top: 5%"><h3>Présentation<i class="ion-arrow-right-b"></i></h3></div>
+        <div>
+          <p align="center">
+        Cook Cooning est une application permettant à des clients de passer des commandes dans notre restaurant situé à la rue telle;
+            Pour passer des commandes dans notre restaurant, vous devez créer votre compte en renseignant votre adresse email
+            ainsi qu'un profile que nous validerons sous un délais très court; lorsque vous passez des commandes dans
+            notre restaurant, le gérant attribut la commande à un livreur qui se charge de vous livrer selon l'heure de livraison
+            que vous aurez choisi
+        </p>
+        </div>
+        <div class="row marge_haut">
+          <div class="col-55 text-left"><a ui-sref="connexion()">J'ai déjà un compte?</a></div>
+          <div class="col"></div>
+          <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+      </ion-slide-page>
+      <ion-slide-page>
+        <div class="box yellow" align="center" style="padding-top: 5%"><h3><i class="ion-arrow-left-b"></i> Page 1 <i class="ion-arrow-right-b"></i></h3></div>
+        <div>
+          <br>
+          <p align="center">
+          La première page de l'application présente la liste des plats disponibles dans le restaurant pour la journées en cours.
+            Une fois connecté, vous pouvez sélectionner des produits et les ajouter à votre panier; vous pourrez ensuite lancer la commande
+            si vous avez un profile déjà validé par l'administrateur
+          </p>
+
+        </div>
+        <div class="row marge_haut">
+          <div class="col-55 text-left"><a ui-sref="connexion()">J'ai déjà un compte?</a></div>
+          <div class="col"></div>
+          <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+      </ion-slide-page>
+      <ion-slide-page>
+        <div class="box pink"align="center" style="padding-top: 5%"><h3><i class="ion-arrow-left-b"></i> Page 2 <i class="ion-arrow-right-b"></i></h3></div>
+        <div>
+          <p align="center">
+            La deuxième page de l'application présente à l'utilisateur la liste de ses commandes livrés et en cours de livraison. Pour les
+            commandes livrés, ce dernier à la possibilité de signaler une erreur sur sa commande, et le gérant se chargera de gérer sa doléance.
+          </p>
+        </div>
+        <div class="row marge_haut">
+          <div class="col-55 text-left"><a ui-sref="connexion()">J'ai déjà un compte?</a></div>
+          <div class="col"></div>
+          <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+      </ion-slide-page>
+      <ion-slide-page>
+      <div class="box pink"align="center" style="padding-top: 5%"><h3><i class="ion-arrow-left-b"></i> Page 3 <i class="ion-arrow-right-b"></i></h3></div>
+      <div>
+        <p align="center">
+          La troisième page de l'application présente à l'utilisateur la liste de ses profiles validés et pas encore validés; cette
+          page lui permet également d'ajouter un profile supplémentaire, qui sera validé par l'administrateur par la suite.
+        </p>
+      </div>
+        <div class="row marge_haut">
+          <div class="col-55 text-left"><a ui-sref="connexion()">J'ai déjà un compte?</a></div>
+          <div class="col"></div>
+          <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+    </ion-slide-page>
+
+      <ion-slide-page>
+        <div class="box pink"align="center" style="padding-top: 5%"><h3><i class="ion-arrow-left-b"></i>Précison </i></h3></div>
+        <div>
+          <p align="center">
+            La création et la validation des profiles au sein de l'application a pour objectif de renseigner le gérant du restaurant
+            sur les différents lieux où le client souhaiterait être livré; en fonction des différents profiles, le gérant lors de la
+             validation du profile précisera le montant minimun de commande de l'utilisateur pour le profile en question. Notons pour
+            chaque commande, le client devra spécifié avec quel profile il passe sa commande.
+          </p>
+        </div>
+        <div class="row marge_haut">
+          <div class="col-55 text-left"><a ui-sref="connexion()">J'ai déjà un compte?</a></div>
+          <div class="col"></div>
+          <div class="col-45 text-right"><a ui-sref="bar.info_user">Créer un compte</a></div>
+        </div>
+        &lt;!&ndash;on met un lien de creation de compte ici&ndash;&gt;
+      </ion-slide-page>
+
+    </ion-slides>-->
+  </ion-content>
+</ion-view>
+

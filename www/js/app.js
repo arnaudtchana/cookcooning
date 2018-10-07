@@ -142,6 +142,15 @@ window.plugins.OneSignal.setSubscription(false);
         },
         controller: 'CompteCtrl'
     })
+      .state('bar.aide',{
+          url:'/aide',
+          views: {
+              'bar_content' :{
+                  templateUrl:'templates/help.html'
+              }
+          },
+          controller: 'HelpCtrl'
+      })
       .state('bar.info_profile',{
           url:'/info_profile',
           views: {
@@ -276,7 +285,7 @@ window.plugins.OneSignal.setSubscription(false);
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/connexion');
+  $urlRouterProvider.otherwise('bar/aide');
 })
 
         .factory('InterceptorFactory',['$sessionStorage','$q','$rootScope','$localStorage','$injector', function($sessionStorage,$q,$rootScope,$localStorage,$injector,$ionicLoading){
