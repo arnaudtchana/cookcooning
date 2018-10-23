@@ -8,6 +8,11 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     //var cart = sharedCartService.cart;
     var myPopup;
 
+    $scope.actualise = function(){
+        /*on actulaise la liste des produits a ce niveau*/
+        location.reload();
+    }
+
     /*$ionicPlatform.ready(function () {
         /!*tout ceci sera decommenter*!/
         console.log("je suis avant le token")
@@ -35,6 +40,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     })*/
 
     $scope.$on('$ionicView.enter', function(e) {
+        $rootScope.montre = true;
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
         if($localStorage.new_connection){
             $scope.articles = $sessionStorage.products;/*apres une nouvelle commande ca doit passer a nouveau*/

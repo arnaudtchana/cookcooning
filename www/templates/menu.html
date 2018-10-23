@@ -9,6 +9,10 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
+        <div ng-controller="AccueilCtrl">
+          <a ng-show="$root.montre" ng-click="actualise()" class="button button-clear  icon ion-android-refresh"></a>
+        </div>
+
         <a ui-sref="app.panier" class="button button-clear  icon ion-android-cart"></a>
         <div class="compte_commande">
           <span class="nombre_commande" ng-if="$root.nombre_plat!=0" style="font-family: inherit;">{{$root.nombre_plat}}</span>

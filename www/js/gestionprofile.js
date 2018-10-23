@@ -1,4 +1,4 @@
-App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,$ionicPopup,$ionicLoading,Restangular) {
+App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,$ionicPopup,$ionicLoading,Restangular,$rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -6,6 +6,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e) {
         /*on recupere la liste des profile de l'utilisateur connecte au niveau du storage*/
+        $rootScope.montre = false;
         var ListeProfile = Restangular.one('profile');
         $ionicLoading.show({
             templateUrl : 'templates/loading.html'

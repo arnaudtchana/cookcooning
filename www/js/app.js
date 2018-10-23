@@ -57,7 +57,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       /*ici on gere les notifications*/
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
       /*je commente cette ligne*/
-window.plugins.OneSignal.setSubscription(false);
+ window.plugins.OneSignal.setSubscription(false);
       /*pour gerer la partie consentement de lueitlisateur*/
       //window.plugins.OneSignal.init();
       /*window.plugins.OneSignal.iOSSettings(iosSettings)

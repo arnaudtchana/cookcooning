@@ -1,10 +1,11 @@
-App.controller('ListeCommandeCtrl', function($scope, $ionicModal, $timeout,$state,Restangular,$ionicLoading,$ionicPopup,$filter) {
+App.controller('ListeCommandeCtrl', function($scope, $ionicModal, $timeout,$state,Restangular,$ionicLoading,$ionicPopup,$filter,$rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e) {
+        $rootScope.montre = false;
         $ionicLoading.show({
             templateUrl : 'templates/loading.html'
         });
