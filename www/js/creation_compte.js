@@ -10,6 +10,8 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
     // Form data for the login modal
     $scope.user = {};
     $scope.profile = {};
+    /*ceci permet de prendre toutes les infos sur ladresse*/
+    $scope.info = {};
     $scope.saveUser = function () {
         /*cette fonction valide et enregistre un compte utilisateur*/
         /*on verifie que le mot de passe et la confirmation sont identiques*/
@@ -67,11 +69,12 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
             templateUrl : 'templates/loading.html'
         });
         var profiles = [];
+        $scope.profile.address = "Rue "+$scope.info.rue+", "+$scope.info.postal_code+" "+$scope.info.ville;
         profiles[0] = $scope.profile;
         console.log("partie profile",profiles)
         $sessionStorage.user.name = $scope.profile.name;
         $sessionStorage.user.phone = $scope.profile.phone;
-        $sessionStorage.user.address = $scope.profile.address;
+        $sessionStorage.user.address = "Rue "+$scope.info.rue+", "+$scope.info.postal_code+" "+$scope.info.ville;
         console.log("partie user",$sessionStorage.user)
         $auth.signup({user:JSON.stringify($sessionStorage.user),profiles:JSON.stringify(profiles)}).then(function (response) {
             $ionicLoading.hide();

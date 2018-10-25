@@ -330,8 +330,9 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
 
                     // Loop through each rejection reason and redirect to the login
                     // state if one is encountered
+                    console.log("voici les raison",rejectionReasons)
+                    console.log("voici les vrais raisons",rejection)
                     angular.forEach(rejectionReasons, function(value, key) {
-
                         if(rejection.data.error === value) {
 
                             // If we get a rejection corresponding to one of the reasons

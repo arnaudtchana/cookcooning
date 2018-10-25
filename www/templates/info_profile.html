@@ -1,4 +1,4 @@
-<ion-view view-title="Informations profile">
+<ion-view view-title="Informations profil">
     <ion-content>
         <!--<div style="padding-top: 20%;text-align: center">
             <img style="width: 100%" src="../img/logo.png">
@@ -15,8 +15,17 @@
                 </label>
 
                 <label class="item item-input">
-                    <input type="text" name="adresse" placeholder="Adresse" ng-model="profile.address" required>
+                    <input type="text" name="rue" placeholder="Rue*" ng-model="info.rue" required>
                 </label>
+
+                <label class="item item-input">
+                    <input type="text" name="code_postal" placeholder="Code postal*" ng-model="info.postal_code" required>
+                </label>
+
+                <label class="item item-input">
+                <input type="text" name="ville" placeholder="Ville*" ng-model="info.ville" required>
+            </label>
+
 
                 <label class="item item-input">
                     <textarea type="text" rows="3" name="description" placeholder="Description" ng-model="profile.comments" required></textarea>

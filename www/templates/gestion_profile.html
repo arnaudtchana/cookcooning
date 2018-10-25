@@ -1,13 +1,20 @@
 <!--ici on ajoute tous les profiles et on permet a un utilisateur d'ajouter un profile-->
-<ion-view view-title="Gestion profile">
+<ion-view view-title="Gestion profil">
     <ion-content ng-controller="GestionProfilCtrl">
 
 
-    <div class="card" ng-repeat="profile in liste_profile">
+    <div class="card" ng-repeat="profile in liste_profile track by $index">
+
         <div class="item item-text-wrap">
+            <div class="position_delete">
+                <button ng-click="delete_profile($index)" class="button-icon icon_size_delete button-assertive ion-android-delete"></button>
+                <button ng-click="modify_profile($index)" class="button-icon icon_size_update button-assertive ion-edit"></button>
+            </div>
+            <br>
             {{profile.address}}
             <span ng-if="profile.status == 1">
               <h2>  Prix min. de commande: {{profile.min_command_amount}} €</h2>
+              <h2>  Prix de livraision: {{profile.delivery_amount}} €</h2>
             </span>
             <span style="color: red" ng-if="profile.status == 0">
                <br> (Pas encore validé)

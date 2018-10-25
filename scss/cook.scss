@@ -196,3 +196,16 @@ p .button:after{
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+.position_delete{
+  position: absolute;
+  left: 70%;
+  top: 0px;
+}
+.icon_size_delete{
+  font-size: 25px;
+  color: red;
+}
+.icon_size_update{
+  font-size: 25px;
+  color: #4CAF50;
+}

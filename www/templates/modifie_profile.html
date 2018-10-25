@@ -1,0 +1,20 @@
+<!--ici la page permettant de modifier le proile dun utilisateur donnee-->
+
+
+<span class="couleur_rouge" ng-show="text">{{message}}</span>
+<label class="item item-input">
+    <input type="text" name="nom" placeholder="Nom" ng-model="info_modify.name" required>
+</label>
+
+<label class="item item-input">
+    <input type="tel" name="tel" placeholder="Numéro de téléphone" ng-model="info_modify.phone" required>
+</label>
+
+<label class="item item-input">
+    <input type="text" name="address" placeholder="Address*" ng-model="info_modify.address" required>
+</label>
+
+<label class="item item-input">
+    <textarea type="text" rows="3" name="description" placeholder="Description" ng-model="info_modify.comments" required></textarea>
+</label>
+
