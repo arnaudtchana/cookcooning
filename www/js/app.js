@@ -57,7 +57,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       /*ici on gere les notifications*/
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
       /*je commente cette ligne*/
- window.plugins.OneSignal.setSubscription(false);
+ //window.plugins.OneSignal.setSubscription(false);
       /*pour gerer la partie consentement de lueitlisateur*/
       //window.plugins.OneSignal.init();
       /*window.plugins.OneSignal.iOSSettings(iosSettings)
@@ -88,10 +88,16 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               console.log("message pour le code de ristourne")
               //alert(data.notification.payload.additionalData.message)
           }
+          if(data.notification.payload.additionalData.channel == 4){
+              /*le profile de lutilisateur vient detre valider*/
+              console.log("message pour la validation du profile de lutilisateur")
+              //alert(data.notification.payload.additionalData.message)
+              $state.go('app.gestion_profile')
+          }
       };
 
 
-      window.plugins.OneSignal
+      /*window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
           .endInit();
@@ -106,7 +112,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       },function (error) {
           console.log(error);
       });
-      window.plugins.OneSignal.setSubscription(true);
+      window.plugins.OneSignal.setSubscription(true);*/
 
   });
 })

@@ -209,3 +209,22 @@ p .button:after{
   font-size: 25px;
   color: #4CAF50;
 }
+/*ceci permet de gerer loeil dans les formlaire*/
+/*.login-form .item {
+  border-width: 0;
+  overflow: visible;
+  text-overflow: inherit;
+  white-space: normal;
+}
+
+.login-form .item-input {
+  margin-top: 24px;
+  border-width: 0 0 1px 0;
+}*/
+.login-form .item-input>input+button.activated {
+  opacity: 1;
+}
+
+.login-form .item-input>input+button>i {
+  font-size: 24px;
+}

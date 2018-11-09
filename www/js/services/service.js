@@ -7,7 +7,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
 
 
 
-    cartObj.cart.add=function(id,image,description,price,qty,name){
+    cartObj.cart.add=function(id,image,description,price,qty,name,available_qty){
         if( cartObj.cart.find(id)!=-1 ){  //find() is declared in the bottom.
             // It is used to check if the product is already added to the cart or not
 
@@ -21,7 +21,7 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
         }
         else{
             //insert this into cart array
-            cartObj.cart.push( { "cart_item_id": id , "cart_item_image": image , "cart_item_description": description , "cart_item_price": price , "cart_item_qty": qty,"cart_item_name": name } );
+            cartObj.cart.push( { "cart_item_id": id , "cart_item_image": image , "cart_item_description": description , "cart_item_price": price , "cart_item_qty": qty,"cart_item_name": name,"cart_item_available_qty": available_qty } );
             cartObj.total_qty+=qty;	// increase the cartqty
             cartObj.total_amount+=price * qty;	//increase the cart amount pkoi il prend la valeur en entier qui fausse les resultats
             console.log(cartObj)

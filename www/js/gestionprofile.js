@@ -197,7 +197,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                 var AjoutProfile = Restangular.one('profile/store');
                 AjoutProfile.name = $scope.info_profil.name;
                 AjoutProfile.phone = $scope.info_profil.phone;
-                AjoutProfile.address = "Rue "+$scope.info.rue+", "+$scope.info.postal_code+" "+$scope.info.ville;
+                AjoutProfile.address = "Rue "+$scope.info.rue+" "+$scope.info.numero+", "+$scope.info.postal_code+" "+$scope.info.ville;
                 AjoutProfile.comments = $scope.info_profil.comments;
 
                 $ionicLoading.show({

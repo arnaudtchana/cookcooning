@@ -209,7 +209,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
      /*on regarde si le profile choisi peut effectuer la commande*/
         console.log("id du profile a ce niveau",$scope.info_commande.profile_id);
         if($scope.info_commande.profile_id ==""){
-            $scope.message = "Choisissez un profile s'il vous plaît";
+            $scope.message = "Choisissez un profil s'il vous plaît";
             $scope.text = true;
             $scope.profile_valide = false;
         }else{
@@ -217,7 +217,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 /*le affiche le message derreur*/
                 $scope.montant_minimum = $scope.profile_user[$scope.info_commande.profile_id].min_command_amount;
                 $scope.text = true;
-                $scope.message = "Désolé, ce profile peut commander pour un montant supérieur ou égal à "+$scope.montant_minimum+" €"
+                $scope.message = "Désolé, ce profil peut commander pour un montant supérieur ou égal à "+$scope.montant_minimum+" €"
                 $scope.profile_valide = false;
             }else{
                 /*on affiche le message de success*/
@@ -262,10 +262,11 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             var profile_valide = 0;
             angular.forEach($scope.profile_user,function (value,key) {
                 console.log("on cherche le profile valide",value);
-                if(value.status = 1){
+                if(value.status == 1){
                     profile_valide+=1;
                 }
             })
+
 
             if(profile_valide>0){
                 /*il a au moins un profile valide et peut passer sa commande*/

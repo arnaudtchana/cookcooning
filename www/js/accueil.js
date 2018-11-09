@@ -124,9 +124,21 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
                         type: 'button-positive',
                         onTap:function(){
                             /*on va remplacer cart ici par sa valeur sharedCartService*/
-                            sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty,$scope.produit_courant.name);
-                        /*on essaaye de modifier la variable du rootscope pour la qtite*/
-                            $rootScope.nombre_plat=sharedCartService.total_qty;
+                            /*a ce niveau je dois d'abord comparer la qtite que l'utilisateur veut commander avec la qtite disponible*/
+                            /*le premier control a faire ici est de verifier si le produit est encore disponible*/
+                            if($scope.produit_courant.available_quantity>0){
+                                if($scope.produit_courant.qty <= $scope.produit_courant.available_quantity){
+                                    sharedCartService.cart.add($scope.produit_courant.id,$scope.produit_courant.image,$scope.produit_courant.description,$scope.produit_courant.price,$scope.produit_courant.qty,$scope.produit_courant.name,$scope.produit_courant.available_quantity);
+                                    /*on essaaye de modifier la variable du rootscope pour la qtite*/
+                                    $rootScope.nombre_plat=sharedCartService.total_qty;
+                                }else{
+                                    alert('Désolé ,la quantité que vous voulez commander n\'est plus disponible')
+                                }
+                            }else{
+                                alert('Désolé ,le produit que vous voulez commander n\'est plus disponible pour cette journée')
+                            }
+
+
                         }
                     }
                 ]
@@ -176,11 +188,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
 
     // increments the qty
     $scope.inc=function(c_id){
-        /*je fais lincrement sirectement sur la variable se trouvant dans le service*/
+        /*je fais lincrement directement sur la variable se trouvant dans le service*/
         //$scope.cart.increment(c_id);
-        sharedCartService.cart.increment(c_id);
-        $scope.total_qty=sharedCartService.total_qty;
-        $scope.total_amount=sharedCartService.total_amount;
+        /*ici on doit tester et se rassurer que la qtite ajouter ne depasse pas la qtite disponible*/
+        if($scope.produit_courant.cart_item_available_qty > $scope.produit_courant.cart_item_qty){
+            sharedCartService.cart.increment(c_id);
+            $scope.total_qty=sharedCartService.total_qty;
+            $scope.total_amount=sharedCartService.total_amount;
+        }else{
+            alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+        }
+
     };
 
     // decrements the qty
@@ -209,12 +227,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     };
 
     //add to cart function
-    $scope.addToCart=function(id,image,description,price,name){
+    $scope.addToCart=function(id,image,description,price,name,available_quantity){
         // function cart.add is declared in services.js
         /*on le fait directement sur la variable du service*/
         //cart.add(id,image,description,price,1);
-        sharedCartService.cart.add(id,image,description,price,1,name);
-        $rootScope.nombre_plat=sharedCartService.total_qty;
+        if(available_quantity > 0){
+            sharedCartService.cart.add(id,image,description,price,1,name,available_quantity);
+            $rootScope.nombre_plat=sharedCartService.total_qty;
+        }else{
+            alert('Désolé, ce produit  n\'est plus disponible pour cette journée');
+        }
+
     };
 
     /*ces foncitons sont appliquee dans le cas ou le produit n'est pas encore dans le panier*/
