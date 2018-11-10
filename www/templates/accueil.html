@@ -5,14 +5,14 @@
             <div class="col-80">
 
                     <label class="item item-select">
-                        <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
-                            <option value="" selected>-- Catégories --</option>
-                            <option value="1" >Légumes</option>
+                        <select class="item_select_popup" name="category_id" ng-model="category_id" ng-change="choix_categorie()" style="max-width: 100%;width: 100%;direction: ltr">
+                            <option value="" selected>-- Toutes les catégories --</option>
+                            <!--<option value="1" >Légumes</option>
                             <option value="2" >Salades</option>
                             <option value="3" >Viandes</option>
-                            <option value="4" >Soupe</option>
+                            <option value="4" >Soupe</option>-->
 
-                            <!--<option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}} ({{profile.min_command_amount}} €)</option>-->
+                            <option value="{{catego.id}}" ng-repeat="catego in liste_categories track by $index">{{catego.name}}</option>
                         </select>
                     </label>
 
@@ -29,9 +29,10 @@
                 <input type="search" placeholder="Rechercher" ng-model="search">
             </label>
             <button class="button button-assertive" ng-click="cache_recherche()">
-                Annuler
+                Retour
             </button>
         </div>
+        <h5 class="padding text-center" ng-show="categorie_vide">Aucun produit disponible dans cette catégorie aujourd'hui</h5>
         <ion-list ng-repeat="item in articles | filter:search">
 
 

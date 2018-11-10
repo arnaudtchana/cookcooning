@@ -7,8 +7,9 @@
 
         <div class="item item-text-wrap">
             <div class="position_delete">
-                <button ng-click="delete_profile($index)" class="button-icon icon_size_delete button-assertive ion-android-delete"></button>
-                <button ng-click="modify_profile($index)" class="button-icon icon_size_update button-assertive ion-edit"></button>
+                <a ng-click="modify_profile($index)" class="positive">Modifier</a>
+                &nbsp;
+                <a ng-click="delete_profile($index)" class="assertive">Supprimer</a>
             </div>
             <br>
             {{profile.address}}
@@ -22,9 +23,9 @@
         </div>
     </div>
 
-        <div class="row">
-            <div class="col col-33 col-offset-80 pull-right" ng-click="ajouter_profile()">
-                <i class="icon ion-android-add button button-balanced"></i>
+        <div class="row" style="padding-top: 0px;margin-top: 0px">
+            <div class="col col-50 col-offset-50 pull-right" ng-click="ajouter_profile()" style="padding-top: 0px;margin-top: 0px">
+                <a class="button icon-left ion-android-add button-balanced button-full text-right">Nouveau</a>
             </div>
         </div>
 

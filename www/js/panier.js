@@ -5,6 +5,11 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e) {
+        /*on initialise les variables de message d'erreur*/
+        $scope.message_error = {
+            'show':false,
+            'message':''
+        };
         $rootScope.montre = false;
         $scope.text = false;/*permet de gerer le montant de la commande par rapport au profil*/
         $scope.heure = true;/*permet de gerer le champs de l'heure*/
@@ -465,10 +470,35 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                 /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
 
                             }else{
-                                var popupResult = $ionicPopup.alert({
-                                    title: 'Error',
-                                    template: response.message
-                                });
+                                if(response.type ==0){
+                                    /*erreur au niveau de la qte disponible*/
+                                    $scope.message_error.show = true;
+                                    $scope.message_error.message = response.message;
+                                }
+                                else if(response.type==1){
+                                    /*code de ristourne invalide rafraichir la page pour reprendre les codes de ristourne*/
+                                    var popupResult = $ionicPopup.alert({
+                                        title: 'Attention',
+                                        template: response.message
+                                    });
+
+                                    popupResult.then(function () {
+                                        /*on recupere a niveau la liste des codes de ristourne de lutilisateur*/
+                                        $ionicLoading.show({
+                                            templateUrl : 'templates/loading.html'
+                                        });
+                                        var Profiles_code = Restangular.one('refund-code');
+                                        Profiles_code.get().then(function (response) {
+                                            $ionicLoading.hide();
+                                            console.log("voici les profiles",response)
+                                            $scope.profile_user = response.profiles;
+                                            $scope.refund_codes = response.refund_codes;
+                                        },function (error) {
+                                            $ionicLoading.hide();
+                                        })
+                                    })
+                                }
+
                             }
                         },function (error) {
                             $ionicLoading.hide();

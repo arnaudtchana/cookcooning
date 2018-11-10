@@ -1,4 +1,4 @@
-App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading,$localStorage,Restangular,$ionicPlatform) {
+App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,$ionicLoading,$localStorage,Restangular,$ionicPlatform,$filter) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -44,6 +44,8 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         $scope.categorie = true;
         $rootScope.montre = true;
         $scope.search = "";
+        $scope.categorie_vide = false;
+        //$scope.category_id=1;
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
         if($localStorage.new_connection){
             $scope.articles = $sessionStorage.products;/*apres une nouvelle commande ca doit passer a nouveau*/
@@ -67,6 +69,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         }
 
     });
+    /*filtre par le choix sur la categorie*/
+    $scope.choix_categorie = function(){
+        $scope.articles = $filter('filter')($sessionStorage.products,{category_id:$scope.category_id});
+        if($scope.articles.length == 0){
+            $scope.categorie_vide = true
+        }else{
+            $scope.categorie_vide=false;
+        }
+        console.log("valeur filtrer",$scope.articles)
+    }
+
     /*fonction pour gerer l'affichage de categorie et de recherche*/
     $scope.cache_categorie = function(){
         $scope.categorie = false;
@@ -80,7 +93,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     //$localStorage.nombre_plat = 0;
     //$rootScope.nombre_plat=sharedCartService.total_qty;
     console.log('voici le rootscope',$rootScope.nombre_plat)
-    /*ici on va fire une requette qui recupere la liste des produits
+    /*ici on va faire une requette qui recupere la liste des produits
     * apres la requete on va laisser les donnees dans le sessionStorage*/
     var Produit = Restangular.one('product');
     $ionicLoading.show({
@@ -89,6 +102,7 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     Produit.get().then(function (response) {
         $ionicLoading.hide();
         $scope.articles = response.products;
+        $scope.liste_categories = response.categories;
         $sessionStorage.products = response.products;
         console.log($scope.articles)
         //console.log($sessionStorage.data.products)
