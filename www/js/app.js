@@ -57,7 +57,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       /*ici on gere les notifications*/
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
       /*je commente cette ligne*/
- //window.plugins.OneSignal.setSubscription(false);
+ window.plugins.OneSignal.setSubscription(false);
       /*pour gerer la partie consentement de lueitlisateur*/
       //window.plugins.OneSignal.init();
       /*window.plugins.OneSignal.iOSSettings(iosSettings)
@@ -97,7 +97,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       };
 
 
-      /*window.plugins.OneSignal
+      window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
           .endInit();
@@ -112,7 +112,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       },function (error) {
           console.log(error);
       });
-      window.plugins.OneSignal.setSubscription(true);*/
+      window.plugins.OneSignal.setSubscription(true);
 
   });
 })
