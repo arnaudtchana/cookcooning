@@ -157,11 +157,20 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
 
     // increments the qty
     $scope.inc=function(c_id){
-        sharedCartService.cart.increment(c_id);
-        $scope.total_qty=sharedCartService.total_qty;
-        $scope.total_amount=sharedCartService.total_amount;
-        /*on met a jour le nombre de plat*/
-        $rootScope.nombre_plat+=1;
+        /*je recupere dabord le produit kon dont on veut ajouter la qtite dans lobjet cart*/
+        $scope.produit_a_ajouter = sharedCartService.cart[sharedCartService.cart.find(c_id)];
+        if($scope.produit_a_ajouter.cart_item_available_qty > $scope.produit_a_ajouter.cart_item_qty){
+            /*on ajoute le produit*/
+            sharedCartService.cart.increment(c_id);
+            $scope.total_qty=sharedCartService.total_qty;
+            $scope.total_amount=sharedCartService.total_amount;
+            /*on met a jour le nombre de plat*/
+            $rootScope.nombre_plat+=1;
+        }else{
+            /*on retourne un message derreur*/
+            alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+        }
+
     };
 
     // decrements the qty

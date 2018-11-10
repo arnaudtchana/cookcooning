@@ -1,6 +1,38 @@
 <ion-view view-title="Accueil">
     <ion-content ng-controller="AccueilCtrl">
-        <ion-list ng-repeat="item in articles">
+        <!--ici on met la liste des categorie avec le bouton de recherche a coter-->
+        <div class="row" ng-show="categorie">
+            <div class="col-80">
+
+                    <label class="item item-select">
+                        <select class="item_select_popup" name="profile_id" ng-model="info_commande.profile_id" ng-change="choix_profile()" style="max-width: 100%;width: 100%;direction: ltr">
+                            <option value="" selected>-- Catégories --</option>
+                            <option value="1" >Légumes</option>
+                            <option value="2" >Salades</option>
+                            <option value="3" >Viandes</option>
+                            <option value="4" >Soupe</option>
+
+                            <!--<option value="{{$index}}" ng-if="profile.status == 1" ng-repeat="profile in profile_user track by $index">{{profile.address}} ({{profile.min_command_amount}} €)</option>-->
+                        </select>
+                    </label>
+
+            </div>
+            <div class="col text-center">
+                <span ng-click="cache_categorie()"><i class="icon ion-search icon_size_search"></i></span>
+            </div>
+
+        </div>
+        <!--ici le formulaire de recherche-->
+        <div class="bar bar-header item-input-inset" ng-show="!categorie">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="Rechercher" ng-model="search">
+            </label>
+            <button class="button button-assertive" ng-click="cache_recherche()">
+                Annuler
+            </button>
+        </div>
+        <ion-list ng-repeat="item in articles | filter:search">
 
 
             <ion-item class="item-thumbnail-left" >

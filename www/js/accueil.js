@@ -40,7 +40,10 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     })*/
 
     $scope.$on('$ionicView.enter', function(e) {
+        /*ici on gere laffichange des categories et de loption de recherche*/
+        $scope.categorie = true;
         $rootScope.montre = true;
+        $scope.search = "";
         console.log("je passe ici quand jentre dans la page daccueil",sharedCartService)
         if($localStorage.new_connection){
             $scope.articles = $sessionStorage.products;/*apres une nouvelle commande ca doit passer a nouveau*/
@@ -64,6 +67,14 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
         }
 
     });
+    /*fonction pour gerer l'affichage de categorie et de recherche*/
+    $scope.cache_categorie = function(){
+        $scope.categorie = false;
+    }
+    $scope.cache_recherche = function(){
+        $scope.categorie = true;
+        $scope.search="";
+    }
     //global variable shared between different pages.
 
     //$localStorage.nombre_plat = 0;
