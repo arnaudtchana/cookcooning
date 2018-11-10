@@ -332,7 +332,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                     // Instead of checking for a status code of 400 which might be used
                     // for other reasons in Laravel, we check for the specific rejection
                     // reasons to tell us if we need to redirect to the login state
-                    var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
+                    var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid','user_not_found'];
 
                     // Loop through each rejection reason and redirect to the login
                     // state if one is encountered
@@ -340,6 +340,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                     console.log("voici les vrais raisons",rejection)
                     angular.forEach(rejectionReasons, function(value, key) {
                         if(rejection.data.error === value) {
+                            console.log("jentre dans le rejection")
 
                             // If we get a rejection corresponding to one of the reasons
                             // in our array, we know we need to authenticate the user so
@@ -347,7 +348,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
                             //localStorage.removeItem('user');
                              $localStorage.token = undefined;
                             // Send the user to the auth state so they can login
-                            $ionicLoading.hide();
+                            //$ionicLoading.hide();
                             $state.go('connexion');
                         }
                     });
