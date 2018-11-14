@@ -51,7 +51,7 @@ $scope.error = "";
             }else{
                 /*on affiche le message d'erreur*/
                 $scope.error = response.data.error;
-                alert(response.data.message);
+                //alert(response.data.message);
             }
 
         },function (error) {

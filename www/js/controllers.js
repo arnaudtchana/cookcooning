@@ -19,7 +19,7 @@ App
                   disableAnimate: true,
                   disableBack: true
               })
-              $state.go('connexion');
+              $state.go('bar.aide');
           },function (error) {
               $ionicLoading.hide();
           })
@@ -32,7 +32,7 @@ App
               disableAnimate: true,
               disableBack: true
           })
-          $state.go('connexion');
+          $state.go('bar.aide');
       })
 
 
