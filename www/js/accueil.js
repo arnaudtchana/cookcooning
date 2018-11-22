@@ -9,8 +9,17 @@ App.controller('AccueilCtrl', function($scope, $ionicModal, $timeout,$state,$ses
     var myPopup;
 
     $scope.actualise = function(){
-        /*on actulaise la liste des produits a ce niveau*/
-        location.reload();
+        /*on actulaise la liste des produits a ce niveau*
+        /*ici on teste dabord sil ya connexion internet*/
+        if(window.Connection) {
+            if (navigator.connection.type == Connection.NONE) {
+                /*on fait uen alert ici*/
+                alert('Vérifiez votre connexion internet');
+            }else{
+                location.reload();
+            }
+        }
+
     }
 
     /*$ionicPlatform.ready(function () {

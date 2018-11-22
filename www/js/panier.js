@@ -33,6 +33,9 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 console.log("voici les profiles",response)
                 $scope.profile_user = response.profiles;
                 $scope.refund_codes = response.refund_codes;
+                /*on recupere egalement les horaires a ce niveau*/
+                $scope.heure_ouverture = response.schedule.opening_time;
+                $scope.heure_fermeture = response.schedule.closure_time;
             },function (error) {
                 $ionicLoading.hide();
             })
@@ -271,253 +274,291 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     $scope.commander = function () {
         /*je lance la commande a ce niveau*/
         /*toute la commande va se gerer dans un popup*/
-        if($scope.profile_user.length !=0){
-            /*maintenant on se rassur kau moins un profile est valide*/
-            var profile_valide = 0;
-            angular.forEach($scope.profile_user,function (value,key) {
-                console.log("on cherche le profile valide",value);
-                if(value.status == 1){
-                    profile_valide+=1;
-                }
-            })
+        /*on se rassure que l'utilisateur est bien dans les horaires de commande*/
+        $scope.heure_ouverture_split = $scope.heure_ouverture;
+        $scope.heure_ouverture_split = $scope.heure_ouverture_split.split(':');
+        $scope.heure_fermeture_split = $scope.heure_fermeture;
+        $scope.heure_fermeture_split = $scope.heure_fermeture_split.split(':');
+        var heure_ouverture = new Date();
+        var heure_fermeture = new Date();
+heure_ouverture.setHours(parseInt($scope.heure_ouverture_split[0]),parseInt($scope.heure_ouverture_split[1]),parseInt($scope.heure_ouverture_split[2]))
+heure_fermeture.setHours(parseInt($scope.heure_fermeture_split[0]),parseInt($scope.heure_fermeture_split[1]),parseInt($scope.heure_fermeture_split[2]))
+        console.log('opening time',heure_ouverture)
+        console.log('closing time',heure_fermeture)
+        var heure_courante_com = new Date();
+
+console.log('difference entre les heures',(heure_courante_com.getTime() - heure_ouverture.getTime())/60000)
+        console.log('heure en minute',heure_courante_com.getTime()/60000)
+/*dans la condition ci-dessous on dit inferieur a 30 parce qu'il y a au moins 30 minutes reserve a la livraison
+* donc les commandes s'arretent a 18h*/
+        if((heure_courante_com.getTime() - heure_ouverture.getTime())/60000 > 0 && ((heure_fermeture.getTime() - heure_courante_com.getTime())/60000 > 0)){
+            if($scope.profile_user.length !=0){
+                /*maintenant on se rassur kau moins un profile est valide*/
+                var profile_valide = 0;
+                angular.forEach($scope.profile_user,function (value,key) {
+                    console.log("on cherche le profile valide",value);
+                    if(value.status == 1){
+                        profile_valide+=1;
+                    }
+                })
 
 
-            if(profile_valide>0){
-                /*il a au moins un profile valide et peut passer sa commande*/
-                $scope.lance_la_commande = false;
-                $scope.text = false;
-                $scope.profile_valide = false;
-                $scope.refund_valide = false;
-                $scope.info_commande = {
-                    profile_id :"",
-                    moment : ""
-                };
-                /*on recupere les profiles de lutilisateur ici on doit faire une requete autre requete a ce niveau*/
-                //$scope.profile_user = $sessionStorage.profiles;
-                var Popup_commande = $ionicPopup.show({
-                    cssClass: 'popup_commande',
-                    templateUrl: 'templates/popup_commande.html',
-                    title: 'Finaliser votre commande',
-                    scope: $scope,
-                    buttons: [
-                        { text: 'Annuler' },
-                        {
-                            text: '<b>Valider</b>',
-                            type: 'button-positive',
-                            onTap: function(e) {
-                                /*ici on met la logique de verification*/
-                                /*on verifie d'abord quil a choisi un profile, et un moment de livraison*/
-                                console.log($scope.info_commande)
-                                if($scope.info_commande.profile_id !="" && $scope.profile_valide==true){
-                                    /*il a choisi un profile et on doit se rassurer que le profile est accepter*/
-                                    /*on verifie sil a chisi un moment de livraison*/
-                                    if($scope.info_commande.moment !=""){
-                                        /*il a choisi un moment de livraison*/
-                                        /*s'il a choisi on regarde la valeur avannt ou apres*/
-                                        if($scope.info_commande.moment ==="0"){
-                                            /*on ferme le popup et on lance la commande via une fonction*/
-                                            /*on doit faire un test ici pour voir si la ristourne est prise en compte*/
-                                            if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
-                                                /*on lance la commande*/
-                                                $scope.lance_la_commande = true;
-                                                Popup_commande.close();
-                                            }else{
-                                                if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
-                                                    /*on lance la commande ici*/
+                if(profile_valide>0){
+                    /*il a au moins un profile valide et peut passer sa commande*/
+                    $scope.lance_la_commande = false;
+                    $scope.text = false;
+                    $scope.profile_valide = false;
+                    $scope.refund_valide = false;
+                    $scope.info_commande = {
+                        profile_id :"",
+                        moment : ""
+                    };
+                    /*on recupere les profiles de lutilisateur ici on doit faire une requete autre requete a ce niveau*/
+                    //$scope.profile_user = $sessionStorage.profiles;
+                    var Popup_commande = $ionicPopup.show({
+                        cssClass: 'popup_commande',
+                        templateUrl: 'templates/popup_commande.html',
+                        title: 'Finaliser votre commande',
+                        scope: $scope,
+                        buttons: [
+                            { text: 'Annuler' },
+                            {
+                                text: '<b>Valider</b>',
+                                type: 'button-positive',
+                                onTap: function(e) {
+                                    /*ici on met la logique de verification*/
+                                    /*on verifie d'abord quil a choisi un profile, et un moment de livraison*/
+                                    console.log($scope.info_commande)
+                                    if($scope.info_commande.profile_id !="" && $scope.profile_valide==true){
+                                        /*il a choisi un profile et on doit se rassurer que le profile est accepter*/
+                                        /*on verifie sil a chisi un moment de livraison*/
+                                        if($scope.info_commande.moment !=""){
+                                            /*il a choisi un moment de livraison*/
+                                            /*s'il a choisi on regarde la valeur avannt ou apres*/
+                                            if($scope.info_commande.moment ==="0"){
+                                                /*on ferme le popup et on lance la commande via une fonction*/
+                                                /*on doit faire un test ici pour voir si la ristourne est prise en compte*/
+                                                if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
+                                                    /*on lance la commande*/
                                                     $scope.lance_la_commande = true;
                                                     Popup_commande.close();
                                                 }else{
-                                                    $scope.message = "Le montant de la commande doit être supérieur à la réduction";
-                                                    $scope.text = true;
-                                                    e.preventDefault();
-                                                }
-                                            }
-
-
-
-                                        }else{
-                                            /*dans le cas contraire on se rassure kil a rempli l'heure*/
-                                            console.log("voici lheure",$scope.info_commande.heure);
-                                            if($scope.info_commande.heure === undefined){
-                                                /*on lui demande de preciser l'heure*/
-                                                $scope.message = "Précisez une heure s\'il vous plaît";
-                                                $scope.text = true;
-                                            }else{
-                                                /*on verifie que l'heure est superieur a l'heure courante*/
-                                                var heure_courant = new Date();
-                                                var heure_commande = new Date();
-                                                heure_commande.setHours($scope.info_commande.heure.getHours(),$scope.info_commande.heure.getMinutes(),$scope.info_commande.heure.getSeconds())
-                                                heure_courant.setHours(heure_courant.getHours(),heure_courant.getMinutes(),heure_courant.getSeconds());
-                                                console.log(heure_commande.getTime(),heure_courant.getTime())
-                                                var diff_in_minutes = (heure_commande.getTime() - heure_courant.getTime())/60000;
-                                                if(heure_commande.getTime() - heure_courant.getTime() > 0 && diff_in_minutes > 30){
-                                                    /*lheur est bien choisi*/
-                                                    $scope.text = false;
-                                                    /*on ferme le popup et on appelle la fonciton qui lance la commande*/
-                                                    if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
-                                                        /*on lance la commande*/
+                                                    if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
+                                                        /*on lance la commande ici*/
                                                         $scope.lance_la_commande = true;
                                                         Popup_commande.close();
                                                     }else{
-                                                        if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
-                                                            /*on lance la commande ici*/
-                                                            $scope.lance_la_commande = true;
-                                                            Popup_commande.close();
-                                                        }else{
-                                                            $scope.message = "Le montant de la commande doit être supérieur à la réduction";
-                                                            $scope.text = true;
-                                                            e.preventDefault();
-
-                                                        }
+                                                        $scope.message = "Le montant de la commande doit être supérieur à la réduction";
+                                                        $scope.text = true;
+                                                        e.preventDefault();
                                                     }
-                                                    /*$scope.lance_la_commande = true;
-                                                    Popup_commande.close();*/
-                                                }else{
-                                                    $scope.message = "Entrez une heure valide avec un décallage d'au moins 30 minutes";
-                                                    $scope.text = true;
                                                 }
+
+
+
+                                            }else{
+                                                /*dans le cas contraire on se rassure kil a rempli l'heure*/
+                                                console.log("voici lheure",$scope.info_commande.heure);
+                                                if($scope.info_commande.heure === undefined){
+                                                    /*on lui demande de preciser l'heure*/
+                                                    $scope.message = "Précisez une heure s\'il vous plaît";
+                                                    $scope.text = true;
+                                                }else{
+
+                                                    /*a ce niveau la premiere verification a faire est celle de savoir si l'heure de la commande
+                                                    * est comprise dans les horaires d'ouverture du restaurant*/
+                                                    /*on verifie que l'heure est superieur a l'heure courante*/
+                                                    var heure_courant = new Date();
+                                                    var heure_commande = new Date();
+
+                                                    heure_commande.setHours($scope.info_commande.heure.getHours(),$scope.info_commande.heure.getMinutes(),$scope.info_commande.heure.getSeconds())
+                                                    heure_courant.setHours(heure_courant.getHours(),heure_courant.getMinutes(),heure_courant.getSeconds());
+                                                    console.log(heure_commande.getTime(),heure_courant.getTime())
+                                                    var diff_in_minutes = (heure_commande.getTime() - heure_courant.getTime())/60000;
+
+                                                    /*on doit commencer par se rassurer que l'heure de la livraison souhaitee est dans lintervalle
+                                                    * d'ouverture du restaurant lheure de livraison peut etre 8h30 ou 18h */
+                                                    if((heure_commande.getTime() - heure_ouverture.getTime())/60000 > 0 && (heure_fermeture.getTime() - heure_commande.getTime())/60000 > 0){
+                                                        if(heure_commande.getTime() - heure_courant.getTime() > 0 && diff_in_minutes > 30){
+                                                            /*lheur est bien choisi*/
+                                                            $scope.text = false;
+                                                            /*on ferme le popup et on appelle la fonciton qui lance la commande*/
+                                                            if($scope.info_commande.index ==="" || $scope.info_commande.index ==undefined){
+                                                                /*on lance la commande*/
+                                                                $scope.lance_la_commande = true;
+                                                                Popup_commande.close();
+                                                            }else{
+                                                                if($scope.total_amount > $scope.refund_codes[$scope.info_commande.index].price){
+                                                                    /*on lance la commande ici*/
+                                                                    $scope.lance_la_commande = true;
+                                                                    Popup_commande.close();
+                                                                }else{
+                                                                    $scope.message = "Le montant de la commande doit être supérieur à la réduction";
+                                                                    $scope.text = true;
+                                                                    e.preventDefault();
+
+                                                                }
+                                                            }
+                                                            /*$scope.lance_la_commande = true;
+                                                            Popup_commande.close();*/
+                                                        }else{
+                                                            $scope.message = "Entrez une heure valide avec un décallage d'au moins 30 minutes";
+                                                            $scope.text = true;
+                                                        }
+                                                    }else{
+                                                        /*lecart de 30 minute va se gerer dans le code plus bas*/
+
+                                                        $scope.message = 'Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1]);
+                                                        $scope.text = true;
+                                                    }
+
+                                                }
+                                                e.preventDefault();
                                             }
+                                        }else{
+                                            /*on lui demande de choisir le moment de la commande*/
+                                            $scope.message = "Choisissez le moment de la commande s\'il vous plaît";
+                                            $scope.text = true;
                                             e.preventDefault();
                                         }
                                     }else{
-                                        /*on lui demande de choisir le moment de la commande*/
-                                        $scope.message = "Choisissez le moment de la commande s\'il vous plaît";
+                                        /*on lui demande de choisir un profile*/
+                                        $scope.message = "Choisissez un profile valide s\'il vous plaît";
                                         $scope.text = true;
+
                                         e.preventDefault();
                                     }
-                                }else{
-                                    /*on lui demande de choisir un profile*/
-                                    $scope.message = "Choisissez un profile valide s\'il vous plaît";
-                                    $scope.text = true;
 
-                                    e.preventDefault();
                                 }
-
                             }
-                        }
-                    ]
-                });
+                        ]
+                    });
 
-                Popup_commande.then(function(res) {
-                    /*on forme d'abord les deux objets qui vont aller dans la commande*/
-                    if($scope.lance_la_commande){
-                        var heure_livraison;
-                        if($scope.info_commande.moment !=="0"){
-                            var heure_livraison = ""+$scope.info_commande.heure.getHours()+":"+$scope.info_commande.heure.getMinutes()+":"+$scope.info_commande.heure.getSeconds();
-                        }else{
-                            heure_livraison = "undefined"
-                        }
-                        /*on regarde si le refund_code a une valeur*/
-                        console.log("on vpit la va;eur de index",$scope.info_commande.index)
-                        if($scope.info_commande.index == undefined || $scope.info_commande.index ==""){
-                            /*pas de code de ristourne prix en compte*/
-                            $scope.refund_code_id = null;
-                        }else{
-                            $scope.refund_code_id = $scope.refund_codes[$scope.info_commande.index].id;
-                        }
-                        var command = {
-                            "client_id": $localStorage.userData.id,
-                            "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
-                            "moment": $scope.info_commande.moment,
-                            "delivery_date": heure_livraison,
-                            "amount": sharedCartService.total_amount,
-                            "comment": $scope.info_commande.commentaire,
-                            "refund_code_id": $scope.refund_code_id
-                        }
-                        var commandLines = [];
-                        /*on fait un foreach pour mettre chaque produit commander avec la qte*/
-                        angular.forEach(sharedCartService.cart, function (value,key) {
-                            /*on met chaque valeur dans le tableau sous forme d'objet*/
-                            var produit = {
-                                "product_id": value.cart_item_id,
-                                "quantity": value.cart_item_qty,
-                                "price": value.cart_item_price
-                            }
-                            commandLines[key] = produit;
-                        })
-                        var CommandeEnFin = Restangular.one('command');
-                        CommandeEnFin.command = JSON.stringify(command);
-                        CommandeEnFin.commandLines = JSON.stringify(commandLines);
-                        $ionicLoading.show({
-                            templateUrl : 'templates/loading.html'
-                        });
-                        CommandeEnFin.post().then(function (response) {
-                            $ionicLoading.hide();
-                            if (response.success == true){
-                                /*on affiche le message de success a l'utilisateur*/
-                                var popupResult = $ionicPopup.alert({
-                                    cssClass: 'popup_commande',
-                                    title: 'Information',
-                                    template: response.message
-                                });
-                                /*on remet toutes les variables a jour apres une comamnde*/
-                                popupResult.then(function () {
-                                    /*sharedCartService = {};
-                                    sharedCartService.cart=[]; 		// array of product items
-                                    sharedCartService.total_amount=0; // total cart amount
-                                    sharedCartService.total_qty=0;*/
-                                    sharedCartService.cart.vider();
-                                    /*lorskil fini de vider on passe ici*/
-                                    $rootScope.nombre_plat = 0;
-                                    //$rootScope.commander = true;
-                                    //$scope.taille_panier = 0;
-                                    $scope.cart = [];
-                                    console.log(sharedCartService);
-                                    $state.go('app.accueil');
-
-                                })
-
-                                /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
-
+                    Popup_commande.then(function(res) {
+                        /*on forme d'abord les deux objets qui vont aller dans la commande*/
+                        if($scope.lance_la_commande){
+                            var heure_livraison;
+                            if($scope.info_commande.moment !=="0"){
+                                var heure_livraison = ""+$scope.info_commande.heure.getHours()+":"+$scope.info_commande.heure.getMinutes()+":"+$scope.info_commande.heure.getSeconds();
                             }else{
-                                if(response.type ==0){
-                                    /*erreur au niveau de la qte disponible*/
-                                    $scope.message_error.show = true;
-                                    $scope.message_error.message = response.message;
+                                heure_livraison = "undefined"
+                            }
+                            /*on regarde si le refund_code a une valeur*/
+                            console.log("on vpit la va;eur de index",$scope.info_commande.index)
+                            if($scope.info_commande.index == undefined || $scope.info_commande.index ==""){
+                                /*pas de code de ristourne prix en compte*/
+                                $scope.refund_code_id = null;
+                            }else{
+                                $scope.refund_code_id = $scope.refund_codes[$scope.info_commande.index].id;
+                            }
+                            var command = {
+                                "client_id": $localStorage.userData.id,
+                                "profile_id": $scope.profile_user[$scope.info_commande.profile_id].id,
+                                "moment": $scope.info_commande.moment,
+                                "delivery_date": heure_livraison,
+                                "amount": sharedCartService.total_amount,
+                                "comment": $scope.info_commande.commentaire,
+                                "refund_code_id": $scope.refund_code_id
+                            }
+                            var commandLines = [];
+                            /*on fait un foreach pour mettre chaque produit commander avec la qte*/
+                            angular.forEach(sharedCartService.cart, function (value,key) {
+                                /*on met chaque valeur dans le tableau sous forme d'objet*/
+                                var produit = {
+                                    "product_id": value.cart_item_id,
+                                    "quantity": value.cart_item_qty,
+                                    "price": value.cart_item_price
                                 }
-                                else if(response.type==1){
-                                    /*code de ristourne invalide rafraichir la page pour reprendre les codes de ristourne*/
+                                commandLines[key] = produit;
+                            })
+                            var CommandeEnFin = Restangular.one('command');
+                            CommandeEnFin.command = JSON.stringify(command);
+                            CommandeEnFin.commandLines = JSON.stringify(commandLines);
+                            $ionicLoading.show({
+                                templateUrl : 'templates/loading.html'
+                            });
+                            CommandeEnFin.post().then(function (response) {
+                                $ionicLoading.hide();
+                                if (response.success == true){
+                                    /*on affiche le message de success a l'utilisateur*/
                                     var popupResult = $ionicPopup.alert({
-                                        title: 'Attention',
+                                        cssClass: 'popup_commande',
+                                        title: 'Information',
                                         template: response.message
                                     });
-
+                                    /*on remet toutes les variables a jour apres une comamnde*/
                                     popupResult.then(function () {
-                                        /*on recupere a niveau la liste des codes de ristourne de lutilisateur*/
-                                        $ionicLoading.show({
-                                            templateUrl : 'templates/loading.html'
-                                        });
-                                        var Profiles_code = Restangular.one('refund-code');
-                                        Profiles_code.get().then(function (response) {
-                                            $ionicLoading.hide();
-                                            console.log("voici les profiles",response)
-                                            $scope.profile_user = response.profiles;
-                                            $scope.refund_codes = response.refund_codes;
-                                        },function (error) {
-                                            $ionicLoading.hide();
-                                        })
+                                        /*sharedCartService = {};
+                                        sharedCartService.cart=[]; 		// array of product items
+                                        sharedCartService.total_amount=0; // total cart amount
+                                        sharedCartService.total_qty=0;*/
+                                        sharedCartService.cart.vider();
+                                        /*lorskil fini de vider on passe ici*/
+                                        $rootScope.nombre_plat = 0;
+                                        //$rootScope.commander = true;
+                                        //$scope.taille_panier = 0;
+                                        $scope.cart = [];
+                                        console.log(sharedCartService);
+                                        $state.go('app.accueil');
+
                                     })
+
+                                    /*on cache le bouton de lancement de la commande et on affiche celui disant que le panier est vide*/
+
+                                }else{
+                                    if(response.type ==0){
+                                        /*erreur au niveau de la qte disponible*/
+                                        $scope.message_error.show = true;
+                                        $scope.message_error.message = response.message;
+                                    }
+                                    else if(response.type==1){
+                                        /*code de ristourne invalide rafraichir la page pour reprendre les codes de ristourne*/
+                                        var popupResult = $ionicPopup.alert({
+                                            title: 'Attention',
+                                            template: response.message
+                                        });
+
+                                        popupResult.then(function () {
+                                            /*on recupere a niveau la liste des codes de ristourne de lutilisateur*/
+                                            $ionicLoading.show({
+                                                templateUrl : 'templates/loading.html'
+                                            });
+                                            var Profiles_code = Restangular.one('refund-code');
+                                            Profiles_code.get().then(function (response) {
+                                                $ionicLoading.hide();
+                                                console.log("voici les profiles",response)
+                                                $scope.profile_user = response.profiles;
+                                                $scope.refund_codes = response.refund_codes;
+                                            },function (error) {
+                                                $ionicLoading.hide();
+                                            })
+                                        })
+                                    }
+
                                 }
+                            },function (error) {
+                                $ionicLoading.hide();
+                            })
+                            console.log(command);
+                            console.log("liste des produits commander avec qte",commandLines)
+                        }
 
-                            }
-                        },function (error) {
-                            $ionicLoading.hide();
-                        })
-                        console.log(command);
-                        console.log("liste des produits commander avec qte",commandLines)
-                    }
+                    });
+                    console.log($sessionStorage.data)
+                }else{
+                    /*on refuse*/
+                    alert("Vous n'avez pas encore de profil valide")
+                }
 
-                });
-                console.log($sessionStorage.data)
             }else{
-                /*on refuse*/
+                /*ceci veut seulemet dire kil ya un profile mais il doit egalement etre valide*/
                 alert("Vous n'avez pas encore de profil valide")
             }
-
         }else{
-            /*ceci veut seulemet dire kil ya un profile mais il doit egalement etre valide*/
-            alert("Vous n'avez pas encore de profil valide")
+            /*on affiche le message derreur*/
+            alert('Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1]));
         }
+
 
     }
 })

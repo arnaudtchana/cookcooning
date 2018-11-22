@@ -16,6 +16,21 @@ App.controller('HelpCtrl',function($scope,$state,$stateParams,$ionicLoading,$htt
     Produit.get().then(function (response) {
         $ionicLoading.hide();
         $scope.articles = response.products;
+        $scope.opening_time = response.schedule.opening_time;
+        $scope.opening_time_split = $scope.opening_time.split(':');
+        $scope.closure_time = response.schedule.closure_time;
+        $scope.closure_time_split = $scope.closure_time.split(':');
+        $scope.ouverture = {
+            'heure': $scope.opening_time_split[0],
+            'minute': $scope.opening_time_split[1],
+        };
+
+        $scope.fermeture = {
+            'heure': $scope.closure_time_split[0],
+            'minute': $scope.closure_time_split[1],
+        };
+
+        $scope.message_ouverture = "Ouvert de "+$scope.ouverture.heure+"h"+$scope.ouverture.minute+" à "+$scope.fermeture.heure+"h"+$scope.fermeture.minute;
         console.log('liste des articles',$scope.articles)
         //console.log($sessionStorage.data.products)
     },function (error) {

@@ -19,29 +19,26 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       /*check for network connection*/
       /*installer le plugin et tester*/
       /*on teste sil y a la connection*/
-      if(window.Connection) {
+      /*if(window.Connection) {
           if (navigator.connection.type == Connection.NONE) {
-              /*on fait uen alert ici*/
+              /!*on fait uen alert ici*!/
               $ionicPopup.confirm({
                   title: 'Erreur !',
                   content: "Vous n\'êtes pas connecté à internet "
               })
-                  .then(function (result) {
-                      if (!result) {
-                          ionic.Platform.exitApp();
-                      }
-                  });
           }
-      }
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard) {
+      }*/
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard && $cordovaKeyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(false);
         cordova.plugins.Keyboard.disableScroll(true);
+        $cordovaKeyboard.hideAccessoryBar(true);
     }
 
     if (window.StatusBar) {
       // Set the statusbar to use the default style, tweak this to
       // remove the status bar on iOS or change it to use white instead of dark colors.
       StatusBar.styleDefault();
+        StatusBar.overlaysWebView(false);
     }
       if($localStorage.token){
           console.log("on regarde dans le run",$localStorage.token)
@@ -297,17 +294,34 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
         .factory('InterceptorFactory',['$sessionStorage','$q','$rootScope','$localStorage','$injector', function($sessionStorage,$q,$rootScope,$localStorage,$injector,$ionicLoading){
             return {
                 //lorsquon envoi une requette on met le token dans lentete
+
                 request : function(config) {
-                    console.log("je suis ici dans la requete de sortie");
-                    config.headers.Authorization= "bearer "+$localStorage.token;
-                    /*config.headers=["Access-Control-Allow-Origin", '*'];
-                    config.headers=['Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE'];
-                    config.headers=['Access-Control-Allow-Headers', 'Content-Type,Accept'];*/
-                    config.url = config.url+"?token="+$localStorage.token;
+
+                    /*on regarde si on peut tester la connexin dans lintercepteur*/
+                    /*on teste sil y a la connection*/
+                    if(window.Connection) {
+                        if (navigator.connection.type == Connection.NONE) {
+                            /*on fait uen alert ici*/
+                            alert('Vérifiez votre connexion internet');
+                            //ionic.Platform.exitApp();
+                            /*on met un return config a ce niveau pour voir ce qui va se passer*/
+                        }else{
+                            console.log("je suis ici dans la requete de sortie");
+                            config.headers.Authorization= "bearer "+$localStorage.token;
+                            /*config.headers=["Access-Control-Allow-Origin", '*'];
+                            config.headers=['Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE'];
+                            config.headers=['Access-Control-Allow-Headers', 'Content-Type,Accept'];*/
+                            config.url = config.url+"?token="+$localStorage.token;
+                            return config;
+                        }
+                    }else{
+                        return config;
+                    }
+
 
                    // console.log(config);
                     /*en envoi la requette*/
-                    return config;
+
                 },
                 /*dans le cas ou la requete passe avec succes on regarde si le token est present dans lentete
                  * auquel cas on le met dans la variable de session*/
