@@ -33,10 +33,10 @@
             </button>
         </div>
         <h5 class="padding text-center" ng-show="categorie_vide">Aucun produit disponible dans cette catégorie aujourd'hui</h5>
-        <ion-list ng-repeat="item in articles | filter:search">
+        <ion-list ng-repeat="item in articles | filter:search" class="slide-in-both-ways">
 
 
-            <ion-item class="item-thumbnail-left" >
+            <ion-item class="item-thumbnail-left" class="animate-in-primary">
 
                 <img ng-src="https://cook-cooning.quickdeveloppement.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" >
                 <p ng-if="item.available_quantity < 6" style="position:absolute;right:20px;top:30px;">

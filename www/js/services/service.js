@@ -12,11 +12,21 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
             // It is used to check if the product is already added to the cart or not
 
             //Ionic popup
-            var alertPopup = $ionicPopup.alert({
+            /*var alertPopup = $ionicPopup.alert({
                 cssClass: 'popup_commande',
                 title: 'Produit déjà ajouté',
                 template: 'Modifier la quantité en cliquant sur l\'image'
-            });
+            });*/
+            /*on se rassure que la qtite n'est pas superieur a ce qui est disponible*/
+            if(cartObj.cart[cartObj.cart.find(id)].cart_item_qty < available_qty){
+                /*a ce niveau on incremente encore de 1 la qte du produit*/
+                cartObj.cart[cartObj.cart.find(id)].cart_item_qty+=1;
+                cartObj.total_qty+=qty;	// increase the cartqty
+                cartObj.total_amount+=price * qty;
+                console.log(cartObj)
+            }else{
+                alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+            }
 
         }
         else{
