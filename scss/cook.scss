@@ -62,7 +62,16 @@
   background-color: #ff6600;
 }
 
+.popup_profile .popup-head{
+  background-color: #ff6600;
+}
+
 .popup_commande .popup-buttons{
+  padding: 0px;
+  min-height: 40px;
+}
+
+.popup_profile .popup-buttons{
   padding: 0px;
   min-height: 40px;
 }
@@ -85,6 +94,13 @@
 
 .popup_commande .popup-head .popup-title{
   color: white;
+}
+.popup_profile .popup-head .popup-title{
+  color: white;
+}
+.popup_profile .popup-body{
+  background-color: white;
+  //padding: 0;
 }
 /*css du bouton ajouter au panier a ce niveau*/
 .button_ajout_panier{

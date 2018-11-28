@@ -76,7 +76,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
         $scope.text = false;
         $scope.lance_form_modify = false;
         var Popup_profile_modify = $ionicPopup.show({
-            cssClass: 'popup_commande',
+            cssClass: 'popup_profile',
             templateUrl: 'templates/modifie_profile.html',
             title: 'Modifier le profil',
             scope: $scope,

@@ -242,6 +242,15 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               }
           }
       })
+        .state('app.information', {
+            url: '/information',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/info.html',
+                    controller: 'InfoCtrl'
+                }
+            }
+        })
       .state('app.new_profile', {
           url: '/new_profile',
           views: {
