@@ -24,14 +24,14 @@ $scope.error = "";
                 /*on enregistre le token*/
                 var Savetoken = Restangular.one('device/registration/save');
 /*je commente cette partie pour generer les screenshot*/
-                    /*window.plugins.OneSignal.getIds(function(ids) {
+                    window.plugins.OneSignal.getIds(function(ids) {
                         console.log("on regarde la valeur ici",ids.userId);
                         Savetoken.registration_token = ids.userId;
                         Savetoken.post().then(function (response) {
                             console.log('le token est enregistrer sur le serveur')
                             console.log("voici la reponse du serveur",response)
                         })
-                    });*/
+                    });
                 $localStorage.token = response.data.token;
                 $localStorage.new_connection = true;
                 //$localStorage.products = response.data.products;
@@ -50,7 +50,12 @@ $scope.error = "";
                 $state.go('app.accueil');
             }else{
                 /*on affiche le message d'erreur*/
-                $scope.error = response.data.error;
+
+                if(response.data.hasOwnProperty('error')){
+                    $scope.error = response.data.error;
+                }else if(response.data.hasOwnProperty('message')){
+                    $scope.error = response.data.message;
+                }
                 //alert(response.data.message);
             }
 
