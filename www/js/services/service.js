@@ -25,7 +25,13 @@ App.factory('sharedCartService', ['$ionicPopup',function($ionicPopup,$rootScope)
                 cartObj.total_amount+=price * qty;
                 console.log(cartObj)
             }else{
-                alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+                //alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+                //Ionic popup
+                var alertPopup = $ionicPopup.alert({
+                    cssClass: 'popup_commande',
+                    title: 'Alerte',
+                    template: 'Désolé, nous n\'avons plus de plat disponible pour cette journée'
+                });
             }
 
         }

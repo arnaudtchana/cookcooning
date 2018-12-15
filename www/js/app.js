@@ -55,17 +55,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
       /*je commente cette ligne*/
  //window.plugins.OneSignal.setSubscription(false);
-      /*pour gerer la partie consentement de lueitlisateur*/
-      //window.plugins.OneSignal.init();
-      /*window.plugins.OneSignal.iOSSettings(iosSettings)
-      window.plugins.OneSignal.setRequiresUserPrivacyConsent(true);
-      window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
-          console.log("User accepted notifications: " + accepted);
-          window.plugins.OneSignal.provideUserConsent(true);
-      });*/
 
-      /*window.plugins.OneSignal.setSubscription(true);*/
-      //OneSignal.setRequiresUserPrivacyConsent(true)
       var notificationOpenedCallback = function(data) {
           console.log('notificationOpenedCallback: ' + JSON.stringify(data));
 
@@ -109,8 +99,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       },function (error) {
           console.log(error);
       });
-      window.plugins.OneSignal.setSubscription(true);
-*/
+      window.plugins.OneSignal.setSubscription(true);*/
   });
 })
 

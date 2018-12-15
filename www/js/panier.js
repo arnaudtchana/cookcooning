@@ -178,7 +178,11 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             $rootScope.nombre_plat+=1;
         }else{
             /*on retourne un message derreur*/
-            alert('Désolé, nous n\'avons pas plus de plat disponible pour cette journée')
+            var alertPopup = $ionicPopup.alert({
+                cssClass: 'popup_commande',
+                title: 'Alerte',
+                template: 'Désolé, nous n\'avons plus de plat disponible pour cette journée'
+            });
         }
 
     };
@@ -284,6 +288,10 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             $scope.heure_ouverture_split = $scope.heure_ouverture_split.split(':');
             $scope.heure_fermeture_split = $scope.heure_fermeture;
             $scope.heure_fermeture_split = $scope.heure_fermeture_split.split(':');
+            /*on regarde si l'heure de fermeture c'est 00h dans ce cas on met 24h pour que ca marche*/
+            if($scope.heure_fermeture_split[0] == "00"){
+                $scope.heure_fermeture_split[0] = "24"
+            }
             var heure_ouverture = new Date();
             var heure_fermeture = new Date();
             heure_ouverture.setHours(parseInt($scope.heure_ouverture_split[0]),parseInt($scope.heure_ouverture_split[1]),parseInt($scope.heure_ouverture_split[2]))
@@ -556,21 +564,37 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                         console.log($sessionStorage.data)
                     }else{
                         /*on refuse*/
-                        alert("Vous n'avez pas encore de profil valide")
+                        var alertPopup = $ionicPopup.alert({
+                            cssClass: 'popup_commande',
+                            title: 'Alerte',
+                            template: 'Vous n\'avez pas encore de profil valide'
+                        });
                     }
 
                 }else{
                     /*ceci veut seulemet dire kil ya un profile mais il doit egalement etre valide*/
-                    alert("Vous n'avez pas encore de profil valide")
+                    var alertPopup = $ionicPopup.alert({
+                        cssClass: 'popup_commande',
+                        title: 'Alerte',
+                        template: 'Vous n\'avez pas encore de profil valide'
+                    });
                 }
             }else{
                 /*on affiche le message derreur*/
-                alert('Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1]));
+                var alertPopup = $ionicPopup.alert({
+                    cssClass: 'popup_commande',
+                    title: 'Alerte',
+                    template: 'Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1])
+                });
             }
 
 
         }else{
-            alert("Votre restaurant est fermé pour le moment")
+            var alertPopup = $ionicPopup.alert({
+                cssClass: 'popup_commande',
+                title: 'Alerte',
+                template:"Votre restaurant est fermé pour le moment"
+            });
         }
 
     }
