@@ -29,10 +29,18 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
           }
       }*/
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard && $cordovaKeyboard) {
-      window.Keyboard.hideKeyboardAccessoryBar(false);
-        cordova.plugins.Keyboard.disableScroll(true);
+        /*je ne sais pas pourkoi le code netre pas dans cette condition c'est la raison pour laquelle la ligne qui
+        * resoud le probleme du select ci-dessous ne fonctionne pas*/
+      window.Keyboard.hideFormAccessoryBar(false);
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
         $cordovaKeyboard.hideAccessoryBar(true);
     }
+    /*le problem du select sur ios est definitivement gerer a ce niveau*/
+      if(window.cordova && window.cordova.plugins.Keyboard) {
+          window.Keyboard.hideFormAccessoryBar(false);
+      }
+        //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
 
     if (window.StatusBar) {
       // Set the statusbar to use the default style, tweak this to

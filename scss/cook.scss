@@ -102,6 +102,12 @@
   background-color: white;
   //padding: 0;
 }
+/*on definit la position du popup pour gerer les informations dans lactionsheet*/
+.popup_commande .popup{
+  position: absolute;
+  top:0px;
+  max-height: 50%;
+}
 /*css du bouton ajouter au panier a ce niveau*/
 .button_ajout_panier{
   padding: 0 5px;
@@ -312,4 +318,9 @@ p .button:after{
   animation: animateInSecondary ease-in 1;
   -webkit-animation-duration: 750ms;
   animation-duraton: 750ms;
+}
+
+/*on fait le style de notre actionSheet*/
+.action-sheet .button{
+  font-size: 12px;
 }

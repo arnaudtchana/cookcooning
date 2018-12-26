@@ -3,7 +3,7 @@
     <name>CookCooning</name>
     <description>Application de commande</description>
     <author email="quick.developpement@gmail.com" href="#">Quick Developpement</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.43.239:8100" />
     <access origin="https://at-deg.inimov-cloud.com" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -94,6 +94,7 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.4.4" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <allow-navigation href="http://192.168.43.239:8100" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.5" />
 </widget>

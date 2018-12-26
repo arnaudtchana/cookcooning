@@ -1,4 +1,4 @@
-App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,Restangular,$ionicLoading,$localStorage) {
+App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sessionStorage,sharedCartService,$ionicPopup,$rootScope,Restangular,$ionicLoading,$localStorage,$ionicActionSheet) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -229,8 +229,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
     };
     /*fonction qui permet de virifeir si le profile de lutilisateur est valide pour passer la commande*/
     $scope.choix_profile = function(){
-     /*on regarde si le profile choisi peut effectuer la commande*/
-        console.log("id du profile a ce niveau",$scope.info_commande.profile_id);
+        /*on cree le premier action sheet pour la gestion du choix du profile ici*/
         if($scope.info_commande.profile_id ==""){
             $scope.message = "Choisissez un profil s'il vous plaît";
             $scope.text = true;
@@ -250,7 +249,6 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 $scope.montant_livraison = $scope.profile_user[$scope.info_commande.profile_id].delivery_amount;
             }
         }
-
 
     }
 
