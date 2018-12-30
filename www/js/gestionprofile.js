@@ -170,7 +170,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                         /*ici on met la logique de verification*/
                         /*on verifie d'abord quil a choisi un profile, et un moment de livraison*/
                         console.log($scope.info_profil);
-                        if($scope.info_profil.name && $scope.info_profil.phone && $scope.info.rue && $scope.info.postal_code && $scope.info.ville  && $scope.info_profil.comments){
+                        if($scope.info_profil.name && $scope.info_profil.phone && $scope.info.rue && $scope.info.postal_code && $scope.info.ville){
                             /*on ferme le popup et on lance lenregistrement*/
                             $scope.lance_form = true;
                             Popup_profile.close();
