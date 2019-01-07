@@ -1,14 +1,14 @@
 
-<form name="formulaire">
+<form name="info.formulaire">
         <span class="couleur_rouge" ng-show="text">{{message}}</span>
         <label class="item item-input">
             <input type="text" name="nom" placeholder="Nom du profil*" ng-model="info_profil.name" required>
         </label>
 
         <label class="item item-input">
-            <input type="tel" name="tel" ng-pattern="/^\+[0-9]{1,3}[0-9 ]*$/" placeholder="Téléphone* Ex. +41 72 853 95 63" ng-model="info_profil.phone" required>
+            <input type="tel" name="tel" ng-pattern="/^\+32-\d{3}-\d{2}-\d{2}-\d{2}$/" placeholder="Tél.* Ex. +32-XXX-XX-XX-XX" ng-model="info_profil.phone" required>
         </label>
-        <span style="color: red" ng-show="formulaire.tel.$error.pattern">Numéro de téléphone invalide!</span>
+        <span style="color: red" ng-show="info.formulaire.tel.$error.pattern">Numéro de téléphone invalide!</span>
 
     <label class="item item-input">
         <input type="text" name="rue" placeholder="Rue* Ex. Rue des wallons" ng-model="info.rue" required>

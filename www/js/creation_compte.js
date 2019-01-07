@@ -74,34 +74,43 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
 
     $scope.singup = function () {
         /*ici la fonction de creation de compte complete*/
-        $ionicLoading.show({
-            templateUrl : 'templates/loading.html'
-        });
-        var profiles = [];
-        $scope.profile.address = $scope.info.rue+" "+$scope.info.numero+", "+$scope.info.postal_code+" "+$scope.info.ville;
-        profiles[0] = $scope.profile;
-        console.log("partie profile",profiles)
-        $sessionStorage.user.name = $scope.profile.name;
-        $sessionStorage.user.phone = $scope.profile.phone;
-        $sessionStorage.user.address = $scope.info.rue+" "+$scope.info.numero+", "+$scope.info.postal_code+" "+$scope.info.ville;
-        console.log("partie user",$sessionStorage.user)
-        $auth.signup({user:JSON.stringify($sessionStorage.user),profiles:JSON.stringify(profiles)}).then(function (response) {
-            $ionicLoading.hide();
-            if(response.data.success == true){
-                /*on met un toast et on passe a la page de connexion*/
-                ionicToast.show('Votre compte a été créé avec succès, vous pourrez passer des commandes après validation de votre profile', 'center', true, 2500);
-                $state.go("connexion");
-            }
-            console.log(response)
-
-        },function (error) {
-          $ionicLoading.hide();
-            var alertPopupError = $ionicPopup.alert({
-                title: 'Attention!',
-                template: error.message
+        if($scope.formulaire.tel.$error.pattern){
+            var alertPopup = $ionicPopup.alert({
+                cssClass: 'popup_commande',
+                title: 'Alerte',
+                template: 'Mettez un numéro valide'
             });
+        }else{
+            $ionicLoading.show({
+                templateUrl : 'templates/loading.html'
+            });
+            var profiles = [];
+            $scope.profile.address = $scope.info.rue+" "+$scope.info.numero+", "+$scope.info.postal_code+" "+$scope.info.ville;
+            profiles[0] = $scope.profile;
+            console.log("partie profile",profiles)
+            $sessionStorage.user.name = $scope.profile.name;
+            $sessionStorage.user.phone = $scope.profile.phone;
+            $sessionStorage.user.address = $scope.info.rue+" "+$scope.info.numero+", "+$scope.info.postal_code+" "+$scope.info.ville;
+            console.log("partie user",$sessionStorage.user)
+            $auth.signup({user:JSON.stringify($sessionStorage.user),profiles:JSON.stringify(profiles)}).then(function (response) {
+                $ionicLoading.hide();
+                if(response.data.success == true){
+                    /*on met un toast et on passe a la page de connexion*/
+                    ionicToast.show('Votre compte a été créé avec succès, vous pourrez passer des commandes après validation de votre profile', 'center', true, 2500);
+                    $state.go("connexion");
+                }
+                console.log(response)
 
-        })
+            },function (error) {
+                $ionicLoading.hide();
+                var alertPopupError = $ionicPopup.alert({
+                    title: 'Attention!',
+                    template: error.message
+                });
+
+            })
+        }
+
     }
 
 

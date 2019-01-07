@@ -35,8 +35,8 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
         $cordovaKeyboard.hideAccessoryBar(true);
     }
-    /*le problem du select sur ios est definitivement gerer a ce niveau*/
-      if(window.cordova && window.cordova.plugins.Keyboard) {
+    /*le problem du select sur ios est definitivement gerer a ce niveau ici ca derangeait un peu fjkfds*/
+      if(window.cordova) {
           window.Keyboard.hideFormAccessoryBar(false);
       }
         //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

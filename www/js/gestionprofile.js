@@ -89,14 +89,18 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                         /*ici on met la logique de verification*/
                         /*on verifie d'abord quil a choisi un profile, et un moment de livraison*/
                         console.log($scope.info_modify);
-                        if($scope.info_modify.name && $scope.info_modify.phone && $scope.info_modify.address && $scope.info_modify.comments){
+                        if($scope.info_modify.formulaire.tel.$error.pattern){
+                            /*on demande de corriger le numero*/
+                            e.preventDefault();
+                        }
+                        if($scope.info_modify.name && $scope.info_modify.phone && $scope.info_modify.address){
                             /*on ferme le popup et on lance lenregistrement*/
                             $scope.lance_form_modify = true;
                             Popup_profile_modify.close();
                         }
                         else{
                             /*on lui demande de choisir un profile*/
-                            $scope.message = "Tous les champs sont requis";
+                            $scope.message = "Bien remplir Tous les champs requis";
                             $scope.text = true;
                             $scope.lance_form_modify = false;
 
@@ -170,6 +174,11 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                         /*ici on met la logique de verification*/
                         /*on verifie d'abord quil a choisi un profile, et un moment de livraison*/
                         console.log($scope.info_profil);
+
+                        if($scope.info.formulaire.tel.$error.pattern){
+                            /*on demande de corriger le numero*/
+                            e.preventDefault();
+                        }
                         if($scope.info_profil.name && $scope.info_profil.phone && $scope.info.rue && $scope.info.postal_code && $scope.info.ville){
                             /*on ferme le popup et on lance lenregistrement*/
                             $scope.lance_form = true;
@@ -177,7 +186,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                         }
                         else{
                             /*on lui demande de choisir un profile*/
-                            $scope.message = "Tous les champs sont requis";
+                            $scope.message = "Bien remplir tous les champs requis";
                             $scope.text = true;
                             $scope.lance_form = false;
 

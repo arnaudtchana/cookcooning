@@ -1,8 +1,5 @@
 <ion-view view-title="Informations profil">
     <ion-content>
-        <!--<div style="padding-top: 20%;text-align: center">
-            <img style="width: 100%" src="../img/logo.png">
-        </div>-->
 
         <div ng-controller="CompteCtrl">
             <form name="formulaire" class="list list-inset" ng-submit="singup()">
@@ -11,7 +8,8 @@
                 </label>
 
                 <label class="item item-input">
-                    <input type="tel" name="tel" ng-pattern="/^\+[0-9]{1,3}[0-9 ]*$/" placeholder="Téléphone* Ex. +41 72 853 95 63" ng-model="profile.phone" required>
+                    <!--<input type="tel" name="tel" ng-pattern="/^\+[0-9]{1,3}[0-9 ]*$/" placeholder="Téléphone* Ex. +41 72 853 95 63" ng-model="profile.phone" required>-->
+                    <input type="tel" name="tel" ng-pattern="/^\+32-\d{3}-\d{2}-\d{2}-\d{2}$/" placeholder="Téléphone* Ex. +32-XXX-XX-XX-XX" ng-model="profile.phone" required>
                 </label>
 
                 <label class="item item-input">

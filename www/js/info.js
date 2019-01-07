@@ -11,10 +11,10 @@ App.controller('InfoCtrl',function($scope,$state,$stateParams,$ionicLoading,$htt
             /*on recupere egalement les horaires a ce niveau*/
             $scope.status_restau= response.schedule.open;
             if(!$scope.status_restau){
-                $scope.disponibilite = "Votre restaurant est fermé pour le moment";
+                $scope.disponibilite = "Nous sommes fermé";
                 $scope.message = response.schedule.reason_closure;
             }else{
-                $scope.disponibilite = "Votre restaurant est ouvert";
+                $scope.disponibilite = "Nous sommes ouvert";
             }
             $scope.heure_ouverture = response.schedule.opening_time;
             $scope.opening_time_split = $scope.heure_ouverture.split(':');
