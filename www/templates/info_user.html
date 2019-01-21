@@ -7,7 +7,7 @@
         <div ng-controller="CompteCtrl">
             <form name="formulaire" class="list list-inset" ng-submit="saveUser()">
                 <label class="item item-input">
-                    <input type="email" name="email" placeholder="Email" ng-model="user.email" required>
+                    <input type="email" name="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" placeholder="Email" ng-model="user.email" required>
                 </label>
 
                 <label class="item item-input">

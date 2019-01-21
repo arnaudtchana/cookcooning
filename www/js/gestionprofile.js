@@ -100,7 +100,7 @@ App.controller('GestionProfilCtrl', function($scope, $ionicModal, $timeout,$stat
                         }
                         else{
                             /*on lui demande de choisir un profile*/
-                            $scope.message = "Bien remplir Tous les champs requis";
+                            $scope.message = "Bien remplir tous les champs requis";
                             $scope.text = true;
                             $scope.lance_form_modify = false;
 

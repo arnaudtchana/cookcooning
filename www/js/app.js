@@ -8,33 +8,15 @@ var ApiUrl = "https://cook-cooning.quickdeveloppement.com/api/";
 //var ApiUrl = "http://www.africare.io/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
 //App.options('*', cors())
-.run(function($ionicPlatform,$localStorage,$state,$ionicHistory,$ionicPopup) {
+.run(function($ionicPlatform,$localStorage,$state,$ionicHistory,$rootScope) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs).
-    // The reason we default this to hidden is that native apps don't usually show an accessory bar, at
-    // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
-    // useful especially with forms, though we would prefer giving the user a little more room
-    // to interact with the app.
-      /*check for network connection*/
-      /*installer le plugin et tester*/
-      /*on teste sil y a la connection*/
-      /*if(window.Connection) {
-          if (navigator.connection.type == Connection.NONE) {
-              /!*on fait uen alert ici*!/
-              $ionicPopup.confirm({
-                  title: 'Erreur !',
-                  content: "Vous n\'êtes pas connecté à internet "
-              })
-          }
-      }*/
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard && $cordovaKeyboard) {
-        /*je ne sais pas pourkoi le code netre pas dans cette condition c'est la raison pour laquelle la ligne qui
-        * resoud le probleme du select ci-dessous ne fonctionne pas*/
+    /*if (window.cordova && window.cordova.plugins && window.cordova.plugins.keyboard && $cordovaKeyboard) {
+        /!*je ne sais pas pourkoi le code netre pas dans cette condition c'est la raison pour la ligne qui
+        * resoud le probleme du select ci-dessous ne fonctionne pas*!/
       window.Keyboard.hideFormAccessoryBar(false);
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
         $cordovaKeyboard.hideAccessoryBar(true);
-    }
+    }*/
     /*le problem du select sur ios est definitivement gerer a ce niveau ici ca derangeait un peu fjkfds*/
       if(window.cordova) {
           window.Keyboard.hideFormAccessoryBar(false);
@@ -49,7 +31,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
         //StatusBar.overlaysWebView(false);
     }
       if($localStorage.token){
-          console.log("on regarde dans le run",$localStorage.token)
+          //alert("on regarde dans le run",$localStorage.token)
           $localStorage.new_connection = false;
           /*ce code permet de retirer la page de connexion de la pile*/
           $ionicHistory.nextViewOptions({
@@ -57,6 +39,8 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
               disableBack: true
           })
           $state.go('app.accueil')
+      }else{
+          $state.go('bar.aide')
       }
 
       /*ici on gere les notifications*/
@@ -142,6 +126,15 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
         },
         controller: 'CompteCtrl'
     })
+      .state('bar.code_validation',{
+          url:'/code_validation',
+          views: {
+              'bar_content' :{
+                  templateUrl:'templates/code_validation.html'
+              }
+          },
+          controller: 'CompteCtrl'
+      })
       .state('bar.aide',{
           url:'/aide',
           views: {
@@ -294,7 +287,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('bar/aide');
+  //$urlRouterProvider.otherwise('bar/aide');
 })
 
         .factory('InterceptorFactory',['$sessionStorage','$q','$rootScope','$localStorage','$injector', function($sessionStorage,$q,$rootScope,$localStorage,$injector,$ionicLoading){

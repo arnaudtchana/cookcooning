@@ -23,7 +23,7 @@
     </label>
     <label class="item item-input item-stacked-label">
         <span class="input-label">Téléphone*</span>
-        <input type="tel" name="tel" ng-pattern="/^\+32-\d{3}-\d{2}-\d{2}-\d{2}$/" placeholder="Tél.* Ex. +32-XXX-XX-XX-XX" ng-model="info_modify.phone" required>
+        <input type="tel" name="tel" ng-pattern="/^\+32\d{9}$/" placeholder="Tél.* Ex. +32XXXXXXXXX" ng-model="info_modify.phone" required>
     </label>
     <span style="color: red" ng-show="info_modify.formulaire.tel.$error.pattern">Numéro de téléphone invalide!</span>
     <label class="item item-input item-stacked-label">

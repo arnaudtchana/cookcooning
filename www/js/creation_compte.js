@@ -28,7 +28,7 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
             /*message d'erreur*/
             var alertPopup = $ionicPopup.alert({
                 title: 'Attention!',
-                template: 'le mot de passe et la confirmation doivent être identiques'
+                template: 'Le mot de passe et la confirmation doivent être identiques'
             });
 
             alertPopup.then(function(res) {
@@ -57,10 +57,11 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
                         $scope.user.email = "";
                     });
                 }else{
-                    /*on passe ici*/
+                    /*on passe ici on enregistre le code de validation et on avance*/
                     console.log($scope.user)
                     $sessionStorage.user = $scope.user;
-                    $state.go('bar.info_profile');
+                    $rootScope.code_validation = response.code;
+                    $state.go("bar.code_validation");
                 }
 
                 console.log(response)

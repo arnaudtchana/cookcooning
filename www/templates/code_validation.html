@@ -1,0 +1,21 @@
+<ion-view view-title="Code de validation">
+    <ion-content>
+
+        <div ng-controller="ValidationCtrl">
+            <form name="formulaire" class="list list-inset" ng-submit="validation()">
+                <label class="item item-input">
+                    <input type="text" name="code" placeholder="Entrer le code reçu par mail*" ng-model="code" required>
+                </label>
+
+                <span style="color: red" ng-show="correct_code">Le code de validation est invalide!</span>
+                <div><button type="submit" class="button button-block button-positive">Suivant</button></div>
+            </form>
+        </div>
+        <div style="padding-top: 25%">
+
+            <div class="text-center"> <a ui-sref="connexion()">J'ai déjà un compte</a></div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

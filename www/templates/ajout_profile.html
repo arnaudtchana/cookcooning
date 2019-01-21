@@ -6,7 +6,9 @@
         </label>
 
         <label class="item item-input">
-            <input type="tel" name="tel" ng-pattern="/^\+32-\d{3}-\d{2}-\d{2}-\d{2}$/" placeholder="Tél.* Ex. +32-XXX-XX-XX-XX" ng-model="info_profil.phone" required>
+            <!--la premiere ligne represente lancienne validation-->
+            <!--<input type="tel" name="tel" ng-pattern="/^\+32-\d{3}-\d{2}-\d{2}-\d{2}$/" placeholder="Tél.* Ex. +32-XXX-XX-XX-XX" ng-model="info_profil.phone" required>-->
+            <input type="tel" name="tel" ng-pattern="/^\+32\d{9}$/" placeholder="Tél.* Ex. +32XXXXXXXXX" ng-model="info_profil.phone" required>
         </label>
         <span style="color: red" ng-show="info.formulaire.tel.$error.pattern">Numéro de téléphone invalide!</span>
 
