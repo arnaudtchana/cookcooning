@@ -30,6 +30,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       StatusBar.styleDefault();
         //StatusBar.overlaysWebView(false);
     }
+
       if($localStorage.token){
           //alert("on regarde dans le run",$localStorage.token)
           $localStorage.new_connection = false;
@@ -46,7 +47,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       /*ici on gere les notifications*/
       //iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
       /*je commente cette ligne*/
- window.plugins.OneSignal.setSubscription(false);
+ //window.plugins.OneSignal.setSubscription(false);
 
       var notificationOpenedCallback = function(data) {
           console.log('notificationOpenedCallback: ' + JSON.stringify(data));
@@ -76,7 +77,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       };
 
 
-      window.plugins.OneSignal
+      /*window.plugins.OneSignal
           .startInit("7c0474c4-949c-4de3-bea1-b3a1ef88fe60")
           .handleNotificationOpened(notificationOpenedCallback)
           .endInit();
@@ -91,7 +92,7 @@ var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangul
       },function (error) {
           console.log(error);
       });
-      window.plugins.OneSignal.setSubscription(true);
+      window.plugins.OneSignal.setSubscription(true);*/
   });
 })
 

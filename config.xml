@@ -22,7 +22,7 @@
     <preference name="SplashScreenDelay" value="5000" />
     <preference name="SplashScreenSpinnerColor" value="#ff6600" />
     <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#ff6600" />
+    <preference name="StatusBarBackgroundColor" value="#f68b1e" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />

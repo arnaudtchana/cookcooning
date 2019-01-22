@@ -1,4 +1,4 @@
-App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ionicPopup,Restangular,$ionicLoading,$auth,$sessionStorage,ionicToast) {
+App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ionicPopup,Restangular,$ionicLoading,$auth,$sessionStorage,ionicToast,$rootScope,$localStorage) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -58,6 +58,8 @@ App.controller('CompteCtrl', function($scope, $ionicModal, $timeout,$state,$ioni
                     });
                 }else{
                     /*on passe ici on enregistre le code de validation et on avance*/
+                    console.log("voici la reponse contenant le code",response)
+
                     console.log($scope.user)
                     $sessionStorage.user = $scope.user;
                     $rootScope.code_validation = response.code;
