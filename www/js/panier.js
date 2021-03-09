@@ -419,7 +419,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                                                         }else{
                                                             /*lecart de 30 minute va se gerer dans le code plus bas*/
 
-                                                            $scope.message = 'Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1]);
+                                                            $scope.message = 'Désolé, nous sommes ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1]);
                                                             $scope.text = true;
                                                         }
 
@@ -582,7 +582,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
                 var alertPopup = $ionicPopup.alert({
                     cssClass: 'popup_commande',
                     title: 'Alerte',
-                    template: 'Désolé, le restaurant est ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1])
+                    template: 'Désolé, nous sommes ouvert entre '+parseInt($scope.heure_ouverture_split[0])+'h et '+parseInt($scope.heure_fermeture_split[0])+'h'+parseInt($scope.heure_fermeture_split[1])
                 });
             }
 
@@ -591,7 +591,7 @@ App.controller('PanierCtrl', function($scope, $ionicModal, $timeout,$state,$sess
             var alertPopup = $ionicPopup.alert({
                 cssClass: 'popup_commande',
                 title: 'Alerte',
-                template:"Votre restaurant est fermé pour le moment"
+                template:"Nous sommes fermés pour le moment"
             });
         }
 

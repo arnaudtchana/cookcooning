@@ -10,7 +10,7 @@
     <div id="resto">
     <div class="padding text-center">
       <!--<h2 style="color: #ff6600; text-align: center">CookCooning</h2>-->
-      <img style="width: 30%;border-radius: 50%" src="https://cook-cooning.quickdeveloppement.com/images/logo-mobile.png">
+      <img style="width: 30%;border-radius: 50%" src="http://78.46.11.29:8080/images/logo-mobile.png">
     </div>
     <div class="row">
       <div class="col text-center" style="color:white;font-weight: bold">Rue Ernest Solvay 267 à 4000 Sclessin</div>
@@ -42,7 +42,7 @@
 
       <ion-item class="item-thumbnail-left" >
 
-        <img  ng-src="https://cook-cooning.quickdeveloppement.com/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" >
+        <img  ng-src="http://78.46.11.29:8080/{{item.image}}"  ng-click="showProductInfo(item.id,item.description,item.image,item.price,item.name)" >
         <p ng-if="item.available_quantity < 6" style="position:absolute;right:20px;top:30px;">
           {{item.available_quantity}} plats
         </p>

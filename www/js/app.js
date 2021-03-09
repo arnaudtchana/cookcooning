@@ -4,7 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var ApiUrl = "https://cook-cooning.quickdeveloppement.com/api/";
+//var ApiUrl = "https://cook-cooning.quickdeveloppement.com/api/";
+var ApiUrl = "http://78.46.11.29:8080/api/";
+var imageUrl = "http://78.46.11.29:8080/";
 //var ApiUrl = "http://www.africare.io/api/";
 var App = angular.module('starter', ['ionic','satellizer','ngStorage','restangular','ionic-toast','ngCordova'])
 //App.options('*', cors())

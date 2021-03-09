@@ -16,7 +16,6 @@ App.controller('ValidationCtrl',function($scope,$state,$stateParams,$ionicLoadin
             $scope.code="";
         }
 
-
     }
 
 
